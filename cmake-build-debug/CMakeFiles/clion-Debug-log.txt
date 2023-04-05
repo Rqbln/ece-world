@@ -1,0 +1,10 @@
+/var/lib/snapd/snap/clion/233/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/var/lib/snapd/snap/clion/233/bin/ninja/linux/x64/ninja -G Ninja -S /home/rqbin/Documents/ECE/ECE-ING-1/Algo-et-Prog/Allegro/Projet2 -B /home/rqbin/Documents/ECE/ECE-ING-1/Algo-et-Prog/Allegro/Projet2/cmake-build-debug
+-- The C compiler identification is GNU 12.2.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/rqbin/Documents/ECE/ECE-ING-1/Algo-et-Prog/Allegro/Projet2/cmake-build-debug
