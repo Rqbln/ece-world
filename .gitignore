@@ -1,0 +1,4 @@
+# Ignore tous les fichiers sauf les fichiers .h et .c à la racine du projet
+/*
+!*.h
+!*.c
