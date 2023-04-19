@@ -1,4 +1,4 @@
-#include "allegro.h"
+#include "Init_Allegro/allegro.h"
 
 int main() {
     initialisation_allegro(); // Initialise Allegro
