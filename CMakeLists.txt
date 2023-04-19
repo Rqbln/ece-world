@@ -9,5 +9,5 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(ALLEGRO REQUIRED allegro)
 
 include_directories(${ALLEGRO_INCLUDE_DIRS})
-add_executable(Projet_Algo2 main.c)
+add_executable(Projet_Algo2 main.c allegro.c Parc.h Parc.c)
 target_link_libraries(Projet_Algo2 ${ALLEGRO_LIBRARIES})
