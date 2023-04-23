@@ -8,7 +8,7 @@
 
 #endif //PROJET_ALGO2_ALLEGRO_H
 
-#define HEIGHT 720
-#define WIDTH 1280
+#define HEIGHT 1080
+#define WIDTH 1920
 
 void initialisation_allegro();
