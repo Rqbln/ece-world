@@ -18,8 +18,8 @@ void anim_horse(){
     int memo=20;
     int order;
     int vy;
-    int xArriver=WIDTH-60;
-    int yArriver=150;
+    int xArriver=WIDTH*0.95;
+    int yArriver=HEIGHT*0.35;
     char message[50];
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
@@ -27,7 +27,7 @@ void anim_horse(){
     for(int i=0;i<nbCheval;i++)
     {
         xcheval[i]=0;
-        ycheval[i]=i*25+150;
+        ycheval[i]=i*25+HEIGHT*0.35;
         position[i]=0;
     }
 
