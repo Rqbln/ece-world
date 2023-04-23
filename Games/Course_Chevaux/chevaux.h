@@ -1,3 +1,4 @@
+//by Baptiste Chesnot
 #ifndef ECE_WORLD_CHEVAUX_H
 #define ECE_WORLD_CHEVAUX_H
 #endif //ECE_WORLD_CHEVAUX_H

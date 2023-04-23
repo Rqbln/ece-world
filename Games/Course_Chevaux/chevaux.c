@@ -1,3 +1,4 @@
+//by Baptiste Chesnot
 #include "chevaux.h"
 void anim_horse(){
     BITMAP *buffer;
@@ -16,18 +17,17 @@ void anim_horse(){
     char nomDeFichier[80];
     int nombreAleatoire;
     int memo=20;
-    int order;
-    int vy;
     int xArriver=WIDTH*0.95;
     int yArriver=HEIGHT*0.35;
     char message[50];
+
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
 
     for(int i=0;i<nbCheval;i++)
     {
         xcheval[i]=0;
-        ycheval[i]=i*25+HEIGHT*0.35;
+        ycheval[i]=i*55+HEIGHT*0.31;
         position[i]=0;
     }
 
@@ -60,15 +60,15 @@ void anim_horse(){
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         // Obtenir les coordonnées de la souris
         stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
-        if (xCheval <= (xArriver + arriver->w) && xArriver <= (xCheval + cheval[0]->w) && yCheval <= (yArriver + arriver->h) && yArriver <= (yCheval + cheval[0]->h))
+        /*if (xCheval <= (xArriver + arriver->w) && xArriver <= (xCheval + cheval[0]->w) && yCheval <= (yArriver + arriver->h) && yArriver <= (yCheval + cheval[0]->h))
         {
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
-        }
+        }*/
         draw_sprite(buffer,arriver,xArriver,yArriver);
         for (int i=0; i<nbCheval; i++){
-            // Génération d'un nombre aléatoire compris entre 0 et 99
-            nombreAleatoire = 6+rand() % 13;
+            // Génération d'un nombre aléatoire compris entre 8 et 20
+            nombreAleatoire = 8+rand() % 20;
             position[i]++;
             xcheval[i]+=nombreAleatoire;
 
@@ -77,14 +77,14 @@ void anim_horse(){
                 position[i]=1;
             }
             draw_sprite(buffer,cheval[position[i]],xcheval[i],ycheval[i]);
-            if (xcheval[i] <= (xArriver + arriver->w) && xArriver <= (xcheval[i] + cheval[0]->w) && ycheval[i] <= (yArriver + arriver->h) && yArriver <= (ycheval[i] + cheval[0]->h))
+            if (xcheval[i] <= (xArriver + arriver->w) && xArriver*1.01 <= (xcheval[i] + cheval[0]->w) && ycheval[i] <= (yArriver + arriver->h) && yArriver <= (ycheval[i] + cheval[0]->h))
             {
                 memo=i;
                 // Collision détectée !
             }
 
         }
-        /**/if (key[KEY_RIGHT]){
+        /*if (key[KEY_RIGHT]){
             posx++;
             xCheval=xCheval+dx;
             if(xCheval<0)
@@ -142,15 +142,15 @@ void anim_horse(){
         else
         {
             draw_sprite(buffer,cheval[0],xCheval,yCheval);
-        }/**/
+        }*/
 
 
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
-            rest(50);
+            rest(15);
         }
         else
-            rest(100); // Pause de 10 ms pour rafraîchir l'écran
+            rest(55); // Pause de 10 ms pour rafraîchir l'écran
     }
     while (!key[KEY_ESC]) {
         sprintf(message,"LE CAVALIER %d A WIN LA GAME",memo+1);
