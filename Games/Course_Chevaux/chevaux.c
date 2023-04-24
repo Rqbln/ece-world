@@ -5,6 +5,7 @@ void pari(){
     BITMAP *cheval= load_bitmap("../Games/Course_Chevaux/image/cheval0.bmp",NULL);;
     BITMAP *arriver= load_bitmap("../Games/Course_Chevaux/image/arriver.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Course_Chevaux/image/map0.bmp",NULL);
+    BITMAP *menu = load_bitmap("../Games/Course_Chevaux/image/menu.bmp",NULL);
 
     int position[nbCheval];
     int xcheval = 0;
@@ -47,6 +48,10 @@ void pari(){
         for (int i=0; i<nbCheval; i++){
             draw_sprite(buffer,cheval,xcheval,ycheval[i]);
         }
+        //blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+        //rest(20); // Pause de 10 ms pour rafraîchir l'écran
+        //stretch_blit(menu,fond,0,0,menu->w,menu->h,0,0,WIDTH,HEIGHT); //permet d afficher un nouveau fond
+        draw_sprite(buffer,menu,WIDTH/2,0);
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         rest(20); // Pause de 10 ms pour rafraîchir l'écran
     }
