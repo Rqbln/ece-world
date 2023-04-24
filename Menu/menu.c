@@ -101,6 +101,7 @@ void menu() {
             rest(250); // Pause pour éviter les mouvements trop rapides
         }
         if (key[KEY_ENTER]) { // Touche Entrée
+
             if (option == 0) { // Option Jouer
                 // TODO: Ajouter le code pour lancer le jeu
             } else if (option == 1) { // Option Lire les règles

@@ -17,6 +17,10 @@ void pari(){
     char nomDuFichier[80];
     int xselect=WIDTH/1.5;
     int yselect[nbCheval];
+    int j;
+    int option=0;
+    int nbJoueur = 2;
+    int joueur[nbJoueur];
 
 
     for(int i=0;i<nbCheval;i++)
@@ -24,13 +28,16 @@ void pari(){
         ycheval[i]=i*55+HEIGHT*0.31;
         yselect[i]=i*55+HEIGHT*0.31;
         position[i]=0;
-        sprintf(nomDuFichier,"../Games/Course_Chevaux/image/selectPari%d.bmp",i);
-        select[i][0]= load_bitmap(nomDuFichier,NULL);
-        if(!select[i][0])
-        {
-            allegro_message("../Games/Course_Chevaux/image/cheval%d.bmp",i);
-            exit(EXIT_FAILURE);
+        for(int y=0 ; y<2 ; y++){
+            sprintf(nomDuFichier,"../Games/Course_Chevaux/image/selectPari%d%d.bmp",i,y);
+            select[i][y]= load_bitmap(nomDuFichier,NULL);
+            if(!select[i][y])
+            {
+                allegro_message("../Games/Course_Chevaux/image/selectPari%d%d.bmp",i,y);
+                exit(EXIT_FAILURE);
+            }
         }
+
 
     }
 
@@ -59,9 +66,45 @@ void pari(){
         stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
         draw_sprite(buffer,arriver,xArriver,yArriver);
         draw_sprite(buffer,menu,WIDTH/2,0);
-        for (int i=0; i<nbCheval; i++){
-            draw_sprite(buffer,select[i][0],xselect,yselect[i]);
-            draw_sprite(buffer,cheval,xcheval,ycheval[i]);
+        for (int tour = 0; tour < nbJoueur; ++tour) {
+            for (int i=0; i<nbCheval; i++){
+
+                draw_sprite(buffer,cheval,xcheval,ycheval[i]);
+
+                if (option==i){
+                    j=1;
+                }
+                else{
+                    j=0;
+                }
+                draw_sprite(buffer,select[i][j],xselect,yselect[i]);
+
+                if (key[KEY_UP]) { // Flèche du haut
+                    option--;
+                    if (option<0){
+                        option=nbCheval;
+                    }
+                    rest(250); // Pause pour éviter les mouvements trop rapides
+                }
+                if (key[KEY_DOWN]) { // Flèche du bas
+                    option++;
+                    if (option>nbCheval){
+                        option=0;
+                    }
+                    rest(250); // Pause pour éviter les mouvements trop rapides
+                }
+
+            }
+            if (key[KEY_ENTER]) { // Touche Entrée
+                rest(50); // Pause pour éviter les mouvements trop rapides
+                joueur[tour] = option;
+                textout_centre_ex(buffer, font, "valider !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+                rest(250); // Pause pour éviter les mouvements trop rapides
+
+                if(tour==nbJoueur-1){
+                    memo=1;
+                }
+            }
         }
         //blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         //rest(20); // Pause de 10 ms pour rafraîchir l'écran
