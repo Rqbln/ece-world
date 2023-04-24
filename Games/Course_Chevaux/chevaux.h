@@ -11,3 +11,4 @@
 #define WIDTH 1920
 
 void anim_horse();
+void pari();
