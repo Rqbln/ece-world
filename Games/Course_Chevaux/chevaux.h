@@ -9,6 +9,5 @@
 #define nbCheval 10
 #define HEIGHT 1080
 #define WIDTH 1920
-
-void anim_horse();
 void pari();
+void anim_horse();

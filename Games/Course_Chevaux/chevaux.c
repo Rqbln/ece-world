@@ -6,27 +6,16 @@ void pari(){
     BITMAP *arriver= load_bitmap("../Games/Course_Chevaux/image/arriver.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Course_Chevaux/image/map0.bmp",NULL);
 
-    int posx=0;
     int position[nbCheval];
-    int dx=9;
-    int dy=9;
-    int xCheval=WIDTH/2;
-    int yCheval=HEIGHT/2;
-    int xcheval[nbCheval];
+    int xcheval = 0;
     int ycheval[nbCheval];
-    char nomDeFichier[80];
-    int nombreAleatoire;
     int memo=20;
     int xArriver=WIDTH*0.95;
     int yArriver=HEIGHT*0.35;
-    char message[50];
 
-    // Initialisation de la fonction rand() avec la fonction srand()
-    srand(time(NULL));
 
     for(int i=0;i<nbCheval;i++)
     {
-        xcheval[i]=0;
         ycheval[i]=i*55+HEIGHT*0.31;
         position[i]=0;
     }
@@ -56,40 +45,14 @@ void pari(){
         stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
         draw_sprite(buffer,arriver,xArriver,yArriver);
         for (int i=0; i<nbCheval; i++){
-            // Génération d'un nombre aléatoire compris entre 8 et 20
-            nombreAleatoire = 8+rand() % 20;
-            position[i]++;
-            xcheval[i]+=nombreAleatoire;
-
-            if(position[i]>11)
-            {
-                position[i]=1;
-            }
-            draw_sprite(buffer,cheval,xcheval[i],ycheval[i]);
-            if (xcheval[i] <= (xArriver + arriver->w) && xArriver*1.01 <= (xcheval[i] + cheval->w) && ycheval[i] <= (yArriver + arriver->h) && yArriver <= (ycheval[i] + cheval->h))
-            {
-                memo=i;
-                // Collision détectée !
-            }
-
+            draw_sprite(buffer,cheval,xcheval,ycheval[i]);
         }
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
-        if (key[KEY_SPACE]) {
-            rest(15);
-        }
-        else
-            rest(55); // Pause de 10 ms pour rafraîchir l'écran
+        rest(20); // Pause de 10 ms pour rafraîchir l'écran
     }
-    while (!key[KEY_ESC]) {
-        sprintf(message,"LE CAVALIER %d A WIN LA GAME",memo+1);
-        textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
-        blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
-        rest(100); // Pause de 10 ms pour rafraîchir l'écran
-    }
-
-
 }
 void anim_horse(){
+    rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
     BITMAP *cheval[13];
     BITMAP *arriver= load_bitmap("../Games/Course_Chevaux/image/arriver.bmp",NULL);
