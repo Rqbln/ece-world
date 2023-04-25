@@ -18,6 +18,7 @@ void jackpot();
 // avec des multiplications et des divisions et pas des addition
 // pour definir les coordonné des images comme ca l emplacement de tes image et de tes sprites
 // ne dependerons plus de la resolution
+//l image de fond n est pas definit a la bonne taille
 
 //et sinon le probleme que tu avais c etais juste un truc tout con:
 //char filename[20];  => 20 caracteres

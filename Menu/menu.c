@@ -107,6 +107,7 @@ void menu() {
             } else if (option == 1) { // Option Lire les règles
                 // TODO: Ajouter le code pour afficher les règles
             } else if (option == 2) { // Option Quitter
+                rest(250); // Pause pour éviter les mouvements trop rapides
                 break; // Sortie de la boucle principale
             }
         }

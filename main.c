@@ -12,10 +12,10 @@ int main() {
     int playerSize = 100; // Taille initiale du joueur
     int gameOver = 0; // Indique si le jeu est terminé
     int squareColor = makecol(rand() % 256, rand() % 256, rand() % 256); // Couleur initiale du carré
-    jackpot();
     menu();
     pari();
     anim_horse();
+    jackpot();
 
     while (!key[KEY_ESC] && !gameOver) { // Boucle principale du jeu
         clear_bitmap(buffer); // Efface le contenu du bitmap
