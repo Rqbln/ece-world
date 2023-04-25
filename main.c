@@ -1,6 +1,7 @@
 #include "Init_Allegro/allegro.h"
 #include "Games/Course_Chevaux/chevaux.h"
 #include "Menu/menu.h"
+#include "Games/Jackpot/jackpot.h"
 
 int main() {
     initialisation_allegro(); // Initialise Allegro
@@ -11,6 +12,7 @@ int main() {
     int playerSize = 100; // Taille initiale du joueur
     int gameOver = 0; // Indique si le jeu est terminé
     int squareColor = makecol(rand() % 256, rand() % 256, rand() % 256); // Couleur initiale du carré
+    jackpot();
     menu();
     pari();
     anim_horse();
