@@ -5,20 +5,28 @@ void parc(){
     BITMAP *pacman[4];
     BITMAP *porte[4];
     BITMAP *fond= load_bitmap("../Parc/image/pacmanmap.bmp",NULL);
+    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome.bmp",NULL);
+    BITMAP *casino= load_bitmap("../Parc/image/hippodrome.bmp",NULL);
+
+    int xcasino= WIDTH/6;
+    int ycasino= HEIGHT/6;
+    int xhippodrome= WIDTH/4;
+    int yhippodrome= HEIGHT/4;
 
     int posx=0;
     int dx=9;
     int dy=9;
-    int xPacman=SCREEN_W/2;
-    int yPacman=SCREEN_W/2;
+    int xPacman=WIDTH/2;
+    int yPacman=HEIGHT/2;
     char nomDeFichier[80];
 
-    int order;
+    int order=0;
     int vx;
     int vy;
-    int xporte=SCREEN_W/2;
-    int yporte=SCREEN_W/2;
+    int xporte=WIDTH/2;
+    int yporte=HEIGHT*0.9;
     char tabporte[80];
+    int end=0;
 
     for(int j=0;j<4;j++)
     {
@@ -49,32 +57,48 @@ void parc(){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    buffer=create_bitmap(SCREEN_W,SCREEN_H);
+    buffer=create_bitmap(WIDTH,HEIGHT);
 
-    while (!key[KEY_ESC]) {
+    while (!key[KEY_ESC] && end==0) {
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         // Obtenir les coordonnées de la souris
-        stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,SCREEN_W,SCREEN_H);
-        int x=mouse_x;
-        int y=mouse_y;
+        stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
 
-        // Afficher les coordonnées de la souris
-        textprintf_ex(buffer, font, 10, 10, makecol(0, 0, 0), -1, "Coordonnées de la souris : (%d,%d)", x, y);
+        //collision porte end
         if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[1]->h))
         {
-            // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", SCREEN_W/2, SCREEN_H/2, makecol(255, 0, 0), -1);
-        }
-        if (key[KEY_ALT]){
             order++;
             if(order>3)
             {
-                order=0;
+                end=1;
             }
-            draw_sprite(buffer,porte[order],xporte,yporte);
-
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
+
+            draw_sprite(buffer,porte[order],xporte,yporte);
+        //collision activité hippodrome
+        if (xPacman <= (xhippodrome + hippodrome->w) && xhippodrome <= (xPacman + pacman[1]->w) && yPacman <= (yhippodrome + hippodrome->h) && yhippodrome <= (yPacman + pacman[1]->h))
+        {
+            pari();
+            anim_horse();
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+        }
+
+        draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
+
+        if (xPacman <= (xcasino + casino->w) && xcasino <= (xPacman + pacman[1]->w) && yPacman <= (ycasino + casino->h) && ycasino <= (yPacman + pacman[1]->h))
+        {
+            jackpot();
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+        }
+
+        draw_sprite(buffer,casino,xcasino,ycasino);
+
+
         if (key[KEY_RIGHT]){
             posx++;
             xPacman=xPacman+dx;
@@ -91,7 +115,7 @@ void parc(){
         else if (key[KEY_LEFT]){
             posx++;
             xPacman=xPacman-dx;
-            if(xPacman>SCREEN_W)
+            if(xPacman>WIDTH)
             {
                 xPacman=0;
             }
@@ -119,7 +143,7 @@ void parc(){
         else if (key[KEY_DOWN]){
             posx++;
             yPacman=yPacman+dy;
-            if(yPacman>SCREEN_H)
+            if(yPacman>HEIGHT)
             {
                 xPacman=0;
             }
@@ -134,10 +158,7 @@ void parc(){
         {
             draw_sprite(buffer,pacman[0],xPacman,yPacman);
         }
-
-        // Dessiner un cercle à la position de la souris si la touche espace est appuyée
-
-        blit(buffer,screen,0,0,0,0,SCREEN_W,SCREEN_H);
+        blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
             rest(50);
         }

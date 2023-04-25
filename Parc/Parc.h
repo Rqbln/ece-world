@@ -10,4 +10,6 @@
 #define WIDTH 1920
 #include "stdio.h"
 #include <allegro.h>
+#include "../Games/Course_Chevaux/chevaux.h"
+#include "../Games/Jackpot/jackpot.h"
 void parc();
