@@ -1,12 +1,6 @@
 
 #include "jackpot.h"
 
-#include <allegro.h>
-#include <stdlib.h>
-#include <time.h>
-#include "stdio.h"
-
-#define NUM_ICONS 4
 // MACHINE A SOUS LOLA LE GALL
 BITMAP *icons[NUM_ICONS];
 char filename[80];
