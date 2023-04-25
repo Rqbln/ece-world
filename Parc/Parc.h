@@ -6,3 +6,8 @@
 #define PROJET_ALGO2_PARC_H
 
 #endif //PROJET_ALGO2_PARC_H
+#define HEIGHT 1080
+#define WIDTH 1920
+#include "stdio.h"
+#include <allegro.h>
+void parc();

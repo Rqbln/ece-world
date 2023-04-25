@@ -1,6 +1,6 @@
 #include "Init_Allegro/allegro.h"
-#include "Games/Course_Chevaux/chevaux.h"
 #include "Menu/menu.h"
+#include "Games/Course_Chevaux/chevaux.h"
 #include "Games/Jackpot/jackpot.h"
 
 int main() {
