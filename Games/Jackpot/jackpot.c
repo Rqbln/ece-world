@@ -9,7 +9,7 @@
 #define NUM_ICONS 4
 // MACHINE A SOUS LOLA LE GALL
 BITMAP *icons[NUM_ICONS];
-char filename[20];
+char filename[80];
 
 void load_icon() { // sous programme pour charger les icones
     for (int i = 0; i < NUM_ICONS; i++) {
