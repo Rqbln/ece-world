@@ -1,7 +1,8 @@
+// MACHINE A SOUS LOLA LE GALL
 
 #include "jackpot.h"
 
-// MACHINE A SOUS LOLA LE GALL
+
 BITMAP *icons[NUM_ICONS];
 char filename[80];
 
@@ -35,7 +36,7 @@ int tourner_roues() {// tourner les roues de manière aleatoire
     int win = 1;
     for (int i = 0; i < 3; i++) { // 3 car 3 roues
         int rand_icon= rand() % NUM_ICONS; // choix d'une icone aléatoire
-        draw_sprite(screen, icons[rand_icon],  748+ i * (75 + 41+i*i), 430);// le calcule de la position NE PAS HESITER A CHANGER CAR JE L'AI TROUVER AU HASARD
+        draw_sprite(screen, icons[rand_icon],  807+ i * (77 + 41+i*i), 525);// le calcule de la position NE PAS HESITER A CHANGER CAR JE L'AI TROUVER AU HASARD
         if (last_rand != -1 && last_rand != rand_icon) { // detecter la victoire
             win = 0;
         }
@@ -48,12 +49,12 @@ void jackpot(){
 
     // ici on charge toutes les images
     BITMAP *fond;
-    fond= load_bitmap("../Games/Jackpot/IMAGES/fond2.bmp",NULL);
+    fond= load_bitmap("../Games/Jackpot/IMAGES/fond3.bmp",NULL);
     if (!fond) { //blindage
         allegro_message("Erreur image fond");
         exit(EXIT_FAILURE);
     }
-    draw_sprite(screen,fond,23,50);
+    draw_sprite(screen,fond,0,0);
     load_slotmachine("../Games/Jackpot/IMAGES/SLOTREELS.bmp");
     load_icon();
 
