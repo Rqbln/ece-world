@@ -8,23 +8,23 @@ void parc(){
     BITMAP *pacman[4];
     BITMAP *porte[4];
     BITMAP *fond= load_bitmap("../Parc/image/pacmanmap.bmp",NULL);
-    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome0.bmp",NULL);
+    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome1.bmp",NULL);
     BITMAP *casino= load_bitmap("../Parc/image/casino0.bmp",NULL);
     BITMAP *river= load_bitmap("../Parc/image/river0.bmp",NULL);
-    BITMAP *snake= load_bitmap("../Parc/image/snake0.bmp",NULL);
+    BITMAP *serpent= load_bitmap("../Parc/image/river0.bmp",NULL);
 
-    int xsnake= WIDTH/20;
-    int ysnake= HEIGHT/20;
-    int xriver= WIDTH/8;
-    int yriver= HEIGHT/8;
-    int xcasino= WIDTH/6;
-    int ycasino= HEIGHT/6;
-    int xhippodrome= WIDTH/4;
-    int yhippodrome= HEIGHT/4;
+    int xserpent= 0;
+    int yserpent= HEIGHT*0.8;
+    int xriver= WIDTH*0.8;
+    int yriver= 0;
+    int xcasino= WIDTH*0.8;
+    int ycasino= HEIGHT*0.8;
+    int xhippodrome= 0;
+    int yhippodrome= 0;
 
     int posx=0;
-    int dx=9;
-    int dy=9;
+    int dx=15;
+    int dy=15;
     int xPacman=WIDTH/2;
     int yPacman=HEIGHT/2;
     char nomDeFichier[80];
@@ -116,14 +116,14 @@ void parc(){
 
         draw_sprite(buffer,river,xriver,yriver);
 
-        if (xPacman <= (xsnake + snake->w) && xsnake <= (xPacman + pacman[1]->w) && yPacman <= (ysnake + snake->h) && ysnake <= (yPacman + pacman[1]->h))
+        if (xPacman <= (xserpent + serpent->w) && xserpent <= (xPacman + pacman[1]->w) && yPacman <= (yserpent + serpent->h) && yserpent <= (yPacman + pacman[1]->h))
         {
-            jackpot();
+            snake();
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,snake,xsnake,ysnake);
+        draw_sprite(buffer,serpent,xserpent,yserpent);
 
 
         if (key[KEY_RIGHT]){
