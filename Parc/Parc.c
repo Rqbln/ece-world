@@ -9,8 +9,14 @@ void parc(){
     BITMAP *porte[4];
     BITMAP *fond= load_bitmap("../Parc/image/pacmanmap.bmp",NULL);
     BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome0.bmp",NULL);
-    BITMAP *casino= load_bitmap("../Parc/image/hippodrome0.bmp",NULL);
+    BITMAP *casino= load_bitmap("../Parc/image/casino0.bmp",NULL);
+    BITMAP *river= load_bitmap("../Parc/image/river0.bmp",NULL);
+    BITMAP *snake= load_bitmap("../Parc/image/snake0.bmp",NULL);
 
+    int xsnake= WIDTH/20;
+    int ysnake= HEIGHT/20;
+    int xriver= WIDTH/8;
+    int yriver= HEIGHT/8;
     int xcasino= WIDTH/6;
     int ycasino= HEIGHT/6;
     int xhippodrome= WIDTH/4;
@@ -100,6 +106,24 @@ void parc(){
         }
 
         draw_sprite(buffer,casino,xcasino,ycasino);
+
+        if (xPacman <= (xriver + river->w) && xriver <= (xPacman + pacman[1]->w) && yPacman <= (yriver + river->h) && yriver <= (yPacman + pacman[1]->h))
+        {
+            jackpot();
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+        }
+
+        draw_sprite(buffer,river,xriver,yriver);
+
+        if (xPacman <= (xsnake + snake->w) && xsnake <= (xPacman + pacman[1]->w) && yPacman <= (ysnake + snake->h) && ysnake <= (yPacman + pacman[1]->h))
+        {
+            jackpot();
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+        }
+
+        draw_sprite(buffer,snake,xsnake,ysnake);
 
 
         if (key[KEY_RIGHT]){
