@@ -1,12 +1,15 @@
 #include "Parc.h"
+void attraction(){
+
+}
 
 void parc(){
     BITMAP *buffer;
     BITMAP *pacman[4];
     BITMAP *porte[4];
     BITMAP *fond= load_bitmap("../Parc/image/pacmanmap.bmp",NULL);
-    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome.bmp",NULL);
-    BITMAP *casino= load_bitmap("../Parc/image/hippodrome.bmp",NULL);
+    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome0.bmp",NULL);
+    BITMAP *casino= load_bitmap("../Parc/image/hippodrome0.bmp",NULL);
 
     int xcasino= WIDTH/6;
     int ycasino= HEIGHT/6;
