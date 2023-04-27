@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~TURTLE RIVER-~-~-~-~-~-~-~-~-~-
 #include "river.h"
 #include<time.h>
-int main()
+int river()
 {
     srand(time(NULL));
     int gameover;
