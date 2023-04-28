@@ -1,7 +1,8 @@
 //-~-~-~-~-~-~-~TURTLE RIVER-~-~-~-~-~-~-~-~-~-
 #include "river.h"
 #include<time.h>
-int river()
+#include <stdlib.h>
+int main()
 {
     srand(time(NULL));
     int gameover;
@@ -12,10 +13,13 @@ int river()
     int frogw=195;
     int frogx=0;
     int frogy=730;
-    int vitesse_grounouille=1;
+    int frogvxy=1;
     //position et vitesse des bûches (1,2,3,4 = bûches normales ; 5,6,7,8= bûches grandes)
-    int log[8][2];
+    int log[2][8];
+    log[2][1]=95+rand()%5;
     int dlog=1;
+    int collision;
+    int direction;
     // Initialisation d'Allegro
     allegro_init();
     install_keyboard();
@@ -44,8 +48,42 @@ int river()
         allegro_message("../Games/River/image/log1.bmp");
         exit(EXIT_FAILURE);
     }
-
-
+    for (int i = 0; i < 9; ++i) {
+        switch (i) {
+            case 1:
+                log[1][i]=0;
+                log[2][i]=1080-370-120;
+                break;
+            case 2:
+                log[1][i]=1800;
+                log[2][i]=1080-494-120;
+                break;
+            case 3:
+                log[1][i]=1800;
+                log[2][i]=1080-494-120;
+                break;
+            case 4:
+                log[1][i]=0;
+                log[2][i]=1080-628-120;
+                break;
+            case 5:
+                log[1][i]=0;
+                log[2][i]=1080-628-120;
+                break;
+            case 6:
+                log[1][i]=1800;
+                log[2][i]=1080-754-120;
+                break;
+            case 7:
+                log[1][i]=0;
+                log[2][i]=1080-878-120;
+                break;
+            case 8:
+                log[1][i]=0;
+                log[2][i]=1080-878-120;
+                break;
+        }
+    }
     // Création du buffer
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
     clear_to_color(buffer, makecol(0, 0, 0));
@@ -57,24 +95,38 @@ int river()
         blit(background, buffer, 0, 0, 0, 0, background->w, background->h);
         // Déplacement du grounouille
         if (key[KEY_Z]) {
-            frogy=frogy-vitesse_grounouille;
+            frogy= frogy - frogvxy;
         }
         if (key[KEY_Q]) {
-            frogx=frogx-vitesse_grounouille;
+            frogx= frogx - frogvxy;
         }
         if (key[KEY_S]) {
-            frogy=frogy+vitesse_grounouille;
+            frogy= frogy + frogvxy;
         }
         if (key[KEY_D]) {
-            frogx=frogx+vitesse_grounouille;
+            frogx= frogx + frogvxy;
         }
-        //Condition de défaite
-        if (frogx==0){
+
+        //buche générée puis on la fait dériver
+        for (int i = 0; i < 9; ++i) {
+            if (i==1 || i==4 || i==5 || i==7 ||i==8) {
+                draw_sprite(buffer,log1,log[1][i],log[2][i]);
+                log[1][i]+=1;
+            }
+            if (i==2 || i==6) {
+                draw_sprite(buffer,log1,log[1][i],log[2][i]);
+                log[1][i]-=1;
+            }
+        }
+        rest(100);
+        //Condition de défaite (Hors écran puis rivère)
+        if (frogx<=-120 && frogy<600){
             gameover=1;
+            textout_centre_ex(buffer, font, "Hors écran!", SCREEN_W/2, SCREEN_H/2, makecol(255, 0, 0), -1);
         }
         //Condition victoire
         if (frogy+frogw/2<=90){
-            textout_centre_ex(buffer, font, "valider !", SCREEN_W/2, SCREEN_H/2, makecol(255, 0, 0), -1);
+            textout_centre_ex(buffer, font, "Traversée réussie !", SCREEN_W/2, SCREEN_H/2, makecol(255, 0, 0), -1);
         }
         //Apparition et réapparition des büches aléatoirement
 
