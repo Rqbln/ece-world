@@ -14,4 +14,5 @@
 #include "../Games/Jackpot/jackpot.h"
 #include "../Games/Snake/snake.h"
 #include "../Games/Taupe/taupe.h"
+#include "../Games/Guitar_hero/guitar_hero.h"
 void parc();
