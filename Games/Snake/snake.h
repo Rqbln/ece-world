@@ -6,4 +6,6 @@
 #include <allegro.h>
 #include "stdio.h"
 
+#define TAILLE_JEU 30
+
 void snake();
