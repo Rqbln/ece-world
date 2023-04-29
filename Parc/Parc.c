@@ -109,7 +109,7 @@ void parc(){
 
         if (xPacman <= (xriver + river->w) && xriver <= (xPacman + pacman[1]->w) && yPacman <= (yriver + river->h) && yriver <= (yPacman + pacman[1]->h))
         {
-            jackpot();
+            playguitar();
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
