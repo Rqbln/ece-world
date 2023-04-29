@@ -6,8 +6,8 @@ void playguitar(){
     BITMAP *arriver= load_bitmap("../Games/Guitar_hero/image/gratte.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/image/musique0.wav");
-    //FONT *police = load_font("arial.pcx", NULL, NULL);
-    //set_trans_blender(0, 0, 0, 128);
+    FONT *police = load_font("arial.pcx", NULL, NULL);
+    set_trans_blender(0, 0, 0, 128);
     if (!musique) {
         allegro_message("Erreur : impossible de charger la musique");
         allegro_exit();
@@ -50,7 +50,7 @@ void playguitar(){
     while (!key[KEY_ESC] && memo ==20) {
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
-        //play_sample(musique, 255, 128, 100, 1);
+        play_sample(musique, 255, 128, 100, 1);
         // Obtenir les coordonnées de la souris
         stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
         int x=mouse_x;
@@ -79,15 +79,15 @@ void playguitar(){
         rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
     }
     while (!key[KEY_ESC]) {
-        //sprintf(message,"Perdu enculé",memo+1);
-        textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -5);
+        sprintf(message,"Perdu enculé",memo+1);
+        textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         rest(100); // Pause de 10 ms pour rafraîchir l'écran
         // Libère la mémoire utilisée par la musique
-        destroy_sample(musique);
-        destroy_bitmap(buffer);
-        destroy_bitmap(note);
-        destroy_bitmap(arriver);
-        destroy_bitmap(fond);
+        //destroy_sample(musique);
+        //destroy_bitmap(buffer);
+        //destroy_bitmap(note);
+        //destroy_bitmap(arriver);
+        //destroy_bitmap(fond);
     }
 }
