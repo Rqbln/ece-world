@@ -1,5 +1,5 @@
 //-~-~-~-~-~-~-~TURTLE RIVER-~-~-~-~-~-~-~-~-~-
-#include "river.h"
+/*#include "river.h"
 #include<time.h>
 #include <stdlib.h>
 int main()
@@ -204,4 +204,4 @@ int main()
     destroy_bitmap(buffer);
 
     return 0;
-}
+}*/

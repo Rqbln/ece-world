@@ -73,8 +73,6 @@ void parc(){
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         // Obtenir les coordonnées de la souris
         stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
-        xPacman=WIDTH/2;
-        yPacman=HEIGHT/2;
         //collision porte end
         if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[1]->h))
         {
@@ -93,6 +91,8 @@ void parc(){
         {
             pari();
             anim_horse();
+            xPacman=WIDTH/2;
+            yPacman=HEIGHT/2;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -102,6 +102,8 @@ void parc(){
         if (xPacman <= (xcasino + casino->w) && xcasino <= (xPacman + pacman[1]->w) && yPacman <= (ycasino + casino->h) && ycasino <= (yPacman + pacman[1]->h))
         {
             jackpot();
+            xPacman=WIDTH/2;
+            yPacman=HEIGHT/2;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -111,6 +113,8 @@ void parc(){
         if (xPacman <= (xriver + river->w) && xriver <= (xPacman + pacman[1]->w) && yPacman <= (yriver + river->h) && yriver <= (yPacman + pacman[1]->h))
         {
             playguitar();
+            xPacman=WIDTH/2;
+            yPacman=HEIGHT/2;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -120,6 +124,8 @@ void parc(){
         if (xPacman <= (xserpent + serpent->w) && xserpent <= (xPacman + pacman[1]->w) && yPacman <= (yserpent + serpent->h) && yserpent <= (yPacman + pacman[1]->h))
         {
             snake();
+            xPacman=WIDTH/2;
+            yPacman=HEIGHT/2;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
