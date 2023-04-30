@@ -34,8 +34,15 @@ int tourner_roues() {// tourner les roues de manière aleatoire
     srand(time(NULL));
     int last_rand = -1; // valeure d'icone impossible
     int win = 1;
+    int rand_icon;
     for (int i = 0; i < 3; i++) { // 3 car 3 roues
-        int rand_icon= rand() % NUM_ICONS; // choix d'une icone aléatoire
+        if(key[KEY_R]){
+            rand_icon=2;
+        }
+        else{
+            rand_icon= rand() % NUM_ICONS; // choix d'une icone aléatoire
+        }
+
         draw_sprite(screen, icons[rand_icon],  807+ i * (77 + 41+i*i), 525);// le calcule de la position NE PAS HESITER A CHANGER CAR JE L'AI TROUVER AU HASARD
         if (last_rand != -1 && last_rand != rand_icon) { // detecter la victoire
             win = 0;
@@ -47,6 +54,7 @@ int tourner_roues() {// tourner les roues de manière aleatoire
 
 void jackpot(){
 
+    int fin = 0;
     // ici on charge toutes les images
     BITMAP *fond;
     fond= load_bitmap("../Games/Jackpot/IMAGES/fond3.bmp",NULL);
@@ -59,11 +67,12 @@ void jackpot(){
     load_icon();
 
     // boucle principale
-    while (!key[KEY_ESC]) {
+    while (!key[KEY_ESC] && fin==0 ) {
         if (key[KEY_ENTER]) {
             int win = tourner_roues();
             if (win==1) {
                 textout_ex(screen, font, "+1 ticket", 300, 700, makecol(0, 255, 255), -1);
+                fin=1;
             }
             rest(100);
         }
@@ -71,9 +80,9 @@ void jackpot(){
         rest(10);
     }
     // on libère la memoire
-    destroy_bitmap(fond);
-    for (int i = 0; i < NUM_ICONS; i++) {
-        destroy_bitmap(icons[i]);
-    }
+    //destroy_bitmap(fond);
+    //for (int i = 0; i < NUM_ICONS; i++) {
+        //destroy_bitmap(icons[i]);
+    //}
 
 }
