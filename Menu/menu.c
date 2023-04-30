@@ -104,7 +104,7 @@ void menu() {
 
             if (option == 0) { // Option Jouer
                 // TODO: Ajouter le code pour lancer le jeu
-                parc();
+                parc2();
             } else if (option == 1) { // Option Lire les règles
                 // TODO: Ajouter le code pour afficher les règles
             } else if (option == 2) { // Option Quitter
