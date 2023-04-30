@@ -211,13 +211,13 @@ void parc2(){
     BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome1.bmp",NULL);
     BITMAP *guitar= load_bitmap("../Parc/image/concert2.bmp",NULL);
     BITMAP *casino= load_bitmap("../Parc/image/casino0.bmp",NULL);
-    BITMAP *river= load_bitmap("../Parc/image/river0.bmp",NULL);
+    BITMAP *river= load_bitmap("../Parc/image/lac0.bmp",NULL);
     BITMAP *serpent= load_bitmap("../Parc/image/river0.bmp",NULL);
 
-    BITMAP *tirballon= load_bitmap("../Parc/image/hippodrome1.bmp",NULL);
-    BITMAP *labyrinthe= load_bitmap("../Parc/image/concert2.bmp",NULL);
-    BITMAP *taupe= load_bitmap("../Parc/image/casino0.bmp",NULL);
-    BITMAP *canard= load_bitmap("../Parc/image/river0.bmp",NULL);
+    BITMAP *tirballon= load_bitmap("../Parc/image/futuroscope0.bmp",NULL);
+    BITMAP *labyrinthe= load_bitmap("../Parc/image/labyrinthe0.bmp",NULL);
+    BITMAP *taupe= load_bitmap("../Parc/image/cirque0.bmp",NULL);
+    BITMAP *canard= load_bitmap("../Parc/image/parc0.bmp",NULL);
     int ximgfond = -4200+WIDTH;
     int yimgfond= -2700 +HEIGHT;
 
@@ -233,14 +233,15 @@ void parc2(){
     int xhippodrome= ximgfond+2500;
     int yhippodrome= yimgfond+1300;
 
-    int xtir= ximgfond+2260;
+    int xtir= ximgfond+2800;
     int ytir= yimgfond+510;
     int xlabyrinthe= ximgfond+2260;
-    int ylabyrinthe= yimgfond+510;
-    int xtaupe= ximgfond+2260;
+    int ylabyrinthe= yimgfond+10;
+    int xtaupe= ximgfond+3500;
     int ytaupe= yimgfond+510;
-    int xcanard= ximgfond+2260;
+    int xcanard= ximgfond+4000;
     int ycanard= yimgfond+510;
+
     int xporte=ximgfond+1700;
     int yporte=yimgfond+950;
     int xPacman=WIDTH/2;
@@ -322,11 +323,95 @@ void parc2(){
             yhippodrome-= pacman[1]->h;
             yporte-= pacman[1]->h;
             yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
         draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
+        if (xPacman <= (xtir + tirballon->w) && xtir <= (xPacman + pacman[1]->w) && yPacman <= (ytir + tirballon->h) && (ytir +tirballon->h) <= (yPacman + pacman[1]->h))
+        {
+            pari();
+            anim_horse();
+            yguitar-= pacman[1]->h;
+            yserpent-= pacman[1]->h;
+            yriver-= pacman[1]->h;
+            ycasino-= pacman[1]->h;
+            yhippodrome-= pacman[1]->h;
+            yporte-= pacman[1]->h;
+            yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+        }
+
+        draw_sprite(buffer,tirballon,xtir,ytir);
+        if (xPacman <= (xlabyrinthe + labyrinthe->w) && xlabyrinthe <= (xPacman + pacman[1]->w) && yPacman <= (ylabyrinthe + labyrinthe->h) && (ylabyrinthe +labyrinthe->h) <= (yPacman + pacman[1]->h))
+        {
+            pari();
+            anim_horse();
+            yguitar-= pacman[1]->h;
+            yserpent-= pacman[1]->h;
+            yriver-= pacman[1]->h;
+            ycasino-= pacman[1]->h;
+            yhippodrome-= pacman[1]->h;
+            yporte-= pacman[1]->h;
+            yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+        }
+
+        draw_sprite(buffer,labyrinthe,xlabyrinthe,ylabyrinthe);
+        if (xPacman <= (xcanard + canard->w) && xcanard <= (xPacman + pacman[1]->w) && yPacman <= (ycanard + canard->h) && (ycanard +canard->h) <= (yPacman + pacman[1]->h))
+        {
+            pari();
+            anim_horse();
+            yguitar-= pacman[1]->h;
+            yserpent-= pacman[1]->h;
+            yriver-= pacman[1]->h;
+            ycasino-= pacman[1]->h;
+            yhippodrome-= pacman[1]->h;
+            yporte-= pacman[1]->h;
+            yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+        }
+
+        draw_sprite(buffer,canard,xcanard,ycanard);
+        if (xPacman <= (xtaupe + taupe->w) && xtaupe <= (xPacman + pacman[1]->w) && yPacman <= (ytaupe + taupe->h) && (ytaupe +taupe->h) <= (yPacman + pacman[1]->h))
+        {
+            pari();
+            anim_horse();
+            yguitar-= pacman[1]->h;
+            yserpent-= pacman[1]->h;
+            yriver-= pacman[1]->h;
+            ycasino-= pacman[1]->h;
+            yhippodrome-= pacman[1]->h;
+            yporte-= pacman[1]->h;
+            yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
+            // Collision détectée !
+            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+        }
+
+        draw_sprite(buffer,taupe,xtaupe,ytaupe);
         if (xPacman <= (xguitar + guitar->w) && xguitar <= (xPacman + pacman[1]->w) && yPacman <= (yguitar + guitar->h) && (yguitar +guitar->h) <= (yPacman + pacman[1]->h))
         {
             playguitar();
@@ -337,6 +422,10 @@ void parc2(){
             yhippodrome-= pacman[1]->h;
             yporte-= pacman[1]->h;
             yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -353,6 +442,10 @@ void parc2(){
             yhippodrome-= pacman[1]->h;
             yporte-= pacman[1]->h;
             yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -369,6 +462,10 @@ void parc2(){
             yhippodrome-= pacman[1]->h;
             yporte-= pacman[1]->h;
             yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -385,6 +482,10 @@ void parc2(){
             yhippodrome-= pacman[1]->h;
             yporte-= pacman[1]->h;
             yimgfond-= pacman[1]->h;
+            ytir-= pacman[1]->h;
+            ylabyrinthe-= pacman[1]->h;
+            ytaupe-= pacman[1]->h;
+            ycanard-= pacman[1]->h;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -403,7 +504,7 @@ void parc2(){
             ximgfond -= dx;
             xtir-= dx;
             xlabyrinthe-= dx;
-            xtaupe+= dx;
+            xtaupe-= dx;
             xcanard-= dx;
 
             /*if(xPacman<0)
