@@ -226,21 +226,21 @@ void parc2(){
     int yserpent= yimgfond+950;
     int xguitar= ximgfond+2260;
     int yguitar= yimgfond+510;
-    int xriver= ximgfond+2090;
-    int yriver= yimgfond+1910;
+    int xriver= ximgfond+2310;
+    int yriver= yimgfond+2020;
     int xcasino= ximgfond+1960;
     int ycasino= yimgfond+1420;
     int xhippodrome= ximgfond+2500;
     int yhippodrome= yimgfond+1300;
 
-    int xtir= ximgfond+2800;
-    int ytir= yimgfond+510;
-    int xlabyrinthe= ximgfond+2260;
-    int ylabyrinthe= yimgfond+10;
-    int xtaupe= ximgfond+3500;
-    int ytaupe= yimgfond+510;
-    int xcanard= ximgfond+4000;
-    int ycanard= yimgfond+510;
+    int xtir= ximgfond+2000;
+    int ytir= yimgfond+1510;
+    int xlabyrinthe= ximgfond+1400;
+    int ylabyrinthe= yimgfond+1010;
+    int xtaupe= ximgfond+1000;
+    int ytaupe= yimgfond+1510;
+    int xcanard= ximgfond+1940;
+    int ycanard= yimgfond+2100;
 
     int xporte=ximgfond+1700;
     int yporte=yimgfond+950;
@@ -249,7 +249,7 @@ void parc2(){
 
     int posx=0;
     int dx=15;
-    int dy=15;
+    int dy=8;
 
     char nomDeFichier[80];
 
@@ -494,6 +494,32 @@ void parc2(){
 
 
         if (key[KEY_RIGHT]){
+            if (key[KEY_UP]){
+                yguitar+= dy;
+                yserpent+= dy;
+                yriver+= dy;
+                ycasino+= dy;
+                yhippodrome+= dy;
+                yporte+= dy;
+                yimgfond+= dy;
+                ytir+= dy;
+                ylabyrinthe+= dy;
+                ytaupe+= dy;
+                ycanard+= dy;
+            }
+            if(key[KEY_DOWN]){
+                yguitar-= dy;
+                yserpent-= dy;
+                yriver-= dy;
+                ycasino-= dy;
+                yhippodrome-= dy;
+                yporte-= dy;
+                yimgfond-= dy;
+                ytir-= dy;
+                ylabyrinthe-= dy;
+                ytaupe-= dy;
+                ycanard-= dy;
+            }
             posx++;
             xguitar-= dx;
             xserpent-= dx;
@@ -518,6 +544,32 @@ void parc2(){
             draw_sprite(buffer,pacman[posx],xPacman,yPacman);
         }
         else if (key[KEY_LEFT]){
+            if (key[KEY_UP]){
+                yguitar+= dy;
+                yserpent+= dy;
+                yriver+= dy;
+                ycasino+= dy;
+                yhippodrome+= dy;
+                yporte+= dy;
+                yimgfond+= dy;
+                ytir+= dy;
+                ylabyrinthe+= dy;
+                ytaupe+= dy;
+                ycanard+= dy;
+            }
+            if(key[KEY_DOWN]){
+                yguitar-= dy;
+                yserpent-= dy;
+                yriver-= dy;
+                ycasino-= dy;
+                yhippodrome-= dy;
+                yporte-= dy;
+                yimgfond-= dy;
+                ytir-= dy;
+                ylabyrinthe-= dy;
+                ytaupe-= dy;
+                ycanard-= dy;
+            }
             posx++;
             xguitar+= dx;
             xserpent+= dx;
@@ -544,17 +596,17 @@ void parc2(){
         }
         else if (key[KEY_UP]){
             posx++;
-            yguitar+= dx;
+            yguitar+= dy;
             yserpent+= dy;
             yriver+= dy;
             ycasino+= dy;
             yhippodrome+= dy;
             yporte+= dy;
             yimgfond+= dy;
-            ytir+= dx;
-            ylabyrinthe+= dx;
-            ytaupe+= dx;
-            ycanard+= dx;
+            ytir+= dy;
+            ylabyrinthe+= dy;
+            ytaupe+= dy;
+            ycanard+= dy;
              /*if(xPacman<0)
             {
                 xPacman=0;
@@ -568,17 +620,17 @@ void parc2(){
         }
         else if (key[KEY_DOWN]){
             posx++;
-            yguitar-= dx;
+            yguitar-= dy;
             yserpent-= dy;
             yriver-= dy;
             ycasino-= dy;
             yhippodrome-= dy;
             yporte-= dy;
             yimgfond-= dy;
-            ytir-= dx;
-            ylabyrinthe-= dx;
-            ytaupe-= dx;
-            ycanard-= dx;
+            ytir-= dy;
+            ylabyrinthe-= dy;
+            ytaupe-= dy;
+            ycanard-= dy;
             /*if(yPacman>HEIGHT)
             {
                 xPacman=0;
