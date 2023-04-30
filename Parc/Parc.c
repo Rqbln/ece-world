@@ -256,6 +256,10 @@ void parc2(){
     int order=0;
     int vx;
     int vy;
+    int xcenter;
+    int ycenter;
+    int r = 0, v = 100, b = 150;
+    int bleu;
 
     char tabporte[80];
     int end=0;
@@ -292,12 +296,31 @@ void parc2(){
     buffer=create_bitmap(WIDTH,HEIGHT);
 
     while (!key[KEY_ESC] && end==0) {
+        xcenter = pacman[1]->w / 2;
+        ycenter = pacman[1]->w / 2;
+        int pixel_color = getpixel(fondmap, xcenter, ycenter);
+        int pixel_r = getr(pixel_color);
+        int pixel_v = getg(pixel_color);
+        int pixel_b = getb(pixel_color);
+        if (pixel_r >= r - 50 && pixel_r <= r + 50 &&
+           pixel_v >= v - 50 && pixel_v <= v + 50 &&
+           pixel_b >= b - 50 && pixel_b <= b + 50) {
+            dx=5;
+            dy=2;
+        }
+        else{
+            dx=15;
+            dy=8;
+        }
+
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         // Obtenir les coordonnées de la souris
         stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
         //image de fond qui bouge
         draw_sprite(buffer,fondmap,ximgfond,yimgfond);
+        textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", pixel_b);
+
         //collision porte end
         if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[1]->h))
         {
