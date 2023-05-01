@@ -19,7 +19,7 @@ int main() {
     //anim_horse();
     //jackpot();
 
-    while (!key[KEY_ESC] && !gameOver) { // Boucle principale du jeu
+    /*while (!key[KEY_ESC] && !gameOver) { // Boucle principale du jeu
         clear_bitmap(buffer); // Efface le contenu du bitmap
 
         // Déplace le joueur à gauche ou à droite en fonction des touches de direction
@@ -43,7 +43,7 @@ int main() {
         // Affiche le bitmap à l'écran
         blit(buffer, screen, 0, 0, 0, 0, 800, 600);
         rest(10); // Attend un court instant avant de passer à la boucle suivante
-    }
+    }*/
 
     allegro_exit(); // Quitte Allegro
     return 0; // Termine le programme avec un code de réussite

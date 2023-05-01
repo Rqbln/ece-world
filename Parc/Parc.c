@@ -208,21 +208,20 @@ void parc2(){
     BITMAP *fond= load_bitmap("../Parc/image/fondplage1.bmp",NULL);
     BITMAP *fondmap= load_bitmap("../Parc/image/mapfond2.bmp",NULL);
 
-    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome1.bmp",NULL);
+    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome1.bmp",NULL);  //image des attractions/mini-jeux
     BITMAP *guitar= load_bitmap("../Parc/image/concert2.bmp",NULL);
     BITMAP *casino= load_bitmap("../Parc/image/casino0.bmp",NULL);
     BITMAP *river= load_bitmap("../Parc/image/lac0.bmp",NULL);
     BITMAP *serpent= load_bitmap("../Parc/image/river0.bmp",NULL);
-
     BITMAP *tirballon= load_bitmap("../Parc/image/futuroscope0.bmp",NULL);
     BITMAP *labyrinthe= load_bitmap("../Parc/image/labyrinthe0.bmp",NULL);
     BITMAP *taupe= load_bitmap("../Parc/image/cirque0.bmp",NULL);
     BITMAP *canard= load_bitmap("../Parc/image/parc0.bmp",NULL);
-    int ximgfond = -4200+WIDTH;
+
+    int ximgfond = -4200+WIDTH;  //coordonnée de l image de fond
     int yimgfond= -2700 +HEIGHT;
 
-
-    int xserpent= ximgfond+1700; //ximgfond + coordonnée paint
+    int xserpent= ximgfond+1700; //coordonnée des mini-jeux (ximgfond + coordonnée paint)
     int yserpent= yimgfond+950;
     int xguitar= ximgfond+2260;
     int yguitar= yimgfond+510;
@@ -232,7 +231,6 @@ void parc2(){
     int ycasino= yimgfond+1420;
     int xhippodrome= ximgfond+2500;
     int yhippodrome= yimgfond+1300;
-
     int xtir= ximgfond+2000;
     int ytir= yimgfond+1510;
     int xlabyrinthe= ximgfond+1400;
@@ -247,23 +245,17 @@ void parc2(){
     int xPacman=WIDTH/2;
     int yPacman=HEIGHT/2;
 
-    int posx=0;
-    int dx=15;
+    int posx=0; //position des sprite du personnage
+    int dx=15;//vitesse
     int dy=8;
-
-    char nomDeFichier[80];
-
-    int order=0;
-    int vx;
-    int vy;
-    int xcenter;
+    int xcenter;//centre du personnage
     int ycenter;
-    int r = 0, v = 0, b = 255;
-    int bleu;
-
-    char tabporte[80];
-    int end=0;
-
+    int order=0;//position des sprite de la porte
+    int r = 0, v = 0, b = 255; //couleur RGB
+    int end=0;//condition de fin
+    char tabporte[80];//tableau nom d image
+    char nomDeFichier[80];
+    //Verifie si les image sont bien la
     for(int j=0;j<4;j++)
     {
         sprintf(tabporte,"../Parc/image/portEnd%d.bmp",j);
@@ -273,9 +265,7 @@ void parc2(){
             allegro_message("../image/portEnd%d.bmp",j);
             exit(EXIT_FAILURE);
         }
-
     }
-
     for(int i=0;i<3;i++)
     {
         sprintf(nomDeFichier,"../Parc/image/pacman%d.bmp",i);
@@ -286,16 +276,9 @@ void parc2(){
             exit(EXIT_FAILURE);
         }
     }
-
-    if(!fond)
-    {
-        allegro_message("pas trouver /image/pacmanmap.bmp ");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
     buffer=create_bitmap(WIDTH,HEIGHT);
 
-    while (!key[KEY_ESC] && end==0) {
+    while (!key[KEY_ESC] && end==0) {  //boucle principale
         xcenter = pacman[1]->w / 2;
         ycenter = pacman[1]->w / 2;
         draw_sprite(buffer,fond,ximgfond,yimgfond);
@@ -321,6 +304,16 @@ void parc2(){
         //image de fond qui bouge
         draw_sprite(buffer,fondmap,ximgfond,yimgfond);
         textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", pixel_r);
+        draw_sprite(buffer,porte[order],xporte,yporte);
+        draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
+        draw_sprite(buffer,tirballon,xtir,ytir);
+        draw_sprite(buffer,labyrinthe,xlabyrinthe,ylabyrinthe);
+        draw_sprite(buffer,canard,xcanard,ycanard);
+        draw_sprite(buffer,taupe,xtaupe,ytaupe);
+        draw_sprite(buffer,guitar,xguitar,yguitar);
+        draw_sprite(buffer,casino,xcasino,ycasino);
+        draw_sprite(buffer,river,xriver,yriver);
+        draw_sprite(buffer,serpent,xserpent,yserpent);
 
         //collision porte end
         if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[1]->h))
@@ -334,7 +327,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,porte[order],xporte,yporte);
+       // draw_sprite(buffer,porte[order],xporte,yporte);
         //collision activité hippodrome
         if (xPacman <= (xhippodrome + hippodrome->w) && xhippodrome <= (xPacman + pacman[1]->w) && yPacman <= (yhippodrome + hippodrome->h) && (yhippodrome +hippodrome->h) <= (yPacman + pacman[1]->h))
         {
@@ -355,7 +348,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
+        //draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
         if (xPacman <= (xtir + tirballon->w) && xtir <= (xPacman + pacman[1]->w) && yPacman <= (ytir + tirballon->h) && (ytir +tirballon->h) <= (yPacman + pacman[1]->h))
         {
             pari();
@@ -375,7 +368,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,tirballon,xtir,ytir);
+        //draw_sprite(buffer,tirballon,xtir,ytir);
         if (xPacman <= (xlabyrinthe + labyrinthe->w) && xlabyrinthe <= (xPacman + pacman[1]->w) && yPacman <= (ylabyrinthe + labyrinthe->h) && (ylabyrinthe +labyrinthe->h) <= (yPacman + pacman[1]->h))
         {
             pari();
@@ -395,7 +388,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,labyrinthe,xlabyrinthe,ylabyrinthe);
+        //draw_sprite(buffer,labyrinthe,xlabyrinthe,ylabyrinthe);
         if (xPacman <= (xcanard + canard->w) && xcanard <= (xPacman + pacman[1]->w) && yPacman <= (ycanard + canard->h) && (ycanard +canard->h) <= (yPacman + pacman[1]->h))
         {
             pari();
@@ -415,7 +408,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,canard,xcanard,ycanard);
+        //draw_sprite(buffer,canard,xcanard,ycanard);
         if (xPacman <= (xtaupe + taupe->w) && xtaupe <= (xPacman + pacman[1]->w) && yPacman <= (ytaupe + taupe->h) && (ytaupe +taupe->h) <= (yPacman + pacman[1]->h))
         {
             pari();
@@ -435,7 +428,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,taupe,xtaupe,ytaupe);
+        //draw_sprite(buffer,taupe,xtaupe,ytaupe);
         if (xPacman <= (xguitar + guitar->w) && xguitar <= (xPacman + pacman[1]->w) && yPacman <= (yguitar + guitar->h) && (yguitar +guitar->h) <= (yPacman + pacman[1]->h))
         {
             playguitar();
@@ -454,8 +447,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,guitar,xguitar,yguitar);
-
+        //draw_sprite(buffer,guitar,xguitar,yguitar);
         if (xPacman <= (xcasino + casino->w) && xcasino <= (xPacman + pacman[1]->w) && yPacman <= (ycasino + casino->h) && (ycasino + casino->h) <= (yPacman + pacman[1]->h))
         {
             jackpot();
@@ -474,7 +466,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,casino,xcasino,ycasino);
+        //draw_sprite(buffer,casino,xcasino,ycasino);
 
         if (xPacman <= (xriver + river->w) && xriver <= (xPacman + pacman[1]->w) && yPacman <= (yriver + river->h) && (yriver + river->h) <= (yPacman + pacman[1]->h))
         {
@@ -494,7 +486,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,river,xriver,yriver);
+        //draw_sprite(buffer,river,xriver,yriver);
 
         if (xPacman <= (xserpent + serpent->w) && xserpent <= (xPacman + pacman[1]->w) && yPacman <= (yserpent + serpent->h) && (yserpent + serpent->h) <= (yPacman + pacman[1]->h))
         {
@@ -514,11 +506,11 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
 
-        draw_sprite(buffer,serpent,xserpent,yserpent);
+        //draw_sprite(buffer,serpent,xserpent,yserpent);
 
 
-        if (key[KEY_RIGHT]){
-            if (key[KEY_UP]){
+        if (key[KEY_RIGHT]&& ((WIDTH+1)<(fondmap->w +ximgfond))){
+            if (key[KEY_UP] && yimgfond<0){
                 yguitar+= dy;
                 yserpent+= dy;
                 yriver+= dy;
@@ -531,7 +523,7 @@ void parc2(){
                 ytaupe+= dy;
                 ycanard+= dy;
             }
-            if(key[KEY_DOWN]){
+            if(key[KEY_DOWN]&& ((HEIGHT+1)<(fondmap->h +yimgfond))){
                 yguitar-= dy;
                 yserpent-= dy;
                 yriver-= dy;
@@ -565,10 +557,11 @@ void parc2(){
             {
                 posx=0;
             }
+
             draw_sprite(buffer,pacman[posx],xPacman,yPacman);
         }
-        else if (key[KEY_LEFT]){
-            if (key[KEY_UP]){
+        else if (key[KEY_LEFT]&& ximgfond<0){
+            if (key[KEY_UP]&& yimgfond<0){
                 yguitar+= dy;
                 yserpent+= dy;
                 yriver+= dy;
@@ -581,7 +574,7 @@ void parc2(){
                 ytaupe+= dy;
                 ycanard+= dy;
             }
-            if(key[KEY_DOWN]){
+            if(key[KEY_DOWN] && ((HEIGHT+1)<(fondmap->h +yimgfond))){
                 yguitar-= dy;
                 yserpent-= dy;
                 yriver-= dy;
@@ -618,7 +611,7 @@ void parc2(){
             draw_sprite_h_flip(buffer,pacman[posx],xPacman,yPacman);
 
         }
-        else if (key[KEY_UP]){
+        else if (key[KEY_UP]&& yimgfond<0){
             posx++;
             yguitar+= dy;
             yserpent+= dy;
@@ -642,7 +635,7 @@ void parc2(){
             draw_sprite_h_flip(buffer,pacman[posx],xPacman,yPacman);
 
         }
-        else if (key[KEY_DOWN]){
+        else if (key[KEY_DOWN]&& ((HEIGHT+1)<(fondmap->h +yimgfond))){
             posx++;
             yguitar-= dy;
             yserpent-= dy;

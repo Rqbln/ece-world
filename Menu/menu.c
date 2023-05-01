@@ -6,7 +6,7 @@ void menu() {
 
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
     clear_to_color(buffer, makecol(255, 255, 255)); // Fond blanc
-    BITMAP *fond = load_bitmap("../Menu/image/menu.bmp",NULL);
+    BITMAP *fond = load_bitmap("../Menu/image/menujeuvideo0.bmp",NULL);
     BITMAP *selectstart[2];
     BITMAP *selectrules[2];
     BITMAP *selectexit[2];
@@ -109,6 +109,7 @@ void menu() {
                 // TODO: Ajouter le code pour afficher les règles
             } else if (option == 2) { // Option Quitter
                 rest(250); // Pause pour éviter les mouvements trop rapides
+                //allegro_exit(); // Quitte Allegro
                 break; // Sortie de la boucle principale
             }
         }
