@@ -17,21 +17,16 @@ void playguitar(){
     int xnote[nbnote];
     int ynote[nbnote];
     int nombreAleatoire=20;
-    int memo=20;
+    int memo;
     char message[50];
-    int score=0;
-    int vitesse=70;
+    int score;
+    int vitesse;
+    int nbjoueur=2;
+    int joueurscore[nbjoueur];
 // Joue la musique en boucle
 //play_sample(musique, 255, 128, 100, 1);
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
-
-    for (int j = 0; j < bat; ++j) {
-        for(int i=0;i<nbnote/bat;i++){
-            xnote[i+j*(nbnote/bat)]=i*155+WIDTH*0.34;
-            ynote[i+j*(nbnote/bat)]=j*(-200*(i+1));
-        }
-    }
     if(!arriver){
         allegro_message("../image/arriver.bmp");
         exit(EXIT_FAILURE);
@@ -47,47 +42,69 @@ void playguitar(){
     }
     buffer=create_bitmap(WIDTH,HEIGHT);
 
-    while (!key[KEY_ESC] && memo ==20) {
-        clear_bitmap(buffer);
-        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
-        play_sample(musique, 255, 128, 100, 1);
-        // Obtenir les coordonnées de la souris
-        stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
-        int x=mouse_x;
-        int y=mouse_y;
-        draw_sprite(buffer,arriver,(x - ((arriver->w)/2)),(y - ((arriver->h)/2)));
-        for (int i=0; i<nbnote; i++){
-            // Génération d'un nombre aléatoire compris entre 8 et 20
-            //nombreAleatoire = 8+rand() % 20;
-            ynote[i]+=nombreAleatoire;
-            if (xnote[i] <= (x) && (x) <= (xnote[i] + note->w) && ynote[i] <= (y) && (y) <= (ynote[i] + note->h)){
-                ynote[i]=-200;
-                score+=1;
-                vitesse-=1;
-                // Collision détectée !
-            }
-            //textprintf_ex(buffer, font, 50, 50, makecol(255, 255, 255), -1, "score: %d", score);
-
-            draw_sprite(buffer,note,xnote[i],ynote[i]);
-            if (ynote[i] >= HEIGHT ){
-                memo=1;
-                // Collision détectée !
+    for (int tour = 0; tour < nbjoueur; ++tour) {
+        memo=0;
+        for (int j = 0; j < bat; ++j) {
+            for(int i=0;i<nbnote/bat;i++){
+                xnote[i+j*(nbnote/bat)]=i*155+WIDTH*0.34;
+                ynote[i+j*(nbnote/bat)]=j*(-200*(i+1));
             }
         }
-        textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
-        blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
-        rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
+        vitesse=70;
+        score=0;
+        rest(150); // Pause de 10 ms pour rafraîchir l'écran
+        while (!key[KEY_ESC] && memo ==0) {
+            clear_bitmap(buffer);
+            clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+            play_sample(musique, 255, 128, 100, 1);
+            // Obtenir les coordonnées de la souris
+            stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
+            int x=mouse_x;
+            int y=mouse_y;
+            draw_sprite(buffer,arriver,(x - ((arriver->w)/2)),(y - ((arriver->h)/2)));
+            for (int i=0; i<nbnote; i++){
+                // Génération d'un nombre aléatoire compris entre 8 et 20
+                //nombreAleatoire = 8+rand() % 20;
+                ynote[i]+=nombreAleatoire;
+                if (xnote[i] <= (x) && (x) <= (xnote[i] + note->w) && ynote[i] <= (y) && (y) <= (ynote[i] + note->h)){
+                    ynote[i]=-200;
+                    score+=1;
+                    vitesse-=1;
+                    // Collision détectée !
+                }
+                //textprintf_ex(buffer, font, 50, 50, makecol(255, 255, 255), -1, "score: %d", score);
+
+                draw_sprite(buffer,note,xnote[i],ynote[i]);
+                if (ynote[i] >= HEIGHT ){
+                    memo=1;
+                    // Collision détectée !
+                }
+            }
+            textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
+            blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+            rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
+        }
+        while (!key[KEY_ESC]) {
+            sprintf(message,"Perdu enculé");
+            joueurscore[tour] = score;
+            textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+            blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+            rest(100); // Pause de 10 ms pour rafraîchir l'écran
+        }
+
     }
+    rest(150); // Pause de 10 ms pour rafraîchir l'écran
+    clear_bitmap(buffer);
+    clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
     while (!key[KEY_ESC]) {
-        sprintf(message,"Perdu enculé",memo+1);
+        if (joueurscore[0]<joueurscore[1]){
+            sprintf(message,"joueur 2 a gagné 1 ticket");
+        }
+        else {
+            sprintf(message,"joueur 1 a gagné 1 ticket");
+        }
         textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         rest(100); // Pause de 10 ms pour rafraîchir l'écran
-        // Libère la mémoire utilisée par la musique
-        //destroy_sample(musique);
-        //destroy_bitmap(buffer);
-        //destroy_bitmap(note);
-        //destroy_bitmap(arriver);
-        //destroy_bitmap(fond);
     }
 }
