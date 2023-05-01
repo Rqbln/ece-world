@@ -16,35 +16,36 @@ void menu() {
     int num_options = 3; // Nombre total d'options
     char *options[] = {"Jouer", "Lire les règles", "Quitter"}; // Texte des options
     char nomDeFichier[50];
-    int xselect=WIDTH/2-50;
-    int yselectstart=WIDTH/2-200;
-    int yselectrules=WIDTH/2-100;
-    int yselectexit=WIDTH/2;
+    int ecart=200;
+    int xselect=WIDTH/2-200;
+    int yselectstart=HEIGHT/2-ecart;
+    int yselectrules=HEIGHT/2;
+    int yselectexit=HEIGHT/2+ecart;
     int option=0;
 
     //creation des touche de selection
     for(int i=0;i<2;i++)
     {
-        sprintf(nomDeFichier,"../Menu/image/selectstart%d.bmp",i);
+        sprintf(nomDeFichier,"../Menu/image/selectstart%d (Personnalisé).bmp",i);
         selectstart[i]= load_bitmap(nomDeFichier,NULL);
         if(!selectstart[i])
         {
-            allegro_message("../Menu/image/selectstart%d.bmp",i);
+            allegro_message("../Menu/image/selectstart%d (Personnalisé).bmp",i);
             exit(EXIT_FAILURE);
         }
 
-        sprintf(nomDeFichier,"../Menu/image/selectrules%d.bmp",i);
+        sprintf(nomDeFichier,"../Menu/image/selectrules%d (Personnalisé).bmp",i);
         selectrules[i]= load_bitmap(nomDeFichier,NULL);
         if(!selectrules[i])
         {
-            allegro_message("../image/selectrules%d.bmp",i);
+            allegro_message("../image/selectrules%d (Personnalisé).bmp",i);
             exit(EXIT_FAILURE);
         }
-        sprintf(nomDeFichier,"../Menu/image/selectexit%d.bmp",i);
+        sprintf(nomDeFichier,"../Menu/image/selectexit%d (Personnalisé).bmp",i);
         selectexit[i]= load_bitmap(nomDeFichier,NULL);
         if(!selectexit[i])
         {
-            allegro_message("../Menu/image/selectexit%d.bmp",i);
+            allegro_message("../Menu/image/selectexit%d (Personnalisé).bmp",i);
             exit(EXIT_FAILURE);
         }
     }
