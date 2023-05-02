@@ -10,8 +10,6 @@ void menu() {
     BITMAP *selectstart[2];
     BITMAP *selectrules[2];
     BITMAP *selectexit[2];
-
-
     SAMPLE *sound = load_wav("../Musics/Wav/Menu.wav");
     if (!sound) {
         allegro_message("Erreur lors du chargement du fichier WAV\n");
@@ -117,10 +115,12 @@ void menu() {
 
             if (option == 0) { // Option Jouer
                 // TODO: Ajouter le code pour lancer le jeu
+                stop_sample(sound);
                 parc2();
             } else if (option == 1) { // Option Lire les règles
                 // TODO: Ajouter le code pour afficher les règles
             } else if (option == 2) { // Option Quitter
+                stop_sample(sound);
                 rest(250); // Pause pour éviter les mouvements trop rapides
                 //allegro_exit(); // Quitte Allegro
                 break; // Sortie de la boucle principale
