@@ -13,6 +13,7 @@ int main() {
     int playerSize = 100; // Taille initiale du joueur
     int gameOver = 0; // Indique si le jeu est terminé
     int squareColor = makecol(rand() % 256, rand() % 256, rand() % 256); // Couleur initiale du carré
+    //taupe();
     //snake();
     menu();
     //pari();
