@@ -6,7 +6,7 @@
 #include <allegro.h>
 #include "stdio.h"
 
-#define TAILLE_INITIALE 50
+#define TAILLE_INITIALE 100
 
 void taupe();
 
