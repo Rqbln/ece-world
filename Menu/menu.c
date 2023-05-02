@@ -1,5 +1,5 @@
 #include "menu.h"
-#include <allegro.h>
+#include "allegro.h"
 #include "stdio.h"
 
 void menu() {
@@ -10,6 +10,18 @@ void menu() {
     BITMAP *selectstart[2];
     BITMAP *selectrules[2];
     BITMAP *selectexit[2];
+
+    install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL); // Installe le système de son
+
+
+    SAMPLE *sound = load_wav("../Musics/Wav/Menu.wav");
+    if (!sound) {
+        allegro_message("Erreur lors du chargement du fichier WAV\n");
+        exit(EXIT_FAILURE);
+    }
+    play_sample(sound, 255, 128, 1000, 1);
+
+
 
     //declaration variable
     int selection = 0; // Index de l'option sélectionnée
@@ -22,6 +34,7 @@ void menu() {
     int yselectrules=HEIGHT/2;
     int yselectexit=HEIGHT/2+ecart;
     int option=0;
+
 
     //creation des touche de selection
     for(int i=0;i<2;i++)
@@ -52,6 +65,7 @@ void menu() {
 
     // Boucle principale
     while (!key[KEY_ESC]) {
+
         // Affichage de l'image de fond
         // Affichage du buffer à l'écran avec l'image de fond
         stretch_blit(fond, buffer, 0, 0, fond->w, fond->h, 0, 0, WIDTH, HEIGHT);
@@ -116,5 +130,7 @@ void menu() {
         }
         rest(10); // Pause pour libérer un peu le processeur
     }
+    destroy_sample(sound);
+
 }
 
