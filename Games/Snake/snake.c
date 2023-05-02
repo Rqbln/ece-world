@@ -25,6 +25,8 @@ void snake() {
     char messageDebut[60];
     char messageFin[60];
 
+    srand(time(NULL));
+
     while (!key[KEY_ENTER]){
         sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
         textout_centre_ex(screen,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
@@ -140,7 +142,7 @@ void snake() {
 
 
 
-        // Vérifier les collisions du serpent 1 avec lui même
+        // Vérifier les collisions du serpent 1 avec lui-même
         for (int i = 1; i < snake1_length; i++) {
             if (snake1_x[0] == snake1_x[i] && snake1_y[0] == snake1_y[i]) {
                 gagnant = 2;
@@ -149,7 +151,7 @@ void snake() {
         }
 
 
-        // Vérifier les collisions du serpent 2 avec lui même
+        // Vérifier les collisions du serpent 2 avec lui-même
         for (int i = 1; i < snake2_length; i++) {
             if (snake2_x[i] == snake2_x[0] && snake2_y[i] == snake2_y[0]) {
                 gagnant = 1;
@@ -173,6 +175,13 @@ void snake() {
                 gagnant = 1;
                 game_over = 1;
             }
+        }
+
+        // Vérifier si les têtes des deux serpents se sont heurtées
+        if (snake2_x[0] < snake1_x[0] + TAILLE_JEU && snake2_x[0] + TAILLE_JEU > snake1_x[0] && snake2_y[0] < snake1_y[0] + TAILLE_JEU && snake2_y[0] + TAILLE_JEU > snake1_y[0]) {
+            // Générer un nombre aléatoire entre 1 et 2
+            gagnant = rand() % 2 + 1;
+            game_over = 1;
         }
 
         if (score1 == 5 || score2 == 5){
@@ -243,5 +252,4 @@ void snake() {
 
         rest(10); // Pause de 10 ms pour rafraîchir l'écran
     }
-
 }
