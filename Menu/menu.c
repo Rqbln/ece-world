@@ -11,8 +11,6 @@ void menu() {
     BITMAP *selectrules[2];
     BITMAP *selectexit[2];
 
-    install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL); // Installe le système de son
-
 
     SAMPLE *sound = load_wav("../Musics/Wav/Menu.wav");
     if (!sound) {
