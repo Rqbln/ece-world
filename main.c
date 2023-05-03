@@ -2,6 +2,7 @@
 #include "Menu/menu.h"
 //#include "Games/Course_Chevaux/chevaux.h"
 //#include "Games/Jackpot/jackpot.h"
+#include "Games/Ducky/ducky.h"
 
 
 int main() {
@@ -13,6 +14,7 @@ int main() {
     int playerSize = 100; // Taille initiale du joueur
     int gameOver = 0; // Indique si le jeu est terminé
     int squareColor = makecol(rand() % 256, rand() % 256, rand() % 256); // Couleur initiale du carré
+    ducky();
     //taupe();
     //snake();
     menu();
