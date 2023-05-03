@@ -6,7 +6,7 @@
 #define ECE_WORLD_SHOOT_H
 #endif //ECE_WORLD_SHOOT_H
 
-#define SCREEN_W 1920
-#define SCREEN_H 1080
+#define HEIGHT 1080
+#define WIDTH 1920
 #include <allegro.h>
 void baloon();
