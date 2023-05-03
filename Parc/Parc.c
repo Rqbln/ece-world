@@ -209,8 +209,8 @@ void parc2(){
     BITMAP *fond= load_bitmap("../Parc/image/fondplage1.bmp",NULL);
     BITMAP *fondmap= load_bitmap("../Parc/image/mapfond2.bmp",NULL);
     BITMAP *bitcoin[8];
-
-    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome1.bmp",NULL);  //image des attractions/mini-jeux
+    BITMAP *cheval[13];
+    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome2.bmp",NULL);  //image des attractions/mini-jeux
     BITMAP *guitar= load_bitmap("../Parc/image/concert2.bmp",NULL);
     BITMAP *casino= load_bitmap("../Parc/image/casino0.bmp",NULL);
     BITMAP *river= load_bitmap("../Parc/image/lac0.bmp",NULL);
@@ -231,8 +231,8 @@ void parc2(){
     int yriver= yimgfond+2020;
     int xcasino= ximgfond+2680;
     int ycasino= yimgfond+1910;
-    int xhippodrome= ximgfond+2500;
-    int yhippodrome= yimgfond+1300;
+    int xhippodrome= ximgfond+2463;
+    int yhippodrome= yimgfond+1236;
     int xtir= ximgfond+2000;
     int ytir= yimgfond+1510;
     int xlabyrinthe= ximgfond+1400;
@@ -241,6 +241,8 @@ void parc2(){
     int ytaupe= yimgfond+1510;
     int xcanard= ximgfond+1940;
     int ycanard= yimgfond+2100;
+    int xcheval[nbcheval];
+    int ycheval[nbcheval];
 
     int xporte=ximgfond+1700;
     int yporte=yimgfond+950;
@@ -261,6 +263,9 @@ void parc2(){
     int musiquealeatoire;
     char tabporte[80];//tableau nom d image
     char nomDeFichier[80];
+    int poscheval=0;
+    int cmpt=0;
+    int cmp=0;
 
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
@@ -286,7 +291,21 @@ void parc2(){
             exit(EXIT_FAILURE);
         }
     }
-
+    for(int i=0;i<nbcheval;i++)
+    {
+        xcheval[i]=ximgfond+2670-i*21;
+        ycheval[i]=yimgfond+1305+i*9;
+    }
+    for(int i=0;i<12;i++)
+    {
+        sprintf(nomDeFichier,"../Games/Course_Chevaux/image/cheval%d (Personnalisé).bmp",i);
+        cheval[i]= load_bitmap(nomDeFichier,NULL);
+        if(!cheval[i])
+        {
+            allegro_message("../Games/Course_Chevaux/image/cheval%d.bmp",i);
+            exit(EXIT_FAILURE);
+        }
+    }
     for(int i=0;i<nbMusique;i++)
     {
         sprintf(nomDeFichier,"../Parc/musique/musique%d.wav",i);
@@ -353,7 +372,7 @@ void parc2(){
         draw_sprite(buffer,fondmap,ximgfond,yimgfond);
         textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", pixel_r);
         draw_sprite(buffer,porte[order],xporte,yporte);
-        draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
+        //draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
         draw_sprite(buffer,tirballon,xtir,ytir);
         draw_sprite(buffer,labyrinthe,xlabyrinthe,ylabyrinthe);
         draw_sprite(buffer,canard,xcanard,ycanard);
@@ -363,7 +382,30 @@ void parc2(){
         draw_sprite(buffer,river,xriver,yriver);
         draw_sprite(buffer,serpent,xserpent,yserpent);
         draw_sprite(buffer,bitcoin[posbitcoin],xbitcoin,ybitcoin);
-
+        for (int i = 0; i < nbcheval; ++i) {
+            if (cmpt>=280){
+                cmpt=0;
+                cmp+=1;
+                if(cmp>=2){
+                    cmp=0;
+                }
+            }
+            cmpt+=1;
+            if (cmp==0){
+                xcheval[i]+=dx/5;
+                ycheval[i]+=dy/4;
+                draw_sprite(buffer,cheval[poscheval],xcheval[i],ycheval[i]);
+            }
+            else{
+                xcheval[i]-=dx/5;
+                ycheval[i]-=dy/4;
+                draw_sprite_h_flip(buffer,cheval[poscheval],xcheval[i],ycheval[i]);
+            }
+        }
+        poscheval+=1;
+        if (poscheval>=12){
+            poscheval=0;
+        }
         posbitcoin+=1;
         if(posbitcoin>=8){
             posbitcoin=0;
@@ -399,6 +441,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -421,6 +470,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -443,6 +499,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -465,6 +528,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -473,8 +543,7 @@ void parc2(){
         if (xPacman <= (xtaupe + taupe->w) && xtaupe <= (xPacman + pacman[1]->w) && yPacman <= (ytaupe + taupe->h/2) && (ytaupe +taupe->h/2) <= (yPacman + pacman[1]->h))
         {
             stop_sample(sound[musiquealeatoire]);
-            pari();
-            anim_horse();
+            jeu_taupe();
             musique =1;
             yguitar-= pacman[1]->h;
             yserpent-= pacman[1]->h;
@@ -487,6 +556,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -508,6 +584,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -529,6 +612,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -551,6 +641,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -573,6 +670,13 @@ void parc2(){
             ylabyrinthe-= pacman[1]->h;
             ytaupe-= pacman[1]->h;
             ycanard-= pacman[1]->h;
+            for(int i=0;i<nbcheval;i++)
+            {
+                xcheval[i]=ximgfond+2670-i*21;
+                ycheval[i]=yimgfond+1305+i*9;
+            }
+            cmpt=0;
+            cmp=0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
@@ -593,6 +697,9 @@ void parc2(){
                 ylabyrinthe+= dy;
                 ytaupe+= dy;
                 ycanard+= dy;
+                for (int i = 0; i < nbcheval; ++i) {
+                    ycheval[i]+=dy;
+                }
             }
             if(key[KEY_DOWN]&& ((HEIGHT+1)<(fondmap->h +yimgfond))){
                 yguitar-= dy;
@@ -606,6 +713,9 @@ void parc2(){
                 ylabyrinthe-= dy;
                 ytaupe-= dy;
                 ycanard-= dy;
+                for (int i = 0; i < nbcheval; ++i) {
+                    ycheval[i]-=dy;
+                }
             }
             posx++;
             xguitar-= dx;
@@ -619,6 +729,9 @@ void parc2(){
             xlabyrinthe-= dx;
             xtaupe-= dx;
             xcanard-= dx;
+            for (int i = 0; i < nbcheval; ++i) {
+                xcheval[i]-=dx;
+            }
 
             /*if(xPacman<0)
             {
@@ -644,6 +757,9 @@ void parc2(){
                 ylabyrinthe+= dy;
                 ytaupe+= dy;
                 ycanard+= dy;
+                for (int i = 0; i < nbcheval; ++i) {
+                    ycheval[i]+=dy;
+                }
             }
             if(key[KEY_DOWN] && ((HEIGHT+1)<(fondmap->h +yimgfond))){
                 yguitar-= dy;
@@ -657,6 +773,9 @@ void parc2(){
                 ylabyrinthe-= dy;
                 ytaupe-= dy;
                 ycanard-= dy;
+                for (int i = 0; i < nbcheval; ++i) {
+                    ycheval[i]-=dy;
+                }
             }
             posx++;
             xguitar+= dx;
@@ -670,6 +789,9 @@ void parc2(){
             xlabyrinthe+= dx;
             xtaupe+= dx;
             xcanard+= dx;
+            for (int i = 0; i < nbcheval; ++i) {
+                xcheval[i]+=dx;
+            }
 
             if(xPacman>WIDTH)
             {
@@ -695,6 +817,9 @@ void parc2(){
             ylabyrinthe+= dy;
             ytaupe+= dy;
             ycanard+= dy;
+            for (int i = 0; i < nbcheval; ++i) {
+                ycheval[i]+=dy;
+            }
              /*if(xPacman<0)
             {
                 xPacman=0;
@@ -719,6 +844,9 @@ void parc2(){
             ylabyrinthe-= dy;
             ytaupe-= dy;
             ycanard-= dy;
+            for (int i = 0; i < nbcheval; ++i) {
+                ycheval[i]-=dy;
+            }
             /*if(yPacman>HEIGHT)
             {
                 xPacman=0;

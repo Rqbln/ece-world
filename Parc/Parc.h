@@ -9,6 +9,7 @@
 #define HEIGHT 1080
 #define WIDTH 1920
 #define nbMusique 12
+#define nbcheval 6
 #include "stdio.h"
 #include <allegro.h>
 #include "../Games/Course_Chevaux/chevaux.h"
