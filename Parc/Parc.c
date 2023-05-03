@@ -201,12 +201,14 @@ void parc(){
     }
 }
 
+
 void parc2(){
     BITMAP *buffer;
     BITMAP *pacman[4];
     BITMAP *porte[4];
     BITMAP *fond= load_bitmap("../Parc/image/fondplage1.bmp",NULL);
     BITMAP *fondmap= load_bitmap("../Parc/image/mapfond2.bmp",NULL);
+    BITMAP *bitcoin[8];
 
     BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome1.bmp",NULL);  //image des attractions/mini-jeux
     BITMAP *guitar= load_bitmap("../Parc/image/concert2.bmp",NULL);
@@ -244,7 +246,9 @@ void parc2(){
     int yporte=yimgfond+950;
     int xPacman=WIDTH/2;
     int yPacman=HEIGHT/2;
-
+    int xbitcoin=0;
+    int ybitcoin=0;
+    int posbitcoin=0;
     int posx=0; //position des sprite du personnage
     int dx=15;//vitesse
     int dy=8;
@@ -269,6 +273,16 @@ void parc2(){
         if(!porte[j])
         {
             allegro_message("../image/portEnd%d.bmp",j);
+            exit(EXIT_FAILURE);
+        }
+    }
+    for(int j=0;j<8;j++)
+    {
+        sprintf(tabporte,"../Parc/image/bitcoin%d.bmp",j);
+        bitcoin[j]= load_bitmap(tabporte,NULL);
+        if(!bitcoin[j])
+        {
+            allegro_message("../image/bitcoin%d.bmp",j);
             exit(EXIT_FAILURE);
         }
     }
@@ -312,6 +326,7 @@ void parc2(){
             //allegro_message("../image/musique%d.wav",musiquealeatoire);
             musique =0;
         }
+
         xcenter = pacman[1]->w / 2;
         ycenter = pacman[1]->w / 2;
         draw_sprite(buffer,fond,ximgfond,yimgfond);
@@ -347,7 +362,12 @@ void parc2(){
         draw_sprite(buffer,casino,xcasino,ycasino);
         draw_sprite(buffer,river,xriver,yriver);
         draw_sprite(buffer,serpent,xserpent,yserpent);
+        draw_sprite(buffer,bitcoin[posbitcoin],xbitcoin,ybitcoin);
 
+        posbitcoin+=1;
+        if(posbitcoin>=8){
+            posbitcoin=0;
+        }
         //collision porte end
         if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[1]->h))
         {
