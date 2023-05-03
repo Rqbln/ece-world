@@ -273,9 +273,19 @@ void parc2(){
         }
     }
 
-    for(int i=0;i<nbMusique;i++)
+    /*for(int i=0;i<nbMusique;i++)
     {
         sprintf(nomDeFichier,"../Parc/musique/musique%d.wav",i);
+        sound[i]= load_wav(nomDeFichier);
+        if(!sound[i])
+        {
+            allegro_message("../image/musique%d.wav",i);
+            exit(EXIT_FAILURE);
+        }
+    }*/
+    for(int i=0;i<nbMusique;i++)
+    {
+        sprintf(nomDeFichier,"../Parc/musique/[High Quality] Shadow of the Colossus OST 12 - A Violent Encounter.wav");
         sound[i]= load_wav(nomDeFichier);
         if(!sound[i])
         {
