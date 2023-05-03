@@ -30,7 +30,7 @@ int is_target_occupied(int index, Target targets[], int num_targets) {
     return 0;
 }
 
-void taupe(){
+void jeu_taupe(){
     srand(time(NULL));
     for (int i = 0; i < maxTargets; ++i) {
         targets[i].x = pyramid_x[pyramid_index];

@@ -8,5 +8,5 @@
 
 #define TAILLE_INITIALE 100
 
-void taupe();
+void jeu_taupe();
 
