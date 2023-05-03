@@ -203,6 +203,7 @@ void parc(){
 
 
 void parc2(){
+    BITMAP *buffer2;
     BITMAP *buffer;
     BITMAP *pacman[4];
     BITMAP *porte[4];
@@ -213,12 +214,12 @@ void parc2(){
     BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome2.bmp",NULL);  //image des attractions/mini-jeux
     BITMAP *guitar= load_bitmap("../Parc/image/concert2.bmp",NULL);
     BITMAP *casino= load_bitmap("../Parc/image/casino0.bmp",NULL);
-    BITMAP *river= load_bitmap("../Parc/image/lac0.bmp",NULL);
+    BITMAP *river= load_bitmap("../Parc/image/lac1.bmp",NULL);
     BITMAP *serpent= load_bitmap("../Parc/image/river0.bmp",NULL);
     BITMAP *tirballon= load_bitmap("../Parc/image/futuroscope0.bmp",NULL);
     BITMAP *labyrinthe= load_bitmap("../Parc/image/labyrinthe0.bmp",NULL);
     BITMAP *taupe= load_bitmap("../Parc/image/cirque0.bmp",NULL);
-    BITMAP *canard= load_bitmap("../Parc/image/parc0.bmp",NULL);
+    BITMAP *canard= load_bitmap("../Parc/image/parc1.bmp",NULL);
     SAMPLE *sound[nbMusique];
     int ximgfond = -4200+WIDTH;  //coordonnée de l image de fond
     int yimgfond= -2700 +HEIGHT;
@@ -263,10 +264,17 @@ void parc2(){
     int musiquealeatoire;
     char tabporte[80];//tableau nom d image
     char nomDeFichier[80];
+    char text_input[128] = {0}; // variable pour stocker la saisie clavier
+    int stop=0;
+
     int poscheval=0;
     int cmpt=0;
     int cmp=0;
 
+    int buffersizew=WIDTH/6;
+    int buffersizeh=HEIGHT/6;
+    int posxbuff2= (WIDTH/2)-(buffersizew/2);//WIDTH/2
+    int posybuff2 = (HEIGHT/2)-(buffersizeh/2);//HEIGHT/2
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
 
@@ -337,6 +345,7 @@ void parc2(){
         }
     }
     buffer=create_bitmap(WIDTH,HEIGHT);
+    buffer2=create_bitmap(buffersizew,buffersizeh);
 
     while (!key[KEY_ESC] && end==0) {  //boucle principale
         if(musique==1){
@@ -382,6 +391,8 @@ void parc2(){
         draw_sprite(buffer,river,xriver,yriver);
         draw_sprite(buffer,serpent,xserpent,yserpent);
         draw_sprite(buffer,bitcoin[posbitcoin],xbitcoin,ybitcoin);
+
+
         for (int i = 0; i < nbcheval; ++i) {
             if (cmpt>=280){
                 cmpt=0;
@@ -862,6 +873,30 @@ void parc2(){
         {
             draw_sprite(buffer,pacman[0],xPacman,yPacman);
         }
+        while (!key[KEY_ENTER] && stop==0) {
+            clear_bitmap(buffer2);
+            clear_to_color(buffer2, makecol(255, 255, 255)); // Effacer l'écran en blanc
+            // Afficher la zone de saisie clavier
+            //rect(buffer2, 0, 0, buffersizew, buffersizeh, makecol(0, 0, 150));
+            textout_centre_ex(buffer2, font, "entrez votre nom : ", buffersizew/2, 3, makecol(0, 0, 0), -1);
+            textout_centre_ex(buffer2, font, text_input, buffersizew/2, buffersizeh/2, makecol(0, 0, 0), -1);
+
+            // Lire la saisie clavier*
+            blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+            while (keypressed()) {
+                int key = readkey();
+                if (key >> 8 == KEY_BACKSPACE && strlen(text_input) > 0) {
+                    text_input[strlen(text_input) - 1] = '\0';
+                }
+                else if (strlen(text_input) < 128 && (key & 0xFF) >= ' ' && (key & 0xFF) <= '~') {
+                    text_input[strlen(text_input)] = key & 0xFF;
+                }
+            }
+            // Rafraîchir l'écran
+            vsync();
+            blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
+        }
+        stop=1;
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
             rest(10);

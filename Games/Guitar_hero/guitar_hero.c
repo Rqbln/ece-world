@@ -13,6 +13,8 @@ void playguitar(){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    play_sample(musique, 255, 128, 1000, 1);
+
     int nbnote = 4*bat;
     int xnote[nbnote];
     int ynote[nbnote];
@@ -56,7 +58,6 @@ void playguitar(){
         while (!key[KEY_ESC] && memo ==0) {
             clear_bitmap(buffer);
             clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
-            play_sample(musique, 255, 128, 100, 1);
             // Obtenir les coordonnées de la souris
             stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
             int x=mouse_x;
@@ -85,6 +86,7 @@ void playguitar(){
             rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
         }
         while (!key[KEY_ESC]) {
+            stop_sample(musique);
             sprintf(message,"Perdu enculé");
             joueurscore[tour] = score;
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
@@ -107,4 +109,5 @@ void playguitar(){
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         rest(100); // Pause de 10 ms pour rafraîchir l'écran
     }
+    rest(150); // Pause de 10 ms pour rafraîchir l'écran
 }
