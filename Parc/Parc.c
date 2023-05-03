@@ -273,7 +273,7 @@ void parc2(){
         }
     }
 
-    /*for(int i=0;i<nbMusique;i++)
+    for(int i=0;i<nbMusique;i++)
     {
         sprintf(nomDeFichier,"../Parc/musique/musique%d.wav",i);
         sound[i]= load_wav(nomDeFichier);
@@ -282,17 +282,17 @@ void parc2(){
             allegro_message("../image/musique%d.wav",i);
             exit(EXIT_FAILURE);
         }
-    }*/
-    for(int i=0;i<nbMusique;i++)
+    }
+    /*for(int i=0;i<nbMusique;i++)
     {
-        sprintf(nomDeFichier,"../Parc/musique/[High Quality] Shadow of the Colossus OST 12 - A Violent Encounter.wav");
+        sprintf(nomDeFichier,"../Parc/musique/The Vanishing of Ethan Carter Soundtrack - Valley of the Blinding Mist.wav");
         sound[i]= load_wav(nomDeFichier);
         if(!sound[i])
         {
             allegro_message("../image/musique%d.wav",i);
             exit(EXIT_FAILURE);
         }
-    }
+    }*/
     for(int i=0;i<3;i++)
     {
         sprintf(nomDeFichier,"../Parc/image/pacman%d.bmp",i);
@@ -309,6 +309,7 @@ void parc2(){
         if(musique==1){
             musiquealeatoire = rand() % nbMusique;
             play_sample(sound[musiquealeatoire], 255, 128, 1000, 1);
+            //allegro_message("../image/musique%d.wav",musiquealeatoire);
             musique =0;
         }
         xcenter = pacman[1]->w / 2;

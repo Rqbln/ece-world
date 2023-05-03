@@ -8,7 +8,7 @@
 #endif //PROJET_ALGO2_PARC_H
 #define HEIGHT 1080
 #define WIDTH 1920
-#define nbMusique 4
+#define nbMusique 12
 #include "stdio.h"
 #include <allegro.h>
 #include "../Games/Course_Chevaux/chevaux.h"
