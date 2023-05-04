@@ -233,6 +233,9 @@ void parc2(){
     ybarbare[1]=HEIGHT-(barbare[1]->h);
 
     SAMPLE *sound[nbMusique];
+    SAMPLE *effet[2];
+    SAMPLE *ambiance=load_wav("../Parc/musique/ambiance.wav");
+
     int ximgfond = -4200+WIDTH;  //coordonnée de l image de fond
     int yimgfond= -2700 +HEIGHT;
 
@@ -325,6 +328,17 @@ void parc2(){
         if(!cheval[i])
         {
             allegro_message("../Games/Course_Chevaux/image/cheval%d.bmp",i);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    for(int i=0;i<2;i++)
+    {
+        sprintf(nomDeFichier,"../Parc/musique/musiquebarbare%d.wav",i);
+        effet[i]= load_wav(nomDeFichier);
+        if(!effet[i])
+        {
+            allegro_message("../image/musiquebarbare%d.wav",i);
             exit(EXIT_FAILURE);
         }
     }
@@ -886,7 +900,10 @@ void parc2(){
             draw_sprite(buffer,pacman[0],xPacman,yPacman);
         }
         if (stop==0){
+            stop_sample(sound[musiquealeatoire]);
+            play_sample(ambiance, 255, 128, 1000, 1);
             for (int i = 0; i < 2; ++i) {
+                play_sample(effet[i], 255, 128, 1000, 0);
                 while (!key[KEY_ENTER] && stop==0) {
                     clear_bitmap(buffer2);
                     clear_to_color(buffer2, makecol(255, 255, 255)); // Effacer l'écran en blanc
@@ -914,12 +931,15 @@ void parc2(){
                 sprintf(nomjoueur[i],"%s",text_input);
                 memset(text_input, '\0', sizeof(text_input)); //effacer tout le tableau
                 rest(300);
-
+                stop_sample(effet[i]);
             }
+            musique=1;
         }
+        stop_sample(ambiance);
         textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[0]);
         textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[1]);
         stop=1;
+
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
             rest(10);
