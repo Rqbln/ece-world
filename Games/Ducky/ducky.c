@@ -89,8 +89,6 @@ int collision(t_canard *c1, t_canard *c2){ // on dectecte les collisions
 
     return 0;
 }
-
-
 void actualiserTab(t_canard* colonies[NCANARD]){
     int boum;
     for(int canard1=0; canard1<NCANARD; canard1++){
@@ -306,7 +304,7 @@ void ducky(){ // remplace le main
     }
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    rest(2000);//Attendre 5 secondes avant de quitter
+    rest(2000);//Attendre 2 secondes avant de quitter
 
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
