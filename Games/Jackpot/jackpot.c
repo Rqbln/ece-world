@@ -80,9 +80,9 @@ void jackpot(){
         rest(10);
     }
     // on libère la memoire
-    //destroy_bitmap(fond);
-    //for (int i = 0; i < NUM_ICONS; i++) {
-        //destroy_bitmap(icons[i]);
-    //}
+    destroy_bitmap(fond);
+    for (int i = 0; i < NUM_ICONS; i++) {
+        destroy_bitmap(icons[i]);
+    }
 
 }
