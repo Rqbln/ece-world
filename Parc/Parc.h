@@ -18,5 +18,6 @@
 #include "../Games/Taupe/taupe.h"
 #include "../Games/Shoot/shoot.h"
 #include "../Games/Guitar_hero/guitar_hero.h"
+#include "../Games/Ducky/ducky.h"
 void parc();
 void parc2();
