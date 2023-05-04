@@ -137,6 +137,8 @@ void player1(int *score1){ // game du P1
         allegro_message("Erreur image player");
         exit(EXIT_FAILURE);
     }
+    SAMPLE * duck;
+    duck= load_wav("../Games/Ducky/IMAGES/Vidéo-sans-titre.wav");
     ///////////////////////////////////////////////////////////////////////////////
     int mouseX, mouseY;
     show_mouse(screen);
@@ -161,6 +163,7 @@ void player1(int *score1){ // game du P1
         if (mouse_b & 1) {
             for (int i = 0; i < NCANARD; i++) {
                 if (canardClicked(colonies[i], mouseX, mouseY)) {
+                    play_sample(duck,255,128,1000,0);
                     *score1 += 1;
                     int nb= *score1;
                     if (nb>8 && nb<=16){
@@ -217,6 +220,8 @@ void player2(int *score2){ // game du P2
         allegro_message("Erreur image player");
         exit(EXIT_FAILURE);
     }
+    SAMPLE * duck;
+    duck= load_wav("../Games/Ducky/IMAGES/Vidéo-sans-titre.wav");
     int mouseX, mouseY;
     show_mouse(screen);
     draw_sprite(buffer, fond, 0, 0);
@@ -239,6 +244,7 @@ void player2(int *score2){ // game du P2
         if (mouse_b & 1) {
             for (int i = 0; i < NCANARD; i++) {
                 if (canardClicked(colonies[i], mouseX, mouseY)) {
+                    play_sample(duck,255,128,1000,0);
                     *score2 += 1;
                     int nb =*score2;
                     if (nb>8 && nb<=16){
@@ -300,7 +306,7 @@ void ducky(){ // remplace le main
     }
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    rest(5000);//Attendre 5 secondes avant de quitter
+    rest(2000);//Attendre 5 secondes avant de quitter
 
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
