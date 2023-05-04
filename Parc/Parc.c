@@ -13,6 +13,7 @@ void parc(){
     BITMAP *river= load_bitmap("../Parc/image/river0.bmp",NULL);
     BITMAP *serpent= load_bitmap("../Parc/image/river0.bmp",NULL);
     BITMAP *fondmap= load_bitmap("../Parc/image/fondmap0.bmp",NULL);
+
     int xserpent= 0;
     int yserpent= HEIGHT*0.8;
     int xriver= WIDTH*0.8;
@@ -220,6 +221,17 @@ void parc2(){
     BITMAP *labyrinthe= load_bitmap("../Parc/image/labyrinthe0.bmp",NULL);
     BITMAP *taupe= load_bitmap("../Parc/image/cirque0.bmp",NULL);
     BITMAP *canard= load_bitmap("../Parc/image/parc1.bmp",NULL);
+
+    BITMAP *barbare[2];
+    barbare[0]=load_bitmap("../Parc/image/barbare0.bmp",NULL);
+    barbare[1]=load_bitmap("../Parc/image/barbare1.bmp",NULL);
+    int xbarbare[2];
+    int ybarbare[2];
+    xbarbare[0]=WIDTH-(barbare[0]->w);
+    xbarbare[1]=0;
+    ybarbare[0]=HEIGHT-(barbare[0]->h);
+    ybarbare[1]=HEIGHT-(barbare[1]->h);
+
     SAMPLE *sound[nbMusique];
     int ximgfond = -4200+WIDTH;  //coordonnée de l image de fond
     int yimgfond= -2700 +HEIGHT;
@@ -275,6 +287,8 @@ void parc2(){
     int buffersizeh=HEIGHT/6;
     int posxbuff2= (WIDTH/2)-(buffersizew/2);//WIDTH/2
     int posybuff2 = (HEIGHT/2)-(buffersizeh/2);//HEIGHT/2
+
+    char nomjoueur[2][20];
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
 
@@ -871,29 +885,40 @@ void parc2(){
         {
             draw_sprite(buffer,pacman[0],xPacman,yPacman);
         }
-        while (!key[KEY_ENTER] && stop==0) {
-            clear_bitmap(buffer2);
-            clear_to_color(buffer2, makecol(255, 255, 255)); // Effacer l'écran en blanc
-            // Afficher la zone de saisie clavier
-            //rect(buffer2, 0, 0, buffersizew, buffersizeh, makecol(0, 0, 150));
-            textout_centre_ex(buffer2, font, "entrez votre nom : ", buffersizew/2, 3, makecol(0, 0, 0), -1);
-            textout_centre_ex(buffer2, font, text_input, buffersizew/2, buffersizeh/2, makecol(0, 0, 0), -1);
+        if (stop==0){
+            for (int i = 0; i < 2; ++i) {
+                while (!key[KEY_ENTER] && stop==0) {
+                    clear_bitmap(buffer2);
+                    clear_to_color(buffer2, makecol(255, 255, 255)); // Effacer l'écran en blanc
+                    // Afficher la zone de saisie clavier
+                    //rect(buffer2, 0, 0, buffersizew, buffersizeh, makecol(0, 0, 150));
+                    textout_centre_ex(buffer2, font, "entrez votre nom : ", buffersizew/2, 3, makecol(0, 0, 0), -1);
+                    textout_centre_ex(buffer2, font, text_input, buffersizew/2, buffersizeh/2, makecol(0, 0, 0), -1);
 
-            // Lire la saisie clavier*
-            blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
-            while (keypressed()) {
-                int key = readkey();
-                if (key >> 8 == KEY_BACKSPACE && strlen(text_input) > 0) {
-                    text_input[strlen(text_input) - 1] = '\0';
+                    draw_sprite(buffer,barbare[i],xbarbare[i],ybarbare[i]);
+                    // Lire la saisie clavier*
+                    blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+                    while (keypressed()) {
+                        int key = readkey();
+                        if (key >> 8 == KEY_BACKSPACE && strlen(text_input) > 0) {
+                            text_input[strlen(text_input) - 1] = '\0';
+                        }
+                        else if (strlen(text_input) < 128 && (key & 0xFF) >= ' ' && (key & 0xFF) <= '~') {
+                            text_input[strlen(text_input)] = key & 0xFF;
+                        }
+                    }
+                    // Rafraîchir l'écran
+                    vsync();
+                    blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
                 }
-                else if (strlen(text_input) < 128 && (key & 0xFF) >= ' ' && (key & 0xFF) <= '~') {
-                    text_input[strlen(text_input)] = key & 0xFF;
-                }
+                sprintf(nomjoueur[i],"%s",text_input);
+                memset(text_input, '\0', sizeof(text_input)); //effacer tout le tableau
+                rest(300);
+
             }
-            // Rafraîchir l'écran
-            vsync();
-            blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
         }
+        textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[0]);
+        textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[1]);
         stop=1;
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
