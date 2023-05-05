@@ -224,8 +224,9 @@ void parc2(){
 
     BITMAP *barbare[2];
     //barbare[0]=load_bitmap("../Parc/image/barbare0.bmp",NULL);
-    barbare[0]=load_bitmap("../Parc/imagee/perso0_00.bmp",NULL);
-    barbare[1]=load_bitmap("../Parc/image/barbare1.bmp",NULL);
+    barbare[0]=load_bitmap("../Parc/imagee/perso5_1.bmp",NULL);
+    barbare[1]=load_bitmap("../Parc/imagee/perso0_00.bmp",NULL);
+    //barbare[1]=load_bitmap("../Parc/image/barbare1.bmp",NULL);
     int xbarbare[2];
     int ybarbare[2];
     xbarbare[0]=WIDTH-(barbare[0]->w);
