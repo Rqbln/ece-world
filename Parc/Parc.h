@@ -21,3 +21,6 @@
 #include "../Games/Ducky/ducky.h"
 void parc();
 void parc2();
+#define grille 1
+#define action 16
+#define posirang 4
