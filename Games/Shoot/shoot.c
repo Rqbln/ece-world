@@ -37,17 +37,17 @@ void shoot() {
 
     FONT *police = load_font("arial.pcx", NULL, NULL);
     // Chargement des images
-    BITMAP* background = load_bitmap("../image/background.bmp", NULL);
+    BITMAP* background = load_bitmap("../Games/Shoot/image/background.bmp", NULL);
     if(!background){
         allegro_message("../Games/Shoot/image/background.bmp");
         exit(EXIT_FAILURE);
     }
-    BITMAP* baloon = load_bitmap("../image/baloon.bmp", NULL);
+    BITMAP* baloon = load_bitmap("../Games/Shoot/image/baloon.bmp", NULL);
     if(!baloon){
         allegro_message("../Games/Shoot/image/baloon.bmp");
         exit(EXIT_FAILURE);
     }
-    BITMAP* viseur = load_bitmap("../image/viseur.bmp", NULL);
+    BITMAP* viseur = load_bitmap("../Games/Shoot/image/viseur.bmp", NULL);
     if(!viseur){
         allegro_message("../Games/Shoot/image/viseur.bmp");
         exit(EXIT_FAILURE);
