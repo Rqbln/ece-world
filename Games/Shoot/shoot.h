@@ -9,4 +9,4 @@
 #define HEIGHT 1080
 #define WIDTH 1920
 #include <allegro.h>
-void baloon();
+void shoot();
