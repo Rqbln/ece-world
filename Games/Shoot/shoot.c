@@ -26,14 +26,7 @@ void shoot() {
     //Coordonnées souris pour viseur
     int x;
     int y;
-    int random_num = rand() % 2 == 0 ? 1 : -1;
-    for (int i = 0; i < 5; ++i) {
-        baloonxy[0][i]=1920/2;
-        baloonxy[1][i]=1080/2;
-        vx[i]=8*random_num+(rand()%(10-2)+2);
-        vy[i]=10*random_num+(rand()%(10-2)+2);
-        baloonState[i]=0;
-    }
+
 
     FONT *police = load_font("arial.pcx", NULL, NULL);
     // Chargement des images
@@ -56,14 +49,19 @@ void shoot() {
     // Création du buffer
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
     clear_to_color(buffer, makecol(0, 0, 0));
+    //écran d'explication
+    rest(2000);
+
+    readkey();
+    rest(2000);
     // Boucle principale du jeu
     for (int turn = 0; turn < 2; ++turn) {
         int random_num = rand() % 2 == 0 ? 1 : -1;
         for (int i = 0; i < 5; ++i) {
             baloonxy[0][i]=1920/2;
             baloonxy[1][i]=1080/2;
-            vx[i]=8*random_num+(rand()%(10-2)+2);
-            vy[i]=10*random_num+(rand()%(10-2)+2);
+            vx[i]=8*random_num+(rand()%(5-2)+2);
+            vy[i]=10*random_num+(rand()%(5-2)+2);
             baloonState[i]=0;
         }
         start_time =clock();
@@ -117,9 +115,13 @@ void shoot() {
                 textprintf_ex(screen, font, background->w/2, background->h/2, makecol(255, 255, 0), -1, "J%d : SCORE : %.2f s", turn+1,joueurscore[turn]);
                 if (turn==0) {
                     textprintf_ex(screen, font, (background->w / 2) - 80, (background->h / 2) + 100, makecol(255, 0, 255),-1, "Appuyez sur une touche, au tour du J2 !");
+                    rest(1000);
+                    readkey();
+
                 }
                 else {
                     textprintf_ex(screen, font, (background->w/2)-80, (background->h/2)+100, makecol(255, 0, 255), -1, "Appuyez sur une touche, pour voir les scores !");
+                    rest(200);
                     readkey();
                     if (joueurscore[0]<joueurscore[1]) {
                         textprintf_ex(screen, font, (background->w/2)-80, (background->h/2)+200, makecol(255, 255, 0), -1, "Le J1 a remporté 1 ticket ! Quelle vitesse !");
@@ -142,6 +144,7 @@ void shoot() {
     }
     while (!key[KEY_ESC]) {
         textprintf_ex(screen, font, (background->w/2)-80, (background->h/2)+250, makecol(rand()%255, rand()%255, rand()%255), -1, "Cliquez sur échap pour retourner au parc !");
+        rest(20);
     }
     // Libération des ressources
     destroy_bitmap(background);
