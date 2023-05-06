@@ -7,7 +7,8 @@ void initialisation_allegro(){
     install_mouse(); // Installe les pilotes pour la souris
     install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL); // Installe le système de son
     set_color_depth(desktop_color_depth()); // Règle la profondeur de couleurs sur celle du bureau
-    set_trans_blender(255, 0, 255, 0);
+    //set_trans_blender(255, 0, 255, 0);
+    set_trans_blender(0, 0, 0, 128);
     if (set_gfx_mode(GFX_AUTODETECT_FULLSCREEN,WIDTH,HEIGHT,0,0)!=0){ // Règle le mode graphique sur 800x600 et vérifie s'il fonctionne
         allegro_message("prb gfx mode"); // Affiche un message d'erreur si le mode graphique ne fonctionne pas
         allegro_exit(); // Quitte Allegro
