@@ -533,7 +533,7 @@ void parc2(){
         if (xPacman <= (xtir + (tirballon->w)/2) && (xtir + (tirballon->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytir) && (ytir) <= (yPacman + pacman[0][0][1]->h))
         {
             stop_sample(sound[musiquealeatoire]);
-            baloon();
+            shoot();
             musique =1;
             yguitar-= pacman[0][0][1]->h;
             yserpent-= pacman[0][0][1]->h;
