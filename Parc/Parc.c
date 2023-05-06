@@ -208,25 +208,25 @@ void parc2(){
     BITMAP *buffer;
     BITMAP *pacman[grille][action][posirang];
     BITMAP *porte[4];
-    BITMAP *fond= load_bitmap("../Parc/image/fondplage1.bmp",NULL);
-    BITMAP *fondmap= load_bitmap("../Parc/image/mapfond2.bmp",NULL);
+    BITMAP *fond= load_bitmap("../Parc/image/fond/fondplage1.bmp",NULL);
+    BITMAP *fondmap= load_bitmap("../Parc/image/fond/mapfond2.bmp",NULL);
     BITMAP *bitcoin[8];
     BITMAP *cheval[13];
-    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome2.bmp",NULL);  //image des attractions/mini-jeux
-    BITMAP *guitar= load_bitmap("../Parc/image/concert2.bmp",NULL);
-    BITMAP *casino= load_bitmap("../Parc/image/casino0.bmp",NULL);
-    BITMAP *river= load_bitmap("../Parc/image/lac1.bmp",NULL);
-    BITMAP *serpent= load_bitmap("../Parc/image/river0.bmp",NULL);
-    BITMAP *tirballon= load_bitmap("../Parc/image/futuroscope0.bmp",NULL);
-    BITMAP *labyrinthe= load_bitmap("../Parc/image/labyrinthe0.bmp",NULL);
-    BITMAP *taupe= load_bitmap("../Parc/image/cirque0.bmp",NULL);
-    BITMAP *canard= load_bitmap("../Parc/image/parc1.bmp",NULL);
+    BITMAP *hippodrome= load_bitmap("../Parc/image/batiment/hippodrome2.bmp",NULL);  //image des attractions/mini-jeux
+    BITMAP *guitar= load_bitmap("../Parc/image/batiment/concert2.bmp",NULL);
+    BITMAP *casino= load_bitmap("../Parc/image/batiment/casino0.bmp",NULL);
+    BITMAP *river= load_bitmap("../Parc/image/batiment/lac1.bmp",NULL);
+    BITMAP *serpent= load_bitmap("../Parc/image/batiment/river0.bmp",NULL);
+    BITMAP *tirballon= load_bitmap("../Parc/image/batiment/futuroscope0.bmp",NULL);
+    BITMAP *labyrinthe= load_bitmap("../Parc/image/batiment/labyrinthe0.bmp",NULL);
+    BITMAP *taupe= load_bitmap("../Parc/image/batiment/cirque0.bmp",NULL);
+    BITMAP *canard= load_bitmap("../Parc/image/batiment/parc1.bmp",NULL);
 
     BITMAP *barbare[2];
-    barbare[0]=load_bitmap("../Parc/image/barbare0.bmp",NULL);
+    barbare[0]=load_bitmap("../Parc/image/pnjbarbare/barbare0.bmp",NULL);
     //barbare[0]=load_bitmap("../Parc/imagepnj/perso0/action0/0.bmp",NULL);
     //barbare[1]=load_bitmap("../Parc/imagepnj/perso0/action0/1.bmp",NULL);
-    barbare[1]=load_bitmap("../Parc/image/barbare1.bmp",NULL);
+    barbare[1]=load_bitmap("../Parc/image/pnjbarbare/barbare1.bmp",NULL);
     int xbarbare[2];
     int ybarbare[2];
     xbarbare[0]=WIDTH-(barbare[0]->w);
@@ -301,21 +301,21 @@ void parc2(){
     //Verifie si les image sont bien la
     for(int j=0;j<4;j++)
     {
-        sprintf(tabporte,"../Parc/image/portEnd%d.bmp",j);
+        sprintf(tabporte,"../Parc/image/porte/portEnd%d.bmp",j);
         porte[j]= load_bitmap(tabporte,NULL);
         if(!porte[j])
         {
-            allegro_message("../image/portEnd%d.bmp",j);
+            allegro_message("../image/porte/portEnd%d.bmp",j);
             exit(EXIT_FAILURE);
         }
     }
     for(int j=0;j<8;j++)
     {
-        sprintf(tabporte,"../Parc/image/bitcoin%d.bmp",j);
+        sprintf(tabporte,"../Parc/image/bitcoin/bitcoin%d.bmp",j);
         bitcoin[j]= load_bitmap(tabporte,NULL);
         if(!bitcoin[j])
         {
-            allegro_message("../image/bitcoin%d.bmp",j);
+            allegro_message("../image/bitcoin/bitcoin%d.bmp",j);
             exit(EXIT_FAILURE);
         }
     }
@@ -341,7 +341,7 @@ void parc2(){
         effet[i]= load_wav(nomDeFichier);
         if(!effet[i])
         {
-            allegro_message("../image/musiquebarbare%d.wav",i);
+            allegro_message("../musiquebarbare%d.wav",i);
             exit(EXIT_FAILURE);
         }
     }
@@ -351,7 +351,7 @@ void parc2(){
         sound[i]= load_wav(nomDeFichier);
         if(!sound[i])
         {
-            allegro_message("../image/musique%d.wav",i);
+            allegro_message("../musique%d.wav",i);
             exit(EXIT_FAILURE);
         }
     }
@@ -361,17 +361,17 @@ void parc2(){
         sound[i]= load_wav(nomDeFichier);
         if(!sound[i])
         {
-            allegro_message("../image/musique%d.wav",i);
+            allegro_message("../image/batiment/musique%d.wav",i);
             exit(EXIT_FAILURE);
         }
     }*/
     /*for(int i=0;i<3;i++)
     {
-        sprintf(nomDeFichier,"../Parc/image/pacman%d.bmp",i);
+        sprintf(nomDeFichier,"../Parc/image/batiment/pacman%d.bmp",i);
         pacman[i]= load_bitmap(nomDeFichier,NULL);
         if(!pacman[i])
         {
-            allegro_message("../image/pacman%d.bmp",i);
+            allegro_message("../image/batiment/pacman%d.bmp",i);
             exit(EXIT_FAILURE);
         }
     }*/
@@ -383,7 +383,7 @@ void parc2(){
                 pacman[g][a][i]= load_bitmap(nomDeFichier,NULL);
                 if(!pacman[g][a][i])
                 {
-                    allegro_message("../image/perso%d/action%d/%d.bmp",g,a,i);
+                    allegro_message("../image/batiment/perso%d/action%d/%d.bmp",g,a,i);
                     exit(EXIT_FAILURE);
                 }
             }
