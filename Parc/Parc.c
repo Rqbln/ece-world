@@ -1,208 +1,4 @@
 #include "Parc.h"
-void attraction(){
-
-}
-
-void parc(){
-    BITMAP *buffer;
-    BITMAP *pacman[4];
-    BITMAP *porte[4];
-    BITMAP *fond= load_bitmap("../Parc/image/pacmanmap.bmp",NULL);
-    BITMAP *hippodrome= load_bitmap("../Parc/image/hippodrome1.bmp",NULL);
-    BITMAP *casino= load_bitmap("../Parc/image/casino0.bmp",NULL);
-    BITMAP *river= load_bitmap("../Parc/image/river0.bmp",NULL);
-    BITMAP *serpent= load_bitmap("../Parc/image/river0.bmp",NULL);
-    BITMAP *fondmap= load_bitmap("../Parc/image/fondmap0.bmp",NULL);
-
-    int xserpent= 0;
-    int yserpent= HEIGHT*0.8;
-    int xriver= WIDTH*0.8;
-    int yriver= 0;
-    int xcasino= WIDTH*0.8;
-    int ycasino= HEIGHT*0.8;
-    int xhippodrome= 0;
-    int yhippodrome= 0;
-
-    int posx=0;
-    int dx=15;
-    int dy=15;
-    int xPacman=WIDTH/2;
-    int yPacman=HEIGHT/2;
-    char nomDeFichier[80];
-
-    int order=0;
-    int vx;
-    int vy;
-    int xporte=WIDTH/2;
-    int yporte=HEIGHT*0.9;
-    char tabporte[80];
-    int end=0;
-
-    for(int j=0;j<4;j++)
-    {
-        sprintf(tabporte,"../Parc/image/portEnd%d.bmp",j);
-        porte[j]= load_bitmap(tabporte,NULL);
-        if(!porte[j])
-        {
-            allegro_message("../image/portEnd%d.bmp",j);
-            exit(EXIT_FAILURE);
-        }
-
-    }
-
-    for(int i=0;i<3;i++)
-    {
-        sprintf(nomDeFichier,"../Parc/image/pacman%d.bmp",i);
-        pacman[i]= load_bitmap(nomDeFichier,NULL);
-        if(!pacman[i])
-        {
-            allegro_message("../image/pacman%d.bmp",i);
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    if(!fond)
-    {
-        allegro_message("pas trouver /image/pacmanmap.bmp ");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-    buffer=create_bitmap(WIDTH,HEIGHT);
-
-    while (!key[KEY_ESC] && end==0) {
-        clear_bitmap(buffer);
-        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
-        // Obtenir les coordonnées de la souris
-        stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
-        //collision porte end
-        if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[1]->h))
-        {
-            order++;
-            if(order>3)
-            {
-                end=1;
-            }
-            // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
-        }
-
-            draw_sprite(buffer,porte[order],xporte,yporte);
-        //collision activité hippodrome
-        if (xPacman <= (xhippodrome + hippodrome->w) && xhippodrome <= (xPacman + pacman[1]->w) && yPacman <= (yhippodrome + hippodrome->h) && yhippodrome <= (yPacman + pacman[1]->h))
-        {
-            pari();
-            anim_horse();
-            xPacman=WIDTH/2;
-            yPacman=HEIGHT/2;
-            // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
-        }
-
-        draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
-
-        if (xPacman <= (xcasino + casino->w) && xcasino <= (xPacman + pacman[1]->w) && yPacman <= (ycasino + casino->h) && ycasino <= (yPacman + pacman[1]->h))
-        {
-            jackpot();
-            xPacman=WIDTH/2;
-            yPacman=HEIGHT/2;
-            // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
-        }
-
-        draw_sprite(buffer,casino,xcasino,ycasino);
-
-        if (xPacman <= (xriver + river->w) && xriver <= (xPacman + pacman[1]->w) && yPacman <= (yriver + river->h) && yriver <= (yPacman + pacman[1]->h))
-        {
-            playguitar();
-            xPacman=WIDTH/2;
-            yPacman=HEIGHT/2;
-            // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
-        }
-
-        draw_sprite(buffer,river,xriver,yriver);
-
-        if (xPacman <= (xserpent + serpent->w) && xserpent <= (xPacman + pacman[1]->w) && yPacman <= (yserpent + serpent->h) && yserpent <= (yPacman + pacman[1]->h))
-        {
-            snake();
-            xPacman=WIDTH/2;
-            yPacman=HEIGHT/2;
-            // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
-        }
-
-        draw_sprite(buffer,serpent,xserpent,yserpent);
-
-
-        if (key[KEY_RIGHT]){
-            posx++;
-            xPacman=xPacman+dx;
-            if(xPacman<0)
-            {
-                xPacman=0;
-            }
-            if(posx>2)
-            {
-                posx=0;
-            }
-            draw_sprite(buffer,pacman[posx],xPacman,yPacman);
-        }
-        else if (key[KEY_LEFT]){
-            posx++;
-            xPacman=xPacman-dx;
-            if(xPacman>WIDTH)
-            {
-                xPacman=0;
-            }
-            if(posx>2)
-            {
-                posx=0;
-            }
-            draw_sprite_h_flip(buffer,pacman[posx],xPacman,yPacman);
-
-        }
-        else if (key[KEY_UP]){
-            posx++;
-            yPacman=yPacman-dy;
-            if(xPacman<0)
-            {
-                xPacman=0;
-            }
-            if(posx>2)
-            {
-                posx=0;
-            }
-            draw_sprite_h_flip(buffer,pacman[posx],xPacman,yPacman);
-
-        }
-        else if (key[KEY_DOWN]){
-            posx++;
-            yPacman=yPacman+dy;
-            if(yPacman>HEIGHT)
-            {
-                xPacman=0;
-            }
-            if(posx>2)
-            {
-                posx=0;
-            }
-            draw_sprite_h_flip(buffer,pacman[posx],xPacman,yPacman);
-
-        }
-        else
-        {
-            draw_sprite(buffer,pacman[0],xPacman,yPacman);
-        }
-        blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
-        if (key[KEY_SPACE]) {
-            rest(50);
-        }
-        else
-            rest(100); // Pause de 10 ms pour rafraîchir l'écran
-    }
-}
-
-
 void parc2(){
     BITMAP *buffer2;
     BITMAP *buffer;
@@ -263,10 +59,6 @@ void parc2(){
     int xcheval[nbcheval];
     int ycheval[nbcheval];
 
-   /* int xPacman=(WIDTH/2)-(pacman[0][0][0]->w);
-    int yPacman=(HEIGHT/2)-(pacman[0][0][0]->h);
-    int xportail=xPacman;
-    int yportail=yPacman;*/
     int xporte=ximgfond+1700;
     int yporte=yimgfond+950;
     int actionperso=0;
@@ -300,109 +92,70 @@ void parc2(){
     char nomjoueur[2][20];
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
-
     //Verifie si les image sont bien la
-    for(int j=0;j<4;j++)
-    {
+    for(int j=0;j<4;j++){
         sprintf(tabporte,"../Parc/image/porte/portEnd%d.bmp",j);
         porte[j]= load_bitmap(tabporte,NULL);
-        if(!porte[j])
-        {
+        if(!porte[j]){
             allegro_message("../image/porte/portEnd%d.bmp",j);
             exit(EXIT_FAILURE);
         }
     }
-    for(int j=0;j<12;j++)
-    {
+    for(int j=0;j<12;j++){
         sprintf(tabporte,"../Parc/image/portail/%d.bmp",j);
         portail[j]= load_bitmap(tabporte,NULL);
-        if(!portail[j])
-        {
+        if(!portail[j]){
             allegro_message("../image/portail/%d.bmp",j);
             exit(EXIT_FAILURE);
         }
     }
-    for(int j=0;j<8;j++)
-    {
+    for(int j=0;j<8;j++){
         sprintf(tabporte,"../Parc/image/bitcoin/bitcoin%d.bmp",j);
         bitcoin[j]= load_bitmap(tabporte,NULL);
-        if(!bitcoin[j])
-        {
+        if(!bitcoin[j]){
             allegro_message("../image/bitcoin/bitcoin%d.bmp",j);
             exit(EXIT_FAILURE);
         }
     }
-    for(int i=0;i<nbcheval;i++)
-    {
+    for(int i=0;i<nbcheval;i++){
         xcheval[i]=ximgfond+2670-i*21;
         ycheval[i]=yimgfond+1305+i*9;
     }
-    for(int i=0;i<12;i++)
-    {
+    for(int i=0;i<12;i++){
         sprintf(nomDeFichier,"../Games/Course_Chevaux/image/cheval%d (Personnalisé).bmp",i);
         cheval[i]= load_bitmap(nomDeFichier,NULL);
-        if(!cheval[i])
-        {
+        if(!cheval[i]){
             allegro_message("../Games/Course_Chevaux/image/cheval%d.bmp",i);
             exit(EXIT_FAILURE);
         }
     }
-
-    for(int i=0;i<2;i++)
-    {
+    for(int i=0;i<2;i++){
         sprintf(nomDeFichier,"../Parc/musique/musiquebarbare%d.wav",i);
         effet[i]= load_wav(nomDeFichier);
-        if(!effet[i])
-        {
+        if(!effet[i]){
             allegro_message("../musiquebarbare%d.wav",i);
             exit(EXIT_FAILURE);
         }
     }
-    for(int i=0;i<nbMusique;i++)
-    {
+    for(int i=0;i<nbMusique;i++){
         sprintf(nomDeFichier,"../Parc/musique/musique%d.wav",i);
         sound[i]= load_wav(nomDeFichier);
-        if(!sound[i])
-        {
+        if(!sound[i]){
             allegro_message("../musique%d.wav",i);
             exit(EXIT_FAILURE);
         }
     }
-    /*for(int i=0;i<nbMusique;i++)
-    {
-        sprintf(nomDeFichier,"../Parc/musique/The Vanishing of Ethan Carter Soundtrack - Valley of the Blinding Mist.wav");
-        sound[i]= load_wav(nomDeFichier);
-        if(!sound[i])
-        {
-            allegro_message("../image/batiment/musique%d.wav",i);
-            exit(EXIT_FAILURE);
-        }
-    }*/
-    /*for(int i=0;i<3;i++)
-    {
-        sprintf(nomDeFichier,"../Parc/image/batiment/pacman%d.bmp",i);
-        pacman[i]= load_bitmap(nomDeFichier,NULL);
-        if(!pacman[i])
-        {
-            allegro_message("../image/batiment/pacman%d.bmp",i);
-            exit(EXIT_FAILURE);
-        }
-    }*/
     for (int g = 0; g < grille; ++g) {
         for (int a = 0; a < action; ++a) {
-            for(int i=0;i<posirang;i++)
-            {
+            for(int i=0;i<posirang;i++){
                 sprintf(nomDeFichier,"../Parc/imagepnj/perso%d/action%d/%d.bmp",g,a,i);
                 pacman[g][a][i]= load_bitmap(nomDeFichier,NULL);
-                if(!pacman[g][a][i])
-                {
+                if(!pacman[g][a][i]){
                     allegro_message("../image/batiment/perso%d/action%d/%d.bmp",g,a,i);
                     exit(EXIT_FAILURE);
                 }
             }
-
         }
-
     }
     int xPacman=(WIDTH/2)-(pacman[0][0][0]->w)/2;
     int yPacman=(HEIGHT/2)-(pacman[0][0][0]->h)/2;
@@ -411,7 +164,7 @@ void parc2(){
     buffer=create_bitmap(WIDTH,HEIGHT);
     buffer2=create_bitmap(buffersizew,buffersizeh);
 
-    while (!key[KEY_ESC] && end==0) {  //boucle principale
+    while (!key[KEY_ESC] && end==0){  //boucle principale
         if(musique==1){
             musiquealeatoire = rand() % nbMusique;
             play_sample(sound[musiquealeatoire], 255, 128, 1000, 1);
@@ -457,7 +210,6 @@ void parc2(){
         draw_sprite(buffer,bitcoin[posbitcoin],xbitcoin,ybitcoin);
         draw_sprite(buffer,portail[posbitcoin],xportail,yportail);
 
-
         for (int i = 0; i < nbcheval; ++i) {
             if (cmpt>=280){
                 cmpt=0;
@@ -487,21 +239,16 @@ void parc2(){
             posbitcoin=0;
         }
         //collision porte end
-        if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[0][0][1]->h)){
             order++;
-            if(order>3)
-            {
+            if(order>3){
                 end=1;
             }
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-       // draw_sprite(buffer,porte[order],xporte,yporte);
         //collision activité hippodrome
-        if (xPacman <= (xhippodrome + (hippodrome->w)/2) && (xhippodrome + (hippodrome->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yhippodrome) && (yhippodrome) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xhippodrome + (hippodrome->w)/2) && (xhippodrome + (hippodrome->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yhippodrome) && (yhippodrome) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             pari();
             anim_horse();
@@ -518,8 +265,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -528,10 +274,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
-        if (xPacman <= (xtir + (tirballon->w)/2) && (xtir + (tirballon->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytir) && (ytir) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xtir + (tirballon->w)/2) && (xtir + (tirballon->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytir) && (ytir) <= (yPacman + pacman[0][0][1]->h)){
             shoot();
             stop_sample(sound[musiquealeatoire]);
             musique =1;
@@ -547,8 +290,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -557,10 +299,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,tirballon,xtir,ytir);
-        if (xPacman <= (xlabyrinthe + (labyrinthe->w)/2) && (xlabyrinthe + (labyrinthe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ylabyrinthe) && (ylabyrinthe) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xlabyrinthe + (labyrinthe->w)/2) && (xlabyrinthe + (labyrinthe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ylabyrinthe) && (ylabyrinthe) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             pari();
             anim_horse();
@@ -577,8 +316,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -587,10 +325,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,labyrinthe,xlabyrinthe,ylabyrinthe);
-        if (xPacman <= (xcanard + (canard->w)/2) && (xcanard + (canard->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ycanard) && (ycanard) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xcanard + (canard->w)/2) && (xcanard + (canard->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ycanard) && (ycanard) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             ducky();
             musique =1;
@@ -606,8 +341,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -616,10 +350,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,canard,xcanard,ycanard);
-        if (xPacman <= (xtaupe + (taupe->w)/2) && (xtaupe + (taupe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytaupe) && (ytaupe) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xtaupe + (taupe->w)/2) && (xtaupe + (taupe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytaupe) && (ytaupe) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             jeu_taupe();
             musique =1;
@@ -635,8 +366,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -645,10 +375,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,taupe,xtaupe,ytaupe);
-        if (xPacman <= (xguitar + (guitar->w)/2) && (xguitar + (guitar->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yguitar) && (yguitar) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xguitar + (guitar->w)/2) && (xguitar + (guitar->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yguitar) && (yguitar) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             playguitar();
             musique =1;
@@ -664,8 +391,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -674,10 +400,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,guitar,xguitar,yguitar);
-        if (xPacman <= (xcasino + (casino->w)/2) && (xcasino + (casino->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ycasino) && (ycasino) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xcasino + (casino->w)/2) && (xcasino + (casino->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ycasino) && (ycasino) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             jackpot();
             musique =1;
@@ -693,8 +416,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -703,11 +425,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,casino,xcasino,ycasino);
-
-        if (xPacman <= (xriver + (river->w)/2) && (xriver + (river->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yriver) && (yriver) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xriver + (river->w)/2) && (xriver + (river->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yriver) && (yriver) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             //playguitar();
             musique =1;
@@ -723,8 +441,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -733,11 +450,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,river,xriver,yriver);
-
-        if (xPacman <= (xserpent + (serpent->w)/2) && (xserpent + (serpent->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yserpent) && (yserpent) <= (yPacman + pacman[0][0][1]->h))
-        {
+        if (xPacman <= (xserpent + (serpent->w)/2) && (xserpent + (serpent->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yserpent) && (yserpent) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             snake();
             musique =1;
@@ -753,8 +466,7 @@ void parc2(){
             ytaupe-= pacman[0][0][1]->h;
             ycanard-= pacman[0][0][1]->h;
             yportail-= pacman[0][0][1]->h;
-            for(int i=0;i<nbcheval;i++)
-            {
+            for(int i=0;i<nbcheval;i++){
                 xcheval[i]=ximgfond+2670-i*21;
                 ycheval[i]=yimgfond+1305+i*9;
             }
@@ -763,13 +475,8 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-
-        //draw_sprite(buffer,serpent,xserpent,yserpent);
-
-
         if(key[KEY_DOWN] || key[KEY_UP] || key[KEY_LEFT] || key[KEY_RIGHT]){
             if (key[KEY_RIGHT]&& ((WIDTH+1)<(fondmap->w +ximgfond))){
-
                 if (key[KEY_UP] && yimgfond<0){
                     actionperso=13;
                     yguitar+= dy;
@@ -825,20 +532,12 @@ void parc2(){
                 for (int i = 0; i < nbcheval; ++i) {
                     xcheval[i]-=dx;
                 }
-
-                /*if(xPacman<0)
-                {
-                    xPacman=0;
-                }*/
                 if(posx>2)
                 {
                     posx=0;
                 }
-                //pacman[0][0][1]
-                //draw_sprite(buffer,pacman[posx],xPacman,yPacman);
             }
             else if (key[KEY_LEFT]&& ximgfond<0){
-
                 if (key[KEY_UP]&& yimgfond<0){
                     actionperso=9;
                     yguitar+= dy;
@@ -894,7 +593,6 @@ void parc2(){
                 for (int i = 0; i < nbcheval; ++i) {
                     xcheval[i]+=dx;
                 }
-
                 if(xPacman>WIDTH)
                 {
                     xPacman=0;
@@ -903,8 +601,6 @@ void parc2(){
                 {
                     posx=0;
                 }
-                //draw_sprite_h_flip(buffer,pacman[posx],xPacman,yPacman);
-
             }
             else if (key[KEY_UP]&& yimgfond<0){
                 actionperso=12;
@@ -924,16 +620,10 @@ void parc2(){
                 for (int i = 0; i < nbcheval; ++i) {
                     ycheval[i]+=dy;
                 }
-                /*if(xPacman<0)
-               {
-                   xPacman=0;
-               }*/
                 if(posx>2)
                 {
                     posx=0;
                 }
-                //draw_sprite_h_flip(buffer,pacman[posx],xPacman,yPacman);
-
             }
             else if (key[KEY_DOWN]&& ((HEIGHT+1)<(fondmap->h +yimgfond))){
                 actionperso=0;
@@ -953,16 +643,10 @@ void parc2(){
                 for (int i = 0; i < nbcheval; ++i) {
                     ycheval[i]-=dy;
                 }
-                /*if(yPacman>HEIGHT)
-                {
-                    xPacman=0;
-                }*/
                 if(posx>2)
                 {
                     posx=0;
                 }
-                //draw_sprite_h_flip(buffer,pacman[posx],xPacman,yPacman);
-
             }
             draw_sprite(buffer,pacman[0][actionperso][posx],xPacman,yPacman);
         }
@@ -978,12 +662,9 @@ void parc2(){
                 while (!key[KEY_ENTER] && stop==0) {
                     clear_bitmap(buffer2);
                     clear_to_color(buffer2, makecol(255, 255, 255)); // Effacer l'écran en blanc
-                    //draw_trans_sprite(buffer, buffer2, posxbuff2, posybuff2);
                     // Afficher la zone de saisie clavier
-                    //rect(buffer2, 0, 0, buffersizew, buffersizeh, makecol(0, 0, 150));
                     textout_centre_ex(buffer2, font, "entrez votre nom : ", buffersizew/2, 3, makecol(0, 0, 0), -1);
                     textout_centre_ex(buffer2, font, text_input, buffersizew/2, buffersizeh/2, makecol(0, 0, 0), -1);
-
                     draw_sprite(buffer,barbare[i],xbarbare[i],ybarbare[i]);
                     // Lire la saisie clavier*
                     blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
@@ -998,8 +679,6 @@ void parc2(){
                     }
                     // Rafraîchir l'écran
                     vsync();
-                    //draw_trans_sprite(buffer, buffer2, posxbuff2, posybuff2); // Dessiner buffer2 avec transparence sur buffer
-                    //blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
                     blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
                 }
                 sprintf(nomjoueur[i],"%s",text_input);
@@ -1013,7 +692,6 @@ void parc2(){
         textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[0]);
         textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[1]);
         stop=1;
-
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
             rest(10);
