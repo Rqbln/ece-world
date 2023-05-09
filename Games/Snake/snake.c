@@ -13,8 +13,10 @@ void snake() {
     //Snake 1
         for (int i = 0; i < 4; i++) {
             sprintf(filename, "../Games/Snake/images/snake1_%d.bmp",i);
-            sprintf(filename, "../Games/Snake/images/snake2_%d.bmp",i);
+
             snake1[i] = load_bitmap(filename, NULL);
+            sprintf(filename, "../Games/Snake/images/snake2_%d.bmp",i);
+
             snake2[i] = load_bitmap(filename, NULL);
 
             if (!snake1[i] && !snake2[i]) { //blindage
@@ -88,8 +90,10 @@ void snake() {
         clear_bitmap(screen);
         draw_sprite(screen,fond,0,0);
         for (int i = 0; i < snake1_length; i++) {
-            rectfill(screen, snake1_x[i], snake1_y[i], snake1_x[i] + TAILLE_JEU, snake1_y[i] + TAILLE_JEU, makecol(255, 255, 255));
+            rectfill(screen, snake1_x[i], snake1_y[i], snake1_x[i] + TAILLE_JEU, snake1_y[i] + TAILLE_JEU, makecol(136, 170, 0));
         }
+
+
 
         // Dessiner le serpent 2
         for (int i = 0; i < snake2_length; i++) {
@@ -108,15 +112,19 @@ void snake() {
         switch (direction1) {
             case 0: // droite
                 snake1_x[0] += TAILLE_JEU;
+                draw_sprite(screen,snake1[0],snake1_x[0],snake1_y[0]);
                 break;
             case 1: // bas
                 snake1_y[0] += TAILLE_JEU;
+                draw_sprite(screen,snake1[1],snake1_x[0],snake1_y[0]);
                 break;
             case 2: // gauche
                 snake1_x[0] -= TAILLE_JEU;
+                draw_sprite(screen,snake1[2],snake1_x[0],snake1_y[0]);
                 break;
             case 3: // haut
                 snake1_y[0] -= TAILLE_JEU;
+                draw_sprite(screen,snake1[3],snake1_x[0],snake1_y[0]);
                 break;
         }
         for (int i = 1; i < snake1_length; i++) {
@@ -135,15 +143,19 @@ void snake() {
         switch (direction2) {
             case 0: // droite
                 snake2_x[0] += TAILLE_JEU;
+                draw_sprite(screen,snake2[0],snake2_x[0],snake2_y[0]);
                 break;
             case 1: // bas
                 snake2_y[0] += TAILLE_JEU;
+                draw_sprite(screen,snake2[1],snake2_x[0],snake2_y[0]);
                 break;
             case 2: // gauche
                 snake2_x[0] -= TAILLE_JEU;
+                draw_sprite(screen,snake2[2],snake2_x[0],snake2_y[0]);
                 break;
             case 3: // haut
                 snake2_y[0] -= TAILLE_JEU;
+                draw_sprite(screen,snake2[3],snake2_x[0],snake2_y[0]);
                 break;
         }
         for (int i = 1; i < snake2_length; i++) {
