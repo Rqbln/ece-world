@@ -86,6 +86,7 @@ void snake() {
 
         // Dessiner le serpent 1
         clear_bitmap(screen);
+        draw_sprite(screen,fond,0,0);
         for (int i = 0; i < snake1_length; i++) {
             rectfill(screen, snake1_x[i], snake1_y[i], snake1_x[i] + TAILLE_JEU, snake1_y[i] + TAILLE_JEU, makecol(255, 255, 255));
         }
@@ -99,7 +100,7 @@ void snake() {
 
 
         // Dessiner la nourriture
-        rectfill(screen, food_x, food_y, food_x + TAILLE_JEU, food_y + TAILLE_JEU, makecol(0, 255, 0));
+        draw_sprite(screen,pomme,food_x,food_y);
 
         // Mettre à jour le serpent 1
         int old_x1 = snake1_x[0];
