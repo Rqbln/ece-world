@@ -2,6 +2,42 @@
 #include "../../Init_Allegro/allegro.h"
 
 void snake() {
+
+    //Iniitialiser bitmaps
+
+
+    BITMAP *snake1[4];
+    BITMAP *snake2[4];
+    char filename[80];
+
+    //Snake 1
+        for (int i = 0; i < 4; i++) {
+            sprintf(filename, "../Games/Snake/images/snake1_%d.bmp",i);
+            sprintf(filename, "../Games/Snake/images/snake2_%d.bmp",i);
+            snake1[i] = load_bitmap(filename, NULL);
+            snake2[i] = load_bitmap(filename, NULL);
+
+            if (!snake1[i] && !snake2[i]) { //blindage
+                allegro_message("Erreur icone");
+                exit(EXIT_FAILURE);
+            }
+        }
+
+
+    // Buffer et fond
+
+    BITMAP *pomme= load_bitmap("../Games/Snake/images/pomme.bmp",NULL);
+    BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    BITMAP *fond = load_bitmap("../Games/Snake/images/fond.bmp",NULL);
+
+    if (!fond) { //blindage
+        allegro_message("Erreur image fond");
+        exit(EXIT_FAILURE);
+    }
+
+
+
+
     // Initialiser les serpents
     int snake1_length = 3;
     int snake1_x[100] = { WIDTH/2, WIDTH/2, WIDTH/2 };
@@ -28,15 +64,22 @@ void snake() {
     srand(time(NULL));
 
     while (!key[KEY_ENTER]){
+        draw_sprite(buffer,fond,0,0);
         sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
-        textout_centre_ex(screen,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+        textout_centre_ex(buffer,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
         rest(10);
     }
 
+
+
+
     for (int i = 3; i > 0; --i) {
-        clear_bitmap(screen);
+        clear_bitmap(buffer);
+        draw_sprite(buffer,fond,0,0);
         sprintf(messageDebut, "%d",i);
-        textout_centre_ex(screen,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+        textout_centre_ex(buffer,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
         rest(1000);
     }
     while (!game_over && !key[KEY_ESC]) {
