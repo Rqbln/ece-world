@@ -1,4 +1,7 @@
 #include "Parc.h"
+
+//Structure pour les joueurs
+
 void parc2(){
     BITMAP *buffer2;
     BITMAP *bulleDroite = load_bitmap("../Parc/imagepnj/bulledroite.bmp",NULL);
@@ -92,6 +95,10 @@ void parc2(){
     int posybuff2 = (HEIGHT/2)-(buffersizeh/2);//HEIGHT/2
 
     char nomjoueur[2][20];
+
+
+    t_joueurs joueurs [NB_JOUEURS];
+
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
     //Verifie si les image sont bien la
@@ -669,7 +676,7 @@ void parc2(){
                     textout_centre_ex(buffer2, font, text_input, buffersizew/2, buffersizeh/2, makecol(0, 0, 0), -1);
                     draw_sprite(buffer,barbare[i],xbarbare[i],ybarbare[i]);
                     // Lire la saisie clavier
-                    draw_sprite(buffer,bulleDroite,buffersizew,buffersizeh);
+                    draw_sprite(buffer,bulleGauche,xbarbare[0]-400,ybarbare[0]/2 - 200);
 
                     blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
                     while (keypressed()) {
@@ -685,7 +692,7 @@ void parc2(){
                     vsync();
                     blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
                 }
-                sprintf(nomjoueur[i],"%s",text_input);
+                sprintf(joueurs[i].nom,"%s",text_input);
                 memset(text_input, '\0', sizeof(text_input)); //effacer tout le tableau
                 rest(300);
                 stop_sample(effet[i]);
@@ -693,8 +700,8 @@ void parc2(){
             musique=1;
         }
         stop_sample(ambiance);
-        textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[0]);
-        textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[1]);
+        textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", joueurs[0].nom);
+        textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", joueurs[1].nom);
         stop=1;
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
