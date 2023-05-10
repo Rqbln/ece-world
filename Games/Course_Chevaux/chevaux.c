@@ -22,6 +22,7 @@ void pari(){
     int option=0;
     int nbJoueur = 2;
     int joueur[nbJoueur];
+    char texte[20];
 
 
     for(int i=0;i<nbCheval;i++)
@@ -63,15 +64,12 @@ void pari(){
     while (!key[KEY_ESC] && memo ==20 && tour < 2) {
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
-        // Obtenir les coordonnées de la souris
         stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
         draw_sprite(buffer,arriver,xArriver,yArriver);
         draw_sprite(buffer,menu,WIDTH/2,0);
         //for (int tour = 0; tour < nbJoueur; ++tour) {
             for (int i=0; i<nbCheval; i++){
-
                 draw_sprite(buffer,cheval,xcheval,ycheval[i]);
-
                 if (option==i){
                     j=1;
                 }
@@ -79,9 +77,9 @@ void pari(){
                     j=0;
                 }
                 draw_sprite(buffer,select[i][j],xselect,yselect[i]);
+                textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "joueur %d fais ton choix enculé!",tour);
 
             }
-
             if (key[KEY_UP]) { // Flèche du haut
                 option--;
                 if (option<0){
@@ -100,8 +98,11 @@ void pari(){
             if (key[KEY_ENTER]) { // Touche Entrée
                 rest(50); // Pause pour éviter les mouvements trop rapides
                 joueur[tour] = option;
+                 //sprintf("valider, le joueur %d a voté le cheval %d !",tour,option);
                 tour+=1;
-                textout_centre_ex(buffer, font, "valider !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+                textprintf_ex(buffer, font, WIDTH/2, HEIGHT/2, makecol(255, 255, 255), -1, "valider, le joueur %d a voté le cheval %d !",tour,option);
+
+                //textout_centre_ex(buffer, font, "valider, le joueur %d a voté le cheval %d !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
                 rest(250); // Pause pour éviter les mouvements trop rapides
             }
         //}
@@ -186,8 +187,7 @@ void anim_horse(){
             position[i]++;
             xcheval[i]+=nombreAleatoire;
 
-            if(position[i]>11)
-            {
+            if(position[i]>11){
                 position[i]=1;
             }
             draw_sprite(buffer,cheval[position[i]],xcheval[i],ycheval[i]);
@@ -196,69 +196,7 @@ void anim_horse(){
                 memo=i;
                 // Collision détectée !
             }
-
         }
-        /*if (key[KEY_RIGHT]){
-            posx++;
-            xCheval=xCheval+dx;
-            if(xCheval<0)
-            {
-                xCheval=0;
-            }
-            if(posx>11)
-            {
-                posx=1;
-            }
-            draw_sprite(buffer,cheval[posx],xCheval,yCheval);
-        }
-        else if (key[KEY_LEFT]){
-            posx++;
-            xCheval=xCheval-dx;
-            if(xCheval>WIDTH)
-            {
-                xCheval=0;
-            }
-            if(posx>11)
-            {
-                posx=1;
-            }
-            draw_sprite_h_flip(buffer,cheval[posx],xCheval,yCheval);
-
-        }
-        else if (key[KEY_UP]){
-            posx++;
-            yCheval=yCheval-dy;
-            if(xCheval<0)
-            {
-                xCheval=0;
-            }
-            if(posx>11)
-            {
-                posx=1;
-            }
-            draw_sprite_h_flip(buffer,cheval[posx],xCheval,yCheval);
-
-        }
-        else if (key[KEY_DOWN]){
-            posx++;
-            yCheval=yCheval+dy;
-            if(yCheval>HEIGHT)
-            {
-                xCheval=0;
-            }
-            if(posx>11)
-            {
-                posx=1;
-            }
-            draw_sprite_h_flip(buffer,cheval[posx],xCheval,yCheval);
-
-        }
-        else
-        {
-            draw_sprite(buffer,cheval[0],xCheval,yCheval);
-        }*/
-
-
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
             rest(15);
@@ -272,5 +210,4 @@ void anim_horse(){
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         rest(100); // Pause de 10 ms pour rafraîchir l'écran
     }
-
 }

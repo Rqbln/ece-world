@@ -2,44 +2,28 @@
 #include "../../Init_Allegro/allegro.h"
 
 void snake() {
-
     //Iniitialiser bitmaps
-
-
     BITMAP *snake1[4];
     BITMAP *snake2[4];
+    BITMAP *pomme= load_bitmap("../Games/Snake/images/pomme.bmp",NULL);
+    BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    BITMAP *fond = load_bitmap("../Games/Snake/images/fond.bmp",NULL);
     char filename[80];
-
     //Snake 1
         for (int i = 0; i < 4; i++) {
             sprintf(filename, "../Games/Snake/images/snake1_%d.bmp",i);
-
             snake1[i] = load_bitmap(filename, NULL);
             sprintf(filename, "../Games/Snake/images/snake2_%d.bmp",i);
-
             snake2[i] = load_bitmap(filename, NULL);
-
             if (!snake1[i] && !snake2[i]) { //blindage
                 allegro_message("Erreur icone");
                 exit(EXIT_FAILURE);
             }
         }
-
-
-    // Buffer et fond
-
-    BITMAP *pomme= load_bitmap("../Games/Snake/images/pomme.bmp",NULL);
-    BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
-    BITMAP *fond = load_bitmap("../Games/Snake/images/fond.bmp",NULL);
-
     if (!fond) { //blindage
         allegro_message("Erreur image fond");
         exit(EXIT_FAILURE);
     }
-
-
-
-
     // Initialiser les serpents
     int snake1_length = 3;
     int snake1_x[100] = { WIDTH/2, WIDTH/2, WIDTH/2 };
@@ -72,10 +56,6 @@ void snake() {
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
         rest(10);
     }
-
-
-
-
     for (int i = 3; i > 0; --i) {
         clear_bitmap(buffer);
         draw_sprite(buffer,fond,0,0);
@@ -87,24 +67,18 @@ void snake() {
     while (!game_over && !key[KEY_ESC]) {
 
         // Dessiner le serpent 1
-        clear_bitmap(screen);
-        draw_sprite(screen,fond,0,0);
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,fond,0,0);
         for (int i = 0; i < snake1_length; i++) {
-            rectfill(screen, snake1_x[i], snake1_y[i], snake1_x[i] + TAILLE_JEU, snake1_y[i] + TAILLE_JEU, makecol(136, 170, 0));
+            rectfill(buffer, snake1_x[i], snake1_y[i], snake1_x[i] + TAILLE_JEU, snake1_y[i] + TAILLE_JEU, makecol(136, 170, 0));
         }
-
-
-
         // Dessiner le serpent 2
         for (int i = 0; i < snake2_length; i++) {
-            rectfill(screen, snake2_x[i], snake2_y[i], snake2_x[i] + TAILLE_JEU, snake2_y[i] + TAILLE_JEU, makecol(255, 0,  0));
+            rectfill(buffer, snake2_x[i], snake2_y[i], snake2_x[i] + TAILLE_JEU, snake2_y[i] + TAILLE_JEU, makecol(255, 0,  0));
         }
-
-
-
-
         // Dessiner la nourriture
-        draw_sprite(screen,pomme,food_x,food_y);
+        draw_sprite(buffer,pomme,food_x,food_y);
 
         // Mettre à jour le serpent 1
         int old_x1 = snake1_x[0];
@@ -112,19 +86,19 @@ void snake() {
         switch (direction1) {
             case 0: // droite
                 snake1_x[0] += TAILLE_JEU;
-                draw_sprite(screen,snake1[0],snake1_x[0],snake1_y[0]);
+                draw_sprite(buffer,snake1[0],snake1_x[0],snake1_y[0]);
                 break;
             case 1: // bas
                 snake1_y[0] += TAILLE_JEU;
-                draw_sprite(screen,snake1[1],snake1_x[0],snake1_y[0]);
+                draw_sprite(buffer,snake1[1],snake1_x[0],snake1_y[0]);
                 break;
             case 2: // gauche
                 snake1_x[0] -= TAILLE_JEU;
-                draw_sprite(screen,snake1[2],snake1_x[0],snake1_y[0]);
+                draw_sprite(buffer,snake1[2],snake1_x[0],snake1_y[0]);
                 break;
             case 3: // haut
                 snake1_y[0] -= TAILLE_JEU;
-                draw_sprite(screen,snake1[3],snake1_x[0],snake1_y[0]);
+                draw_sprite(buffer,snake1[3],snake1_x[0],snake1_y[0]);
                 break;
         }
         for (int i = 1; i < snake1_length; i++) {
@@ -143,19 +117,19 @@ void snake() {
         switch (direction2) {
             case 0: // droite
                 snake2_x[0] += TAILLE_JEU;
-                draw_sprite(screen,snake2[0],snake2_x[0],snake2_y[0]);
+                draw_sprite(buffer,snake2[0],snake2_x[0],snake2_y[0]);
                 break;
             case 1: // bas
                 snake2_y[0] += TAILLE_JEU;
-                draw_sprite(screen,snake2[1],snake2_x[0],snake2_y[0]);
+                draw_sprite(buffer,snake2[1],snake2_x[0],snake2_y[0]);
                 break;
             case 2: // gauche
                 snake2_x[0] -= TAILLE_JEU;
-                draw_sprite(screen,snake2[2],snake2_x[0],snake2_y[0]);
+                draw_sprite(buffer,snake2[2],snake2_x[0],snake2_y[0]);
                 break;
             case 3: // haut
                 snake2_y[0] -= TAILLE_JEU;
-                draw_sprite(screen,snake2[3],snake2_x[0],snake2_y[0]);
+                draw_sprite(buffer,snake2[3],snake2_x[0],snake2_y[0]);
                 break;
         }
         for (int i = 1; i < snake2_length; i++) {
@@ -166,7 +140,6 @@ void snake() {
             old_x2 = temp_x2;
             old_y2 = temp_y2;
         }
-
 
         // Vérifier les collisions avec la nourriture
         if (snake1_x[0] < food_x + TAILLE_JEU && snake1_x[0] + TAILLE_JEU > food_x && snake1_y[0] < food_y + TAILLE_JEU && snake1_y[0] + TAILLE_JEU > food_y) {
@@ -247,15 +220,15 @@ void snake() {
 
 
         // Afficher le score1
-        textprintf_ex(screen, font, 10, 10, makecol(255, 255, 255), -1, "score1: %d", score1);
+        textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score1: %d", score1);
 
         // Afficher le score2
-        textprintf_ex(screen, font, 10, 30, makecol(255, 255, 255), -1, "score2: %d", score2);
+        textprintf_ex(buffer, font, 10, 30, makecol(255, 255, 255), -1, "score2: %d", score2);
 
 
         // Mettre à jour l'écran
         vsync();
-        blit(screen, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
 
         // Attendre un peu pour éviter que les serpents ne se déplace trop rapidement
         rest(50);
@@ -288,24 +261,25 @@ void snake() {
     while (!key[KEY_ESC]){
         if (gagnant == 1){
             sprintf(messageFin, "Le joueur 1 a gagné par collision, fin de la partie !");
-            textout_centre_ex(screen,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
         }
 
         else if (gagnant == 2) {
             sprintf(messageFin, "Le joueur 2 a gagné par collision, fin de la partie !");
-            textout_centre_ex(screen,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
         }
         else {
             if (score1 == 5) {
                 sprintf(messageFin, "Le joueur 1 a atteint 5 points, fin de la partie !");
-                textout_centre_ex(screen,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+                textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
             }
             else if (score2 == 5){
                 sprintf(messageFin, "Le joueur 2 a atteint 5 points, fin de la partie !");
-                textout_centre_ex(screen,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+                textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
             }
         }
 
+        blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         rest(10); // Pause de 10 ms pour rafraîchir l'écran
     }
 }

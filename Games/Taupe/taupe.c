@@ -4,8 +4,8 @@
 int score = 0;
 int gagnant = 0;
 int gameOver = 0;
-char messageDebut[60];
-char messageFin[60];
+char messageDebut[90];
+char messageFin[90];
 int isClicked = 0;
 
 // Les coordonnées des 6 trous de la pyramide
@@ -34,7 +34,7 @@ int is_target_occupied(int index, Target targets[], int num_targets) {
 
 void jeu_taupe(){
 
-    BITMAP *taupe[4];
+    BITMAP *taupe[5];
     char filename[80];
 
     //Taupe
@@ -86,33 +86,33 @@ void jeu_taupe(){
 
 
     while (!gameOver && !key[KEY_ESC]) {
-        clear_bitmap(screen);
-        draw_sprite(screen, fond, 0, 0);
-
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,fond,0,0);
         for (int i = 0; i < 6; ++i) {
-            circle(screen, pyramid_x[i], pyramid_y[i], TAILLE_INITIALE, makecol(255, 255, 255));
+            circle(buffer, pyramid_x[i], pyramid_y[i], TAILLE_INITIALE, makecol(255, 255, 255));
         }
 
         for (int i = 0; i < maxTargets; ++i) {
-            circlefill(screen, targets[i].x, targets[i].y, targets[i].size, makecol(255, 0, 0));
+            circlefill(buffer, targets[i].x, targets[i].y, targets[i].size, makecol(255, 0, 0));
             targets[i].size -= 2;
 
             if (targets[i].size < TAILLE_INITIALE/8) {
-                draw_sprite(screen,taupe[0],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[0],targets[i].x-63,targets[i].y-64);
             } else if (targets[i].size < 2 * TAILLE_INITIALE/8) {
-                draw_sprite(screen,taupe[1],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[1],targets[i].x-63,targets[i].y-64);
             } else if (targets[i].size < 3 * TAILLE_INITIALE/8) {
-                draw_sprite(screen,taupe[2],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[2],targets[i].x-63,targets[i].y-64);
             } else if (targets[i].size < 4 * TAILLE_INITIALE/8) {
-                draw_sprite(screen,taupe[3],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[3],targets[i].x-63,targets[i].y-64);
             } else if (targets[i].size < 5 * TAILLE_INITIALE/8) {
-                draw_sprite(screen,taupe[2],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[2],targets[i].x-63,targets[i].y-64);
             } else if (targets[i].size < 6 * TAILLE_INITIALE/8) {
-                draw_sprite(screen,taupe[1],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[1],targets[i].x-63,targets[i].y-64);
             } else if (targets[i].size < 7 * TAILLE_INITIALE / 8){
-                draw_sprite(screen,taupe[0],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[0],targets[i].x-63,targets[i].y-64);
             } else if (targets[i].size < TAILLE_INITIALE){
-                draw_sprite(screen,taupe[4],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[4],targets[i].x-63,targets[i].y-64);
             }
         }
 
@@ -170,11 +170,11 @@ void jeu_taupe(){
             }
         }
 
-        textprintf_centre_ex(screen, font, WIDTH / 2, 10, makecol(255, 255, 255), -1, "Score: %d", score);
+        textprintf_centre_ex(buffer, font, WIDTH / 2, 10, makecol(255, 255, 255), -1, "Score: %d", score);
 
         // Mettre à jour l'écran
         vsync();
-        blit(screen, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
 
         // Attendre un peu pour éviter que les cercles n'apparaissent trop rapidement
         rest(50);
@@ -182,28 +182,23 @@ void jeu_taupe(){
         if (score == 20){
             gameOver = 1;
             gagnant = 1;
-            clear_bitmap(screen);
+            clear_bitmap(buffer);
         }
     }
 
     while (!key[KEY_ESC]){
+        clear_bitmap(buffer);
+        draw_sprite(buffer,fond,0,0);
         if (gagnant){
-            clear_bitmap(buffer);
-            draw_sprite(buffer,fond,0,0);
             sprintf(messageFin, "Le joueur 1 a atteint 30 points, Vous avez gagné ! Fin de la partie.");
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
         } else {
-            clear_bitmap(buffer);
-            draw_sprite(buffer,fond,0,0);
             sprintf(messageFin, "Vous avez laissé partir une Taupe après %d points. Fin de la partie",score);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
         }
         // Mettre à jour l'écran
-
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
         rest(10); // Pause de 10 ms pour rafraîchir l'écran
         vsync();
-
-
     }
 }

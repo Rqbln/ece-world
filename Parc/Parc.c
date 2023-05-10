@@ -59,7 +59,7 @@ void parc2(){
     int xcheval[nbcheval];
     int ycheval[nbcheval];
 
-    int xporte=ximgfond+1700;
+    int xporte=ximgfond+2000;
     int yporte=yimgfond+950;
     int actionperso=0;
     int xbitcoin=0;

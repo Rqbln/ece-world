@@ -15,7 +15,7 @@ int main() {
     int gameOver = 0; // Indique si le jeu est terminé
     int squareColor = makecol(rand() % 256, rand() % 256, rand() % 256); // Couleur initiale du carré
     //ducky();
-    //taupe();
+    jeu_taupe();
     //snake();
     menu();
     //pari();
