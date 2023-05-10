@@ -98,21 +98,21 @@ void jeu_taupe(){
             targets[i].size -= 2;
 
             if (targets[i].size < TAILLE_INITIALE/8) {
-                draw_sprite(buffer,taupe[0],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[0],targets[i].x-119,targets[i].y-91);
             } else if (targets[i].size < 2 * TAILLE_INITIALE/8) {
-                draw_sprite(buffer,taupe[1],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[1],targets[i].x-119,targets[i].y-91);
             } else if (targets[i].size < 3 * TAILLE_INITIALE/8) {
-                draw_sprite(buffer,taupe[2],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[2],targets[i].x-119,targets[i].y-91);
             } else if (targets[i].size < 4 * TAILLE_INITIALE/8) {
-                draw_sprite(buffer,taupe[3],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[3],targets[i].x-119,targets[i].y-91);
             } else if (targets[i].size < 5 * TAILLE_INITIALE/8) {
-                draw_sprite(buffer,taupe[2],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[2],targets[i].x-119,targets[i].y-91);
             } else if (targets[i].size < 6 * TAILLE_INITIALE/8) {
-                draw_sprite(buffer,taupe[1],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[1],targets[i].x-119,targets[i].y-91);
             } else if (targets[i].size < 7 * TAILLE_INITIALE / 8){
-                draw_sprite(buffer,taupe[0],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[0],targets[i].x-119,targets[i].y-91);
             } else if (targets[i].size < TAILLE_INITIALE){
-                draw_sprite(buffer,taupe[4],targets[i].x-63,targets[i].y-64);
+                draw_sprite(buffer,taupe[4],targets[i].x-119,targets[i].y-91);
             }
         }
 
