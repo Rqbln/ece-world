@@ -17,11 +17,11 @@ int main() {
     //ducky();
     jeu_taupe();
     //snake();
-    menu();
     //pari();
     //anim_horse();
     //jackpot();
-
+    //playguitar();
+    menu();
     /*while (!key[KEY_ESC] && !gameOver) { // Boucle principale du jeu
         clear_bitmap(buffer); // Efface le contenu du bitmap
 
