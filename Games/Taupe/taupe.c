@@ -122,7 +122,7 @@ void jeu_taupe(){
             int my = mouse_y;
 
             for (int i = 0; i < maxTargets; ++i) {
-                if (mx >= targets[i].x - targets[i].size && mx <= targets[i].x + targets[i].size&& my >= targets[i].y - targets[i].size && my <= targets[i].y + targets[i].size) {
+                if (mx >= targets[i].x - TAILLE_INITIALE && mx <= targets[i].x + TAILLE_INITIALE&& my >= targets[i].y - TAILLE_INITIALE && my <= targets[i].y + TAILLE_INITIALE) {
                     score++;
                     targets[i].isBusy = 0;  // Marquez la position comme libre
                     targets[i].size = TAILLE_INITIALE;
