@@ -234,13 +234,13 @@ void snake() {
         rest(50);
 
         // Lire les entrées du clavier pour le serpent 1
-        if (key[KEY_D] && direction1 != 2) {
+        if (key[KEY_G] && direction1 != 2) {
             direction1 = 0;
-        } else if (key[KEY_S] && direction1 != 3) {
+        } else if (key[KEY_F] && direction1 != 3) {
             direction1 = 1;
-        } else if (key[KEY_Q] && direction1 != 0) {
+        } else if (key[KEY_D] && direction1 != 0) {
             direction1 = 2;
-        } else if (key[KEY_Z] && direction1 != 1) {
+        } else if (key[KEY_R] && direction1 != 1) {
             direction1 = 3;
         }
 
