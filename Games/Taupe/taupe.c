@@ -90,11 +90,10 @@ void jeu_taupe(){
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         draw_sprite(buffer,fond,0,0);
         for (int i = 0; i < 6; ++i) {
-            circle(buffer, pyramid_x[i], pyramid_y[i], TAILLE_INITIALE, makecol(255, 255, 255));
+            circle(buffer, pyramid_x[i], pyramid_y[i], TAILLE_INITIALE, makecol(0, 0, 0));
         }
 
         for (int i = 0; i < maxTargets; ++i) {
-            circlefill(buffer, targets[i].x, targets[i].y, targets[i].size, makecol(255, 0, 0));
             targets[i].size -= 2;
 
             if (targets[i].size < TAILLE_INITIALE/8) {
