@@ -1,6 +1,8 @@
 #include "Parc.h"
 void parc2(){
     BITMAP *buffer2;
+    BITMAP *bulleDroite = load_bitmap("../Parc/imagepnj/bulledroite.bmp",NULL);
+    BITMAP *bulleGauche = load_bitmap("../Parc/imagepnj/bullegauche.bmp",NULL);
     BITMAP *buffer;
     BITMAP *pacman[grille][action][posirang];
     BITMAP *porte[4];
@@ -666,7 +668,9 @@ void parc2(){
                     textout_centre_ex(buffer2, font, "entrez votre nom : ", buffersizew/2, 3, makecol(0, 0, 0), -1);
                     textout_centre_ex(buffer2, font, text_input, buffersizew/2, buffersizeh/2, makecol(0, 0, 0), -1);
                     draw_sprite(buffer,barbare[i],xbarbare[i],ybarbare[i]);
-                    // Lire la saisie clavier*
+                    // Lire la saisie clavier
+                    draw_sprite(buffer,bulleDroite,buffersizew,buffersizeh);
+
                     blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
                     while (keypressed()) {
                         int cle = readkey();
