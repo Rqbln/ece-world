@@ -170,6 +170,9 @@ void parc2(){
     int yPacman = (HEIGHT / 2) - (pacman[0][0][0]->h) / 2;
     int xportail = xPacman - (portail[0]->w) / 2;
     int yportail = yPacman - (portail[0]->h) / 2;
+    int xcoordonnee;
+    int ycoordonnee;
+
 
     buffer = create_bitmap(WIDTH, HEIGHT);
     buffer2 = create_bitmap(buffersizew, buffersizeh);
@@ -187,8 +190,10 @@ void parc2(){
 
         xcenter = pacman[0][0][1]->w / 2;
         ycenter = pacman[0][0][1]->w / 2;
+        xcoordonnee = -(ximgfond-xPacman-pacman[0][0][0]->w);
+        ycoordonnee = -(yimgfond-yPacman-pacman[0][0][0]->h);
         draw_sprite(buffer, fond, ximgfond, yimgfond);
-        int pixel_color = getpixel(screen, xcenter, ycenter);
+        int pixel_color = getpixel(fond, xcoordonnee, ycoordonnee);
         int pixel_r = getr(pixel_color);
         int pixel_v = getg(pixel_color);
         int pixel_b = getb(pixel_color);
@@ -209,7 +214,8 @@ void parc2(){
         //stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
         //image de fond qui bouge
         draw_sprite(buffer, fondmap, ximgfond, yimgfond);
-        textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", pixel_r);
+        //draw_sprite(buffer, fond, ximgfond, yimgfond);
+        textprintf_ex(buffer, font, 500, 10, makecol(255, 255, 255), -1, "red: %d, vert: %d, blu: %d", pixel_r, pixel_v,pixel_b);
         draw_sprite(buffer, porte[order], xporte, yporte);
         //draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
         draw_sprite(buffer, tirballon, xtir, ytir);
