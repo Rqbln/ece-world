@@ -81,7 +81,7 @@ void jackpot(){
                 BITMAP *plus1 = NULL;
                 plus1 = load_bitmap("../Games/Jackpot/IMAGES/plus1.bmp", NULL);
                 if (!plus1) { //blindage
-                    allegro_message("Erreur image slot machine");
+                    allegro_message("Erreur image bitecoin");
                     exit(EXIT_FAILURE);
                 }
                 set_trans_blender(255, 0, 255, 255);
