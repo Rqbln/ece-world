@@ -13,7 +13,7 @@ void parc2(){
     BITMAP *pacman[grille][action][posirang];
     BITMAP *porte[4];
     BITMAP *portail[12];
-    BITMAP *fond = load_bitmap("../Parc/image/fond/fondplage1.bmp", NULL);
+    BITMAP *fond = load_bitmap("../Parc/image/fond/fondplage3.bmp", NULL);
     BITMAP *fondmap = load_bitmap("../Parc/image/fond/mapfond3.bmp", NULL);
     BITMAP *bitcoin[8];
     BITMAP *cheval[13];
@@ -278,12 +278,12 @@ void parc2(){
             cmp=0;
         }
         if (pixel_r==0 && pixel_v==255 && pixel_b==0){
-            dx/=1;
-            dy/=1;
+            dx=15;
+            dy=8;
         }
         else {
-            dx/=1;
-            dy/=1;
+            dx=30;
+            dy=16;
         }
         yguitarM=yguitar;
         yserpentM=yserpent;
