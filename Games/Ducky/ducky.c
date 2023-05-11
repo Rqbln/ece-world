@@ -160,7 +160,7 @@ void player1(int *score1){ // game du P1
         mouseY = mouse_y;
         if (mouse_b & 1) {
             for (int i = 0; i < NCANARD; i++) {
-                if (canardClicked(colonies[i], mouseX, mouseY)) {
+                if (canardClicked(colonies[i], mouseX, mouseY) && mouseY<(SCREEN_H-200)) {
                     play_sample(duck,255,128,1000,0);
                     *score1 += 1;
                     int nb= *score1;
@@ -186,7 +186,10 @@ void player1(int *score1){ // game du P1
         dessinerTab(buffer,colonies);
         char score_text[50];
         sprintf(score_text, "Score: %d", *score1);
-        textout_ex(screen, font, score_text, 10, 10, makecol(255, 255, 255), -1);
+        textout_ex(buffer, font, score_text, 10, 10, makecol(255, 255, 255), -1);
+        char timer[50];
+        sprintf(timer, "Temps: %.0f", temps_actuel);
+        textout_ex(buffer, font, timer, SCREEN_W-75, 10, makecol(255, 255, 255), -1);
         temps_actuel = (double)(clock() - depart_temps) / CLOCKS_PER_SEC;
         blit(buffer,screen,0,0,0,0,SCREEN_W,SCREEN_H);
 
@@ -241,7 +244,7 @@ void player2(int *score2){ // game du P2
         mouseY = mouse_y;
         if (mouse_b & 1) {
             for (int i = 0; i < NCANARD; i++) {
-                if (canardClicked(colonies[i], mouseX, mouseY)) {
+                if (canardClicked(colonies[i], mouseX, mouseY) && mouseY<(SCREEN_H-200)) {
                     play_sample(duck,255,128,1000,0);
                     *score2 += 1;
                     int nb =*score2;
@@ -262,9 +265,13 @@ void player2(int *score2){ // game du P2
                 }
             }
         }
-        char score_text[50];
+        char score[50];
+        const char *score_text;
         sprintf(score_text, "Score: %d", *score2);
-        textout_ex(screen, font, score_text, 10, 10, makecol(255, 255, 255), -1);
+        textout_ex(buffer, font, score_text, 10, 10, makecol(255, 255, 255), -1);
+        char timer[50];
+        sprintf(timer, "Temps: %.0f", temps_actuel);
+        textout_ex(buffer, font, timer, SCREEN_W-75, 10, makecol(255, 255, 255), -1);
         temps_actuel = (double)(clock() - depart_temps) / CLOCKS_PER_SEC;
         actualiserTab(colonies);
         dessinerTab(buffer,colonies);
