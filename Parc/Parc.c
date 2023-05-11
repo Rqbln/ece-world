@@ -129,7 +129,7 @@ void parc2(){
     int xportailM;
     int xchevalM[nbCheval];
     int ychevalM[nbCheval];
-
+    //sprite porte de fin
     for (int j = 0; j < 4; j++) {
         sprintf(tabporte, "../Parc/image/porte/portEnd%d.bmp", j);
         porte[j] = load_bitmap(tabporte, NULL);
@@ -138,6 +138,7 @@ void parc2(){
             exit(EXIT_FAILURE);
         }
     }
+    //sprite portail
     for (int j = 0; j < 12; j++) {
         sprintf(tabporte, "../Parc/image/portail/%d.bmp", j);
         portail[j] = load_bitmap(tabporte, NULL);
@@ -146,6 +147,7 @@ void parc2(){
             exit(EXIT_FAILURE);
         }
     }
+    //sprite bitcoin
     for (int j = 0; j < 8; j++) {
         sprintf(tabporte, "../Parc/image/bitcoin/bitcoin%d.bmp", j);
         bitcoin[j] = load_bitmap(tabporte, NULL);
@@ -154,10 +156,12 @@ void parc2(){
             exit(EXIT_FAILURE);
         }
     }
+    //position chevaux
     for (int i = 0; i < nbcheval; i++) {
         xcheval[i] = ximgfond + 2670 - i * 21;
         ycheval[i] = yimgfond + 1305 + i * 9;
     }
+    //sprite mini chevaux
     for (int i = 0; i < 12; i++) {
         sprintf(nomDeFichier, "../Games/Course_Chevaux/image/cheval%d (Personnalisé).bmp", i);
         cheval[i] = load_bitmap(nomDeFichier, NULL);
@@ -166,6 +170,7 @@ void parc2(){
             exit(EXIT_FAILURE);
         }
     }
+    //bruit barbare
     for (int i = 0; i < 2; i++) {
         sprintf(nomDeFichier, "../Parc/musique/musiquebarbare%d.wav", i);
         effet[i] = load_wav(nomDeFichier);
@@ -174,6 +179,7 @@ void parc2(){
             exit(EXIT_FAILURE);
         }
     }
+    //musique parc
     for (int i = 0; i < nbMusique; i++) {
         sprintf(nomDeFichier, "../Parc/musique/musique%d.wav", i);
         sound[i] = load_wav(nomDeFichier);
@@ -182,6 +188,7 @@ void parc2(){
             exit(EXIT_FAILURE);
         }
     }
+    //sprite perso
     for (int g = 0; g < grille; ++g) {
         for (int a = 0; a < action; ++a) {
             for (int i = 0; i < posirang; i++) {
@@ -194,13 +201,13 @@ void parc2(){
             }
         }
     }
+
     int xPacman = (WIDTH / 2) - (pacman[0][0][0]->w) / 2;
     int yPacman = (HEIGHT / 2) - (pacman[0][0][0]->h) / 2;
     int xportail = xPacman - (portail[0]->w) / 2;
     int yportail = yPacman - (portail[0]->h) / 2;
     int xcoordonnee;
     int ycoordonnee;
-
 
     buffer = create_bitmap(WIDTH, HEIGHT);
     buffer2 = create_bitmap(buffersizew, buffersizeh);
@@ -209,6 +216,7 @@ void parc2(){
 
 
     while (!key[KEY_ESC] && end == 0) {  //boucle principale
+        //choix d une musique aleatoire
         if (musique == 1) {
             musiquealeatoire = rand() % nbMusique;
             play_sample(sound[musiquealeatoire], 255, 128, 1000, 1);
@@ -327,6 +335,7 @@ void parc2(){
         draw_sprite(buffer, bitcoin[posbitcoin], xbitcoin, ybitcoin);
         draw_sprite(buffer, portail[posbitcoin], xportail, yportail);
 
+        //gestion mini chevaux
         for (int i = 0; i < nbcheval; ++i) {
             if (cmpt >= 280) {
                 cmpt = 0;
