@@ -7,7 +7,7 @@ void parc2(){
     BITMAP *bulle[2];
     bulle[0] = load_bitmap("../Parc/imagepnj/bullegauche.bmp", NULL);
     bulle[1] = load_bitmap("../Parc/imagepnj/bulledroite.bmp", NULL);
-    BITMAP *parchemin = load_bitmap("../Parc/imagepnj/parchemin.bmp", NULL);
+    BITMAP *parchemin = load_bitmap("../Parc/imagepnj/parchemin1.bmp", NULL);
 
     BITMAP *buffer;
     BITMAP *pacman[grille][action][posirang];
@@ -71,7 +71,7 @@ void parc2(){
     int yporte = yimgfond + 950;
     int posx = 0; //position des sprite du personnage
     int actionperso = 0;
-    int persochoisit=2;
+    int persochoisit=0;
     int xbitcoin = 0;
     int ybitcoin = 0;
     int posbitcoin = 0;
@@ -95,9 +95,9 @@ void parc2(){
     int cmp = 0;
 
     int buffersizew = WIDTH / 6;
-    int buffersizeh = HEIGHT / 6;
+    int buffersizeh = HEIGHT / 8;
     int posxbuff2 = (WIDTH / 2) - (buffersizew / 2);//WIDTH/2
-    int posybuff2 = (HEIGHT / 2) - (buffersizeh / 2);//HEIGHT/2
+    int posybuff2 = (HEIGHT / 3) - (buffersizeh / 2);//HEIGHT/2
     t_joueurs joueurs [NB_JOUEURS];
     char nomjoueur[2][20];
     // Initialisation de la fonction rand() avec la fonction srand()
@@ -280,7 +280,7 @@ void parc2(){
         }
         if (pixel_r==0 && pixel_v==255 && pixel_b==0){
             dx=15/2;
-            dy=8;
+            dy=8/2;
         }
         else {
             dx=30/3;
@@ -814,13 +814,14 @@ void parc2(){
                     if(persochoisit>=grille){
                         persochoisit=0;
                     }
-                    if(persochoisit<=0){
+                    if(persochoisit<0){
                         persochoisit=4;
                     }
 
                     draw_sprite(buffer, parchemin, ((WIDTH/2)-(parchemin->w)/2), 0);
-                    draw_sprite(buffer, pacman[persochoisit][0][0], ((WIDTH/2)-pacman[0][0][0]->w), HEIGHT-200);
+                    draw_sprite(buffer, pacman[persochoisit][0][0], ((WIDTH/2)-50), HEIGHT-470);
                     blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
+                    rest(120);
                 }
                 //sprintf(nomjoueur[i], "%s", text_input);
                 sprintf(joueurs[i].nom,"%s",text_input);
