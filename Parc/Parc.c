@@ -388,7 +388,7 @@ void parc2(){
         //collision activité hippodrome
         if (xPacman <= (xhippodrome + (hippodrome->w)/2) && (xhippodrome + (hippodrome->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yhippodrome) && (yhippodrome) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
-            pari();
+            //pari();
             anim_horse();
             musique = 1;
             yguitar -= pacman[0][0][1]->h;
@@ -439,7 +439,7 @@ void parc2(){
         }
         if (xPacman <= (xlabyrinthe + (labyrinthe->w)/2) && (xlabyrinthe + (labyrinthe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ylabyrinthe) && (ylabyrinthe) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
-            pari();
+            //pari();
             anim_horse();
             musique = 1;
             yguitar -= pacman[0][0][1]->h;

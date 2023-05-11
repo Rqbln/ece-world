@@ -5,9 +5,9 @@
 
 #include <allegro.h>
 #include "stdio.h"
-
+//#include "../Parc/Parc.h"
 #define nbCheval 10
 #define HEIGHT 1080
 #define WIDTH 1920
-void pari();
+//void pari();
 void anim_horse();
