@@ -206,9 +206,10 @@ void player1(int *score1){ // game du P1
 }
 
 void player2(int *score2){ // game du P2
-    t_canard* colonies[NCANARD]; // même commentaires que pour le P1
+    t_canard* colonies[NCANARD];
     *score2=0;
     remplirTab(colonies);
+    // init des images
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
     BITMAP *fond;
     fond= load_bitmap("../Games/Ducky/IMAGES/fond.bmp",NULL);
@@ -224,6 +225,7 @@ void player2(int *score2){ // game du P2
     }
     SAMPLE * duck;
     duck= load_wav("../Games/Ducky/IMAGES/Vidéo-sans-titre.wav");
+    ///////////////////////////////////////////////////////////////////////////////
     int mouseX, mouseY;
     show_mouse(screen);
     draw_sprite(buffer, fond, 0, 0);
@@ -232,12 +234,13 @@ void player2(int *score2){ // game du P2
     draw_trans_sprite(buffer, player2, (SCREEN_W - player2->w) / 2, (SCREEN_H - player2->h) / 2);
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     rest (1000);
+    // Pour le compteur de 20 secondes
     clock_t depart_temps = clock();
     double temps_actuel = 0.0;
     double compteur = 20.0;
     int nb2=1;
     int nb3=1;
-
+    // boucle de jeux
     while (!key[KEY_ESC] && temps_actuel < compteur){
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
@@ -248,17 +251,17 @@ void player2(int *score2){ // game du P2
                 if (canardClicked(colonies[i], mouseX, mouseY) && mouseY<(SCREEN_H-200)) {
                     play_sample(duck,255,128,1000,0);
                     *score2 += 1;
-                    int nb =*score2;
+                    int nb= *score2;
                     if (nb>8 && nb<=16){
-                        colonies[i]->posX = SCREEN_W - TX - 800+nb2*TX;
+                        colonies[i]->posX = 830+TX + 110+nb2*TX;
                         colonies[i]->posY = SCREEN_H - TY - 105+TX;
                         nb2+=1;
                     }else if(nb>=17){
-                        colonies[i]->posX = SCREEN_W - TX - 800+nb3*TX;
+                        colonies[i]->posX = 830+TX + 110+nb3*TX;
                         colonies[i]->posY = SCREEN_H - TY - 105+2*TX;
                         nb3+=1;
                     }else {
-                        colonies[i]->posX = SCREEN_W - TX - 800+nb*TX;
+                        colonies[i]->posX = 830+TX + 110+nb*TX;
                         colonies[i]->posY = SCREEN_H - TY - 105;
                     }
                     colonies[i]->depX = 0;
@@ -266,8 +269,10 @@ void player2(int *score2){ // game du P2
                 }
             }
         }
-        char score[50];
-        const char *score_text;
+
+        actualiserTab(colonies);
+        dessinerTab(buffer,colonies);
+        char score_text[50];
         sprintf(score_text, "Score: %d", *score2);
         textout_ex(buffer, font, score_text, 10, 10, makecol(255, 255, 255), -1);
         char timer[50];
@@ -275,9 +280,8 @@ void player2(int *score2){ // game du P2
         sprintf(timer, "Temps: %.0f", car);
         textout_ex(buffer, font, timer, SCREEN_W-75, 10, makecol(255, 255, 255), -1);
         temps_actuel = (double)(clock() - depart_temps) / CLOCKS_PER_SEC;
-        actualiserTab(colonies);
-        dessinerTab(buffer,colonies);
         blit(buffer,screen,0,0,0,0,SCREEN_W,SCREEN_H);
+
         rest(10);
     }
 
