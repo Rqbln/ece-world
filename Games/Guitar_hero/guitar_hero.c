@@ -252,12 +252,10 @@ void playguitar(){
                 for (int j = 0; j < 4; ++j) {
                     if(ok[j]==1){
                         time[j]+=1;
-                        if (time[j]>=500){
+                        if (time[j]>=50000){
                             ok[j]=0;
-
                         }
                     }
-                    
                 }
 
 

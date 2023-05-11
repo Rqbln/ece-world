@@ -5,6 +5,7 @@ void initialisation_allegro(){
     allegro_init(); // Initialise la bibliothèque Allegro
     install_keyboard(); // Installe les pilotes pour le clavier
     install_mouse(); // Installe les pilotes pour la souris
+
     install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL); // Installe le système de son
     set_color_depth(desktop_color_depth()); // Règle la profondeur de couleurs sur celle du bureau
     //set_trans_blender(255, 0, 255, 0);
