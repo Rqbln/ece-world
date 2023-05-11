@@ -14,7 +14,7 @@
 
 #define HEIGHT 1080
 #define WIDTH 1920
-#define nbMusique 9
+#define nbMusique 7
 #define nbcheval 6
 
 #define grille 5

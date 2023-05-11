@@ -3,16 +3,15 @@
 //Structure pour les joueurs
 
 void parc2(){
-    BITMAP *buffer2;
-    BITMAP *bulle[2];
-    bulle[0] = load_bitmap("../Parc/imagepnj/bullegauche.bmp", NULL);
-    bulle[1] = load_bitmap("../Parc/imagepnj/bulledroite.bmp", NULL);
+    int buffersizew = WIDTH / 6;
+    int buffersizeh = HEIGHT / 8;
+    BITMAP *buffer2= create_bitmap(buffersizew, buffersizeh);
     BITMAP *parchemin = load_bitmap("../Parc/imagepnj/parchemin2.bmp", NULL);
-
-    BITMAP *buffer;
+    BITMAP *buffer= create_bitmap(WIDTH, HEIGHT);
     BITMAP *pacman[grille][action][posirang];
     BITMAP *porte[4];
-    BITMAP *portail[12];
+    BITMAP *barbare[2];
+    //BITMAP *portail[12];
     BITMAP *fond = load_bitmap("../Parc/image/fond/fondplage3.bmp", NULL);
     BITMAP *fondmap = load_bitmap("../Parc/image/fond/mapfond3.bmp", NULL);
     BITMAP *bitcoin[8];
@@ -27,7 +26,11 @@ void parc2(){
     BITMAP *taupe = load_bitmap("../Parc/image/batiment/cirque0.bmp", NULL);
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
 
-    BITMAP *barbare[2];
+
+    SAMPLE *sound[nbMusique];
+    SAMPLE *effet[2];
+    SAMPLE *ambiance = load_wav("../Parc/musique/ambiance.wav");
+
     barbare[0] = load_bitmap("../Parc/image/pnjbarbare/barbare0.bmp", NULL);
     //barbare[0]=load_bitmap("../Parc/imagepnj/perso0/action0/0.bmp",NULL);
     //barbare[1]=load_bitmap("../Parc/imagepnj/perso1/action0/0.bmp",NULL);
@@ -38,10 +41,6 @@ void parc2(){
     xbarbare[1] = 0;
     ybarbare[0] = HEIGHT - (barbare[0]->h);
     ybarbare[1] = HEIGHT - (barbare[1]->h);
-
-    SAMPLE *sound[nbMusique];
-    SAMPLE *effet[2];
-    SAMPLE *ambiance = load_wav("../Parc/musique/ambiance.wav");
 
     int ximgfond = -4080+WIDTH;  //coordonnée de l image de fond-4200+WIDTH
     int yimgfond= -2640 +HEIGHT;//-2700 +HEIGHT
@@ -72,6 +71,7 @@ void parc2(){
     int posx = 0; //position des sprite du personnage
     int actionperso = 0;
     int persochoisit=0;
+    int vitesseimage=0;
     int xbitcoin = 0;
     int ybitcoin = 0;
     int posbitcoin = 0;
@@ -94,8 +94,6 @@ void parc2(){
     int cmpt = 0;
     int cmp = 0;
 
-    int buffersizew = WIDTH / 6;
-    int buffersizeh = HEIGHT / 8;
     int posxbuff2 = (WIDTH / 2) - (buffersizew / 2);//WIDTH/2
     int posybuff2 = (HEIGHT / 3) - (buffersizeh / 2);//HEIGHT/2
     t_joueurs joueurs [NB_JOUEURS];
@@ -115,7 +113,7 @@ void parc2(){
     int ylabyrintheM;
     int ytaupeM;
     int ycanardM;
-    int yportailM;
+    //int yportailM;
     int xguitarM;
     int xserpentM;
     int xriverM;
@@ -127,7 +125,7 @@ void parc2(){
     int xlabyrintheM;
     int xtaupeM;
     int xcanardM;
-    int xportailM;
+    //int xportailM;
     int xchevalM[nbCheval];
     int ychevalM[nbCheval];
     //sprite porte de fin
@@ -140,14 +138,14 @@ void parc2(){
         }
     }
     //sprite portail
-    for (int j = 0; j < 12; j++) {
+    /*for (int j = 0; j < 12; j++) {
         sprintf(tabporte, "../Parc/image/portail/%d.bmp", j);
         portail[j] = load_bitmap(tabporte, NULL);
         if (!portail[j]) {
             allegro_message("../image/portail/%d.bmp", j);
             exit(EXIT_FAILURE);
         }
-    }
+    }*/
     //sprite bitcoin
     for (int j = 0; j < 8; j++) {
         sprintf(tabporte, "../Parc/image/bitcoin/bitcoin%d.bmp", j);
@@ -205,14 +203,14 @@ void parc2(){
 
     int xPacman = (WIDTH / 2) - (pacman[0][0][0]->w) / 2;
     int yPacman = (HEIGHT / 2) - (pacman[0][0][0]->h) / 2;
-    int xportail = xPacman - (portail[0]->w) / 2;
-    int yportail = yPacman - (portail[0]->h) / 2;
+    //int xportail = xPacman - (portail[0]->w) / 2;
+    //int yportail = yPacman - (portail[0]->h) / 2;
     int xcoordonnee;
     int ycoordonnee;
     int ycoordonneeb;
 
-    buffer = create_bitmap(WIDTH, HEIGHT);
-    buffer2 = create_bitmap(buffersizew, buffersizeh);
+    //buffer = create_bitmap(WIDTH, HEIGHT);
+   // buffer2 = create_bitmap(buffersizew, buffersizeh);
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -252,7 +250,7 @@ void parc2(){
             ylabyrinthe=ylabyrintheM;
             ytaupe=ytaupeM;
             ycanard=ycanardM;
-            yportail=yportailM;
+            //yportail=yportailM;
             xguitar=xguitarM;
             xserpent=xserpentM;
             xriver=xriverM;
@@ -264,7 +262,7 @@ void parc2(){
             xlabyrinthe=xlabyrintheM;
             xtaupe=xtaupeM;
             xcanard=xcanardM;
-            xportail=xportailM;
+            //xportail=xportailM;
             /*for (int i = 0; i < nbcheval; ++i) {
                 xcheval[i] = xchevalM[i];
             }
@@ -279,12 +277,14 @@ void parc2(){
             cmp=0;
         }
         if (pixel_r==0 && pixel_v==255 && pixel_b==0){
-            dx=15/2;
-            dy=8/2;
+            dx=7;
+            dy=4;
+            vitesseimage=0;
         }
         else {
-            dx=30/3;
-            dy=16/3;
+            dx=20;
+            dy=11;
+            vitesseimage=1;
         }
         yguitarM=yguitar;
         yserpentM=yserpent;
@@ -297,7 +297,7 @@ void parc2(){
         ylabyrintheM=ylabyrinthe;
         ytaupeM=ytaupe;
         ycanardM=ycanard;
-        yportailM=yportail;
+        //yportailM=yportail;
         xguitarM=xguitar;
         xserpentM=xserpent;
         xriverM=xriver;
@@ -309,7 +309,7 @@ void parc2(){
         xlabyrintheM=xlabyrinthe;
         xtaupeM=xtaupe;
         xcanardM=xcanard;
-        xportailM=xportail;
+        //xportailM=xportail;
         for (int i = 0; i < nbcheval; ++i) {
             xchevalM[i] = xcheval[i];
         }
@@ -346,7 +346,7 @@ void parc2(){
         draw_sprite(buffer, river, xriver, yriver);
         draw_sprite(buffer, serpent, xserpent, yserpent);
         draw_sprite(buffer, bitcoin[posbitcoin], xbitcoin, ybitcoin);
-        draw_sprite(buffer, portail[posbitcoin], xportail, yportail);
+        //draw_sprite(buffer, portail[posbitcoin], xportail, yportail);
 
         //gestion mini chevaux
         for (int i = 0; i < nbcheval; ++i) {
@@ -359,12 +359,12 @@ void parc2(){
             }
             cmpt += 1;
             if (cmp == 0) {
-                xcheval[i] += dx / 5;
-                ycheval[i] += dy / 4;
+                xcheval[i] += 15 / 5;
+                ycheval[i] += 8 / 4;
                 draw_sprite(buffer, cheval[poscheval], xcheval[i], ycheval[i]);
             } else {
-                xcheval[i] -= dx / 5;
-                ycheval[i] -= dy / 4;
+                xcheval[i] -= 15 / 5;
+                ycheval[i] -= 8 / 4;
                 draw_sprite_h_flip(buffer, cheval[poscheval], xcheval[i], ycheval[i]);
             }
         }
@@ -402,7 +402,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -427,7 +427,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -453,7 +453,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -478,7 +478,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -504,7 +504,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -529,7 +529,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -554,7 +554,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -579,7 +579,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -604,7 +604,7 @@ void parc2(){
             ylabyrinthe -= pacman[0][0][1]->h;
             ytaupe -= pacman[0][0][1]->h;
             ycanard -= pacman[0][0][1]->h;
-            yportail -= pacman[0][0][1]->h;
+            //yportail -= pacman[0][0][1]->h;
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
@@ -617,7 +617,11 @@ void parc2(){
         if (key[KEY_DOWN] || key[KEY_UP] || key[KEY_LEFT] || key[KEY_RIGHT]) {
             if (key[KEY_RIGHT] && ((WIDTH + 1) < (fondmap->w + ximgfond))) {
                 if (key[KEY_UP] && yimgfond < 0) {
-                    actionperso = 13;
+                    if(vitesseimage==0){
+                        actionperso = 13;
+                    } else{
+                        actionperso = 15;
+                    }
                     yguitar += dy;
                     yserpent += dy;
                     yriver += dy;
@@ -629,12 +633,16 @@ void parc2(){
                     ylabyrinthe += dy;
                     ytaupe += dy;
                     ycanard += dy;
-                    yportail += dy;
+                    //yportail += dy;
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] += dy;
                     }
                 } else if (key[KEY_DOWN] && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
-                    actionperso = 5;
+                    if(vitesseimage==0){
+                        actionperso = 5;
+                    } else{
+                        actionperso = 7;
+                    }
                     yguitar -= dy;
                     yserpent -= dy;
                     yriver -= dy;
@@ -646,12 +654,16 @@ void parc2(){
                     ylabyrinthe -= dy;
                     ytaupe -= dy;
                     ycanard -= dy;
-                    yportail -= dy;
+                    //yportail -= dy;
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] -= dy;
                     }
                 } else {
-                    actionperso = 8;
+                    if(vitesseimage==0){
+                        actionperso = 8;
+                    } else{
+                        actionperso = 10;
+                    }
                 }
                 posx++;
                 xguitar -= dx;
@@ -665,7 +677,7 @@ void parc2(){
                 xlabyrinthe -= dx;
                 xtaupe -= dx;
                 xcanard -= dx;
-                xportail -= dx;
+                //xportail -= dx;
                 for (int i = 0; i < nbcheval; ++i) {
                     xcheval[i] -= dx;
                 }
@@ -674,7 +686,11 @@ void parc2(){
                 }
             } else if (key[KEY_LEFT] && ximgfond < 0) {
                 if (key[KEY_UP] && yimgfond < 0) {
-                    actionperso = 9;
+                    if(vitesseimage==0){
+                        actionperso = 9;
+                    } else{
+                        actionperso = 11;
+                    }
                     yguitar += dy;
                     yserpent += dy;
                     yriver += dy;
@@ -686,12 +702,16 @@ void parc2(){
                     ylabyrinthe += dy;
                     ytaupe += dy;
                     ycanard += dy;
-                    yportail += dy;
+                    //yportail += dy;
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] += dy;
                     }
                 } else if (key[KEY_DOWN] && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
-                    actionperso = 1;
+                    if(vitesseimage==0){
+                        actionperso = 1;
+                    } else{
+                        actionperso = 3;
+                    }
                     yguitar -= dy;
                     yserpent -= dy;
                     yriver -= dy;
@@ -703,12 +723,16 @@ void parc2(){
                     ylabyrinthe -= dy;
                     ytaupe -= dy;
                     ycanard -= dy;
-                    yportail -= dy;
+                    //yportail -= dy;
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] -= dy;
                     }
                 } else {
-                    actionperso = 4;
+                    if(vitesseimage==0){
+                        actionperso = 4;
+                    } else{
+                        actionperso = 6;
+                    }
                 }
                 posx++;
                 xguitar += dx;
@@ -722,7 +746,7 @@ void parc2(){
                 xlabyrinthe += dx;
                 xtaupe += dx;
                 xcanard += dx;
-                xportail += dx;
+                //xportail += dx;
                 for (int i = 0; i < nbcheval; ++i) {
                     xcheval[i] += dx;
                 }
@@ -733,7 +757,11 @@ void parc2(){
                     posx = 0;
                 }
             } else if (key[KEY_UP] && yimgfond < 0) {
-                actionperso = 12;
+                if(vitesseimage==0){
+                    actionperso = 12;
+                } else{
+                    actionperso = 14;
+                }
                 posx++;
                 yguitar += dy;
                 yserpent += dy;
@@ -746,7 +774,7 @@ void parc2(){
                 ylabyrinthe += dy;
                 ytaupe += dy;
                 ycanard += dy;
-                yportail += dy;
+                //yportail += dy;
                 for (int i = 0; i < nbcheval; ++i) {
                     ycheval[i] += dy;
                 }
@@ -754,7 +782,11 @@ void parc2(){
                     posx = 0;
                 }
             } else if (key[KEY_DOWN] && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
-                actionperso = 0;
+                if(vitesseimage==0){
+                    actionperso = 0;
+                } else{
+                    actionperso = 2;
+                }
                 posx++;
                 yguitar -= dy;
                 yserpent -= dy;
@@ -767,7 +799,7 @@ void parc2(){
                 ylabyrinthe -= dy;
                 ytaupe -= dy;
                 ycanard -= dy;
-                yportail -= dy;
+                //yportail -= dy;
                 for (int i = 0; i < nbcheval; ++i) {
                     ycheval[i] -= dy;
                 }
