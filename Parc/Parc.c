@@ -71,6 +71,7 @@ void parc2(){
     int yporte = yimgfond + 950;
     int posx = 0; //position des sprite du personnage
     int actionperso = 0;
+    int persochoisit=2;
     int xbitcoin = 0;
     int ybitcoin = 0;
     int posbitcoin = 0;
@@ -278,12 +279,12 @@ void parc2(){
             cmp=0;
         }
         if (pixel_r==0 && pixel_v==255 && pixel_b==0){
-            dx=15;
+            dx=15/2;
             dy=8;
         }
         else {
-            dx=30;
-            dy=16;
+            dx=30/3;
+            dy=16/3;
         }
         yguitarM=yguitar;
         yserpentM=yserpent;
@@ -774,9 +775,9 @@ void parc2(){
                     posx = 0;
                 }
             }
-            draw_sprite(buffer, pacman[0][actionperso][posx], xPacman, yPacman);
+            draw_sprite(buffer, pacman[persochoisit][actionperso][posx], xPacman, yPacman);
         } else {
-            draw_sprite(buffer, pacman[0][0][0], xPacman, yPacman);
+            draw_sprite(buffer, pacman[persochoisit][0][0], xPacman, yPacman);
         }
         if (stop == 0) {
             stop_sample(sound[musiquealeatoire]);

@@ -17,7 +17,7 @@
 #define nbMusique 9
 #define nbcheval 6
 
-#define grille 1
+#define grille 5
 #define action 16
 #define posirang 4
 
