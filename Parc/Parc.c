@@ -14,7 +14,7 @@ void parc2(){
     BITMAP *porte[4];
     BITMAP *portail[12];
     BITMAP *fond = load_bitmap("../Parc/image/fond/fondplage1.bmp", NULL);
-    BITMAP *fondmap = load_bitmap("../Parc/image/fond/mapfond2.bmp", NULL);
+    BITMAP *fondmap = load_bitmap("../Parc/image/fond/mapfond3.bmp", NULL);
     BITMAP *bitcoin[8];
     BITMAP *cheval[13];
     BITMAP *hippodrome = load_bitmap("../Parc/image/batiment/hippodrome2.bmp", NULL);  //image des attractions/mini-jeux
@@ -208,6 +208,7 @@ void parc2(){
     int yportail = yPacman - (portail[0]->h) / 2;
     int xcoordonnee;
     int ycoordonnee;
+    int ycoordonneeb;
 
     buffer = create_bitmap(WIDTH, HEIGHT);
     buffer2 = create_bitmap(buffersizew, buffersizeh);
@@ -226,14 +227,19 @@ void parc2(){
 
         xcenter = pacman[0][0][1]->w / 2;
         ycenter = pacman[0][0][1]->w / 2;
-        xcoordonnee = -(ximgfond-xPacman-pacman[0][0][0]->w);
+        xcoordonnee = -(ximgfond-xPacman-(pacman[0][0][0]->w)/2);
         ycoordonnee = -(yimgfond-yPacman-pacman[0][0][0]->h);
+        ycoordonneeb = -(yimgfond-yPacman-(pacman[0][0][0]->h)+50);
         draw_sprite(buffer, fond, ximgfond, yimgfond);
+        int pixel_colorb = getpixel(fond, xcoordonnee, ycoordonneeb);
+        int pixel_rb = getr(pixel_colorb);
+        int pixel_vb = getg(pixel_colorb);
+        int pixel_bb = getb(pixel_colorb);
         int pixel_color = getpixel(fond, xcoordonnee, ycoordonnee);
         int pixel_r = getr(pixel_color);
         int pixel_v = getg(pixel_color);
         int pixel_b = getb(pixel_color);
-        if (pixel_r==0 && pixel_v==0 && pixel_b==255){
+        if ((pixel_r==0 && pixel_v==0 && pixel_b==255)||(pixel_rb==0 && pixel_vb==0 && pixel_bb==255)){
             yguitar=yguitarM;
             yserpent=yserpentM;
             yriver=yriverM;
@@ -258,12 +264,18 @@ void parc2(){
             xtaupe=xtaupeM;
             xcanard=xcanardM;
             xportail=xportailM;
-            for (int i = 0; i < nbcheval; ++i) {
+            /*for (int i = 0; i < nbcheval; ++i) {
                 xcheval[i] = xchevalM[i];
             }
             for (int i = 0; i < nbcheval; ++i) {
                 ycheval[i] = ychevalM[i];
+            }*/
+            for (int i = 0; i < nbcheval; i++) {
+                xcheval[i] = ximgfond + 2670 - i * 21;
+                ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            cmpt=0;
+            cmp=0;
         }
         if (pixel_r==0 && pixel_v==255 && pixel_b==0){
             dx/=1;

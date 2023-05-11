@@ -143,11 +143,17 @@ void playguitar(){
     int note4=3*155+WIDTH*0.34;
     int notey=HEIGHT/1.5;
 
-
+    int time[4];
+    int ok[4];
+    ok[0]=0;
+    ok[1]=0;
+    ok[2]=0;
+    ok[3]=0;
+    
 // Joue la musique en boucle
 //play_sample(musique, 255, 128, 100, 1);
     // Initialisation de la fonction rand() avec la fonction srand()
-    srand(time(NULL));
+    //srand(time(NULL));
     if(!arriver){
         allegro_message("../image/arriver.bmp");
         exit(EXIT_FAILURE);
@@ -187,54 +193,73 @@ void playguitar(){
                 //nombreAleatoire = 8+rand() % 20;
                 ynote[i]+=nombreAleatoire;
                 if(keypressed()){
-                    if(key[KEY_S]){
+                    if(key[KEY_S]&& ok[0]==0){
                         if (xnote[i] <= (note1) && (note1) <= (xnote[i] + note->w) && ynote[i] <= (notey) && (notey) <= (ynote[i] + note->h)){
                             ynote[i]=-200;
                             score+=1;
                             vitesse-=1;
                             // Collision détectée !
+                            ok[0]=1;
+                            time[0]=0;
 
                         }
                         else{
                             memo=1;
                         }
                     }
-                    if(key[KEY_D]){
+                    if(key[KEY_D]&& ok[1]==0){
                         if (xnote[i] <= (note2) && (note2) <= (xnote[i] + note->w) && ynote[i] <= (notey) && (notey) <= (ynote[i] + note->h)){
                             ynote[i]=-200;
                             score+=1;
                             vitesse-=1;
                             // Collision détectée !
+                            ok[1]=1;
+                            time[1]=0;
                         }
                         else{
                             memo=1;
                         }
                     }
 
-                    if(key[KEY_F]){
+                    if(key[KEY_F]&& ok[2]==0){
                         if (xnote[i] <= (note3) && (note3) <= (xnote[i] + note->w) && ynote[i] <= (notey) && (notey) <= (ynote[i] + note->h)){
                             ynote[i]=-200;
                             score+=1;
                             vitesse-=1;
                             // Collision détectée !
+                            ok[2]=1;
+                            time[2]=0;
                         }
                         else{
                             memo=1;
                         }
                     }
 
-                    if(key[KEY_G]){
+                    if(key[KEY_G]&& ok[3]==0){
                         if (xnote[i] <= (note4) && (note4) <= (xnote[i] + note->w) && ynote[i] <= (notey) && (notey) <= (ynote[i] + note->h)){
                             ynote[i]=-200;
                             score+=1;
                             vitesse-=1;
                             // Collision détectée !
+                            ok[3]=1;
+                            time[3]=0;
                         }
                         else{
                             memo=1;
                         }
                     }
                 }
+                for (int j = 0; j < 4; ++j) {
+                    if(ok[j]==1){
+                        time[j]+=1;
+                        if (time[j]>=500){
+                            ok[j]=0;
+
+                        }
+                    }
+                    
+                }
+
 
                 //textprintf_ex(buffer, font, 50, 50, makecol(255, 255, 255), -1, "score: %d", score);
 
