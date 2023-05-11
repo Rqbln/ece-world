@@ -188,7 +188,8 @@ void player1(int *score1){ // game du P1
         sprintf(score_text, "Score: %d", *score1);
         textout_ex(buffer, font, score_text, 10, 10, makecol(255, 255, 255), -1);
         char timer[50];
-        sprintf(timer, "Temps: %.0f", temps_actuel);
+        float car=20-temps_actuel;
+        sprintf(timer, "Temps: %.0f", car);
         textout_ex(buffer, font, timer, SCREEN_W-75, 10, makecol(255, 255, 255), -1);
         temps_actuel = (double)(clock() - depart_temps) / CLOCKS_PER_SEC;
         blit(buffer,screen,0,0,0,0,SCREEN_W,SCREEN_H);
@@ -270,7 +271,8 @@ void player2(int *score2){ // game du P2
         sprintf(score_text, "Score: %d", *score2);
         textout_ex(buffer, font, score_text, 10, 10, makecol(255, 255, 255), -1);
         char timer[50];
-        sprintf(timer, "Temps: %.0f", temps_actuel);
+        float car=20-temps_actuel;
+        sprintf(timer, "Temps: %.0f", car);
         textout_ex(buffer, font, timer, SCREEN_W-75, 10, makecol(255, 255, 255), -1);
         temps_actuel = (double)(clock() - depart_temps) / CLOCKS_PER_SEC;
         actualiserTab(colonies);
