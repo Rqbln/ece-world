@@ -806,11 +806,20 @@ void parc2(){
                     // Rafraîchir l'écran
                     vsync();
                     if(key[KEY_RIGHT]){
-
+                        persochoisit+=1;
+                    }
+                    if(key[KEY_LEFT]){
+                        persochoisit-=1;
+                    }
+                    if(persochoisit>=grille){
+                        persochoisit=0;
+                    }
+                    if(persochoisit<=0){
+                        persochoisit=4;
                     }
 
                     draw_sprite(buffer, parchemin, ((WIDTH/2)-(parchemin->w)/2), 0);
-                    draw_sprite(buffer, pacman[0][0][0], ((WIDTH/2)-pacman[0][0][0]->w), HEIGHT-200);
+                    draw_sprite(buffer, pacman[persochoisit][0][0], ((WIDTH/2)-pacman[0][0][0]->w), HEIGHT-200);
                     blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
                 }
                 //sprintf(nomjoueur[i], "%s", text_input);
