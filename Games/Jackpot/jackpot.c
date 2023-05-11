@@ -29,7 +29,12 @@ void load_slotmachine(char *path) { // charger la machine a sous en transparence
     draw_trans_sprite(screen, slotmachine, (SCREEN_W - slotmachine->w) / 2, (SCREEN_H - slotmachine->h) / 2);
     destroy_bitmap(slotmachine);
 }
-
+void anime(){
+    for (int j;j<4;j++){
+    for ( int i = 0;i<3; i++){
+    draw_sprite(screen, icons[i],  807+ i * (77 + 41+i*i), 525);
+    rest( 100);}}
+}
 int tourner_roues() {// tourner les roues de manière aleatoire
     srand(time(NULL));
     int last_rand = -1; // valeure d'icone impossible
@@ -54,6 +59,7 @@ int tourner_roues() {// tourner les roues de manière aleatoire
 
 void jackpot(){
 
+    BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
     int fin = 0;
     // ici on charge toutes les images
     BITMAP *fond;
@@ -69,9 +75,28 @@ void jackpot(){
     // boucle principale
     while (!key[KEY_ESC] && fin==0 ) {
         if (key[KEY_ENTER]) {
+            anime();
             int win = tourner_roues();
             if (win==1) {
-                textout_ex(screen, font, "+1 ticket", 300, 700, makecol(0, 255, 255), -1);
+                BITMAP *plus1 = NULL;
+                plus1 = load_bitmap("../Games/Jackpot/IMAGES/plus1.bmp", NULL);
+                if (!plus1) { //blindage
+                    allegro_message("Erreur image slot machine");
+                    exit(EXIT_FAILURE);
+                }
+                set_trans_blender(255, 0, 255, 255);
+                drawing_mode(DRAW_MODE_TRANS, NULL, 0, 0);
+                int target_y = 200;
+                int speed = 5;
+                int deb_y = SCREEN_H-180;
+
+                while(deb_y  < target_y) {
+                    clear_bitmap(buffer);
+                    draw_trans_sprite(buffer, plus1, SCREEN_W-180, deb_y );
+                    deb_y  -= speed;
+                }
+                destroy_bitmap(plus1);
+                rest(2000);
                 fin=1;
             }
             rest(100);
