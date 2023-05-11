@@ -102,6 +102,34 @@ void parc2(){
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
     //Verifie si les image sont bien la
+
+    int yguitarM;
+    int yserpentM;
+    int yriverM;
+    int ycasinoM;
+    int yhippodromeM;
+    int yporteM;
+    int yimgfondM;
+    int ytirM;
+    int ylabyrintheM;
+    int ytaupeM;
+    int ycanardM;
+    int yportailM;
+    int xguitarM;
+    int xserpentM;
+    int xriverM;
+    int xcasinoM;
+    int xhippodromeM;
+    int xporteM;
+    int ximgfondM;
+    int xtirM;
+    int xlabyrintheM;
+    int xtaupeM;
+    int xcanardM;
+    int xportailM;
+    int xchevalM[nbCheval];
+    int ychevalM[nbCheval];
+
     for (int j = 0; j < 4; j++) {
         sprintf(tabporte, "../Parc/image/porte/portEnd%d.bmp", j);
         porte[j] = load_bitmap(tabporte, NULL);
@@ -197,6 +225,76 @@ void parc2(){
         int pixel_r = getr(pixel_color);
         int pixel_v = getg(pixel_color);
         int pixel_b = getb(pixel_color);
+        if (pixel_r==0 && pixel_v==0 && pixel_b==255){
+            yguitar=yguitarM;
+            yserpent=yserpentM;
+            yriver=yriverM;
+            ycasino= ycasinoM;
+            yhippodrome=yhippodromeM;
+            yporte=yporteM;
+            yimgfond=yimgfondM;
+            ytir=ytirM;
+            ylabyrinthe=ylabyrintheM;
+            ytaupe=ytaupeM;
+            ycanard=ycanardM;
+            yportail=yportailM;
+            xguitar=xguitarM;
+            xserpent=xserpentM;
+            xriver=xriverM;
+            xcasino=xcasinoM;
+            xhippodrome=xhippodromeM;
+            xporte=xporteM;
+            ximgfond=ximgfondM;
+            xtir=xtirM;
+            xlabyrinthe=xlabyrintheM;
+            xtaupe=xtaupeM;
+            xcanard=xcanardM;
+            xportail=xportailM;
+            for (int i = 0; i < nbcheval; ++i) {
+                xcheval[i] = xchevalM[i];
+            }
+            for (int i = 0; i < nbcheval; ++i) {
+                ycheval[i] = ychevalM[i];
+            }
+        }
+        if (pixel_r==0 && pixel_v==255 && pixel_b==0){
+            dx/=1;
+            dy/=1;
+        }
+        else {
+            dx/=1;
+            dy/=1;
+        }
+        yguitarM=yguitar;
+        yserpentM=yserpent;
+        yriverM=yriver;
+        ycasinoM= ycasino;
+        yhippodromeM=yhippodrome;
+        yporteM=yporte;
+        yimgfondM=yimgfond;
+        ytirM=ytir;
+        ylabyrintheM=ylabyrinthe;
+        ytaupeM=ytaupe;
+        ycanardM=ycanard;
+        yportailM=yportail;
+        xguitarM=xguitar;
+        xserpentM=xserpent;
+        xriverM=xriver;
+        xcasinoM=xcasino;
+        xhippodromeM=xhippodrome;
+        xporteM=xporte;
+        ximgfondM=ximgfond;
+        xtirM=xtir;
+        xlabyrintheM=xlabyrinthe;
+        xtaupeM=xtaupe;
+        xcanardM=xcanard;
+        xportailM=xportail;
+        for (int i = 0; i < nbcheval; ++i) {
+            xchevalM[i] = xcheval[i];
+        }
+        for (int i = 0; i < nbcheval; ++i) {
+            ychevalM[i] = ycheval[i];
+        }
         //if (pixel_r >= r - 50 && pixel_r <= r + 50 && pixel_v >= v - 50 && pixel_v <= v + 50 && pixel_b >= b - 50 && pixel_b <= b + 50) {
         /*if (getpixel(buffer, xcenter, ycenter) == makecol(0, 0, 255)) {
             dx=5;
