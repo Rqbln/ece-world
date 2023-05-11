@@ -7,7 +7,7 @@ void parc2(){
     BITMAP *bulle[2];
     bulle[0] = load_bitmap("../Parc/imagepnj/bullegauche.bmp", NULL);
     bulle[1] = load_bitmap("../Parc/imagepnj/bulledroite.bmp", NULL);
-    BITMAP *parchemin = load_bitmap("../Parc/imagepnj/parchemin1.bmp", NULL);
+    BITMAP *parchemin = load_bitmap("../Parc/imagepnj/parchemin2.bmp", NULL);
 
     BITMAP *buffer;
     BITMAP *pacman[grille][action][posirang];
