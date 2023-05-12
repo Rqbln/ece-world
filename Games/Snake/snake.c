@@ -1,5 +1,6 @@
 #include "snake.h"
 #include "../../Init_Allegro/allegro.h"
+#include "../../joueur/joueur.h"
 
 void snake() {
     //Iniitialiser bitmaps
@@ -260,22 +261,26 @@ void snake() {
 
     while (!key[KEY_ESC]){
         if (gagnant == 1){
-            sprintf(messageFin, "Le joueur 1 a gagné par collision, fin de la partie !");
+            sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[0].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            joueurs[0].nbTickets++;
         }
 
         else if (gagnant == 2) {
-            sprintf(messageFin, "Le joueur 2 a gagné par collision, fin de la partie !");
+            sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[1].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            joueurs[1].nbTickets++;
         }
         else {
             if (score1 == 5) {
-                sprintf(messageFin, "Le joueur 1 a atteint 5 points, fin de la partie !");
+                sprintf(messageFin, "%s a atteint 5 points, fin de la partie !",joueurs[0].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+                joueurs[0].nbTickets++;
             }
             else if (score2 == 5){
-                sprintf(messageFin, "Le joueur 2 a atteint 5 points, fin de la partie !");
+                sprintf(messageFin, "%s a atteint 5 points, fin de la partie !",joueurs[1].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+                joueurs[1].nbTickets++;
             }
         }
 
