@@ -13,7 +13,9 @@ void anim_horse(){
     menu[0] = load_bitmap("../Games/Course_Chevaux/image/parchem1.bmp",NULL);
     menu[1] = load_bitmap("../Games/Course_Chevaux/image/parchem2.bmp",NULL);
     BITMAP *select[10][2];
-
+    SAMPLE *musicparis= load_sample("../Games/Course_Chevaux/image/pascheval.wav");
+    SAMPLE *musiccourse= load_sample("../Games/Course_Chevaux/image/coursecommente.wav");
+    SAMPLE *musicarrive= load_sample("../Games/Course_Chevaux/image/coursearriver.wav");
     int position[nbCheval];
     int xcheval[nbCheval];
     int ycheval[nbCheval];
@@ -32,7 +34,7 @@ void anim_horse(){
     int j;
     int fin=0;
     int xenter=WIDTH-400;
-    int yenter=HEIGHT-100;
+    int yenter=HEIGHT-80;
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
     for(int i=0;i<nbCheval;i++){
@@ -49,6 +51,12 @@ void anim_horse(){
             }
         }
     }
+    if (!musicparis && !musiccourse && !musicarrive) {
+        allegro_message("Erreur : impossible de charger la musique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
     if(!arriver){
         allegro_message("../Games/Course_Chevaux/image/arriver.bmp");
         exit(EXIT_FAILURE);
@@ -67,6 +75,7 @@ void anim_horse(){
         exit(EXIT_FAILURE);
     }
     buffer=create_bitmap(WIDTH,HEIGHT);
+    play_sample(musicparis, 255, 128, 1000, 1);
     while (tour < 2) {
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
@@ -114,7 +123,11 @@ void anim_horse(){
         rest(20); // Pause de 10 ms pour rafraîchir l'écran
     }
 
+
     while (fin==0 && !key[KEY_ESC]){
+        stop_sample(musicarrive);
+        stop_sample(musicparis);
+        play_sample(musiccourse, 255, 128, 1000, 1);
         for(int i=0;i<nbCheval;i++) {
             xcheval[i] = 0;
             position[i] = 0;
@@ -149,6 +162,8 @@ void anim_horse(){
             else
                 rest(55); // Pause de 10 ms pour rafraîchir l'écran
         }
+        stop_sample(musiccourse);
+        play_sample(musicarrive, 255, 128, 1000, 1);
         while (!key[KEY_ENTER] && !key[KEY_ESC]) {
             sprintf(message,"LE CAVALIER %d A WIN LA GAME",memo+1);
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
@@ -174,4 +189,5 @@ void anim_horse(){
             rest(100); // Pause de 10 ms pour rafraîchir l'écran
         }
     }
+    stop_sample(musicarrive);
 }
