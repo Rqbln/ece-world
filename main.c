@@ -6,8 +6,6 @@
 //#include "Games/Jackpot/jackpot.h"
 //#include "Games/Ducky/ducky.h"
 
-
-
 int main() {
     initialisation_allegro(); // Initialise Allegro
 
