@@ -1,6 +1,7 @@
 #include "Parc.h"
+#include "../joueur/joueur.c"
 
-//Structure pour les joueurs
+
 
 void parc2(){
     int buffersizew = WIDTH / 6;
@@ -96,7 +97,7 @@ void parc2(){
 
     int posxbuff2 = (WIDTH / 2) - (buffersizew / 2);//WIDTH/2
     int posybuff2 = (HEIGHT / 3) - (buffersizeh / 2);//HEIGHT/2
-    t_joueurs joueurs [NB_JOUEURS];
+
     char nomjoueur[2][20];
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));

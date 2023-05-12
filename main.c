@@ -1,6 +1,7 @@
 #include "Init_Allegro/allegro.h"
 #include "Menu/menu.h"
 #include "Parc/Parc.h"
+#include "joueur/joueur.c"
 //#include "Games/Course_Chevaux/chevaux.h"
 //#include "Games/Jackpot/jackpot.h"
 //#include "Games/Ducky/ducky.h"
@@ -15,7 +16,6 @@ int main() {
     int playerSize = 100; // Taille initiale du joueur
     int gameOver = 0; // Indique si le jeu est terminé
     int squareColor = makecol(rand() % 256, rand() % 256, rand() % 256); // Couleur initiale du carré
-    t_joueurs joueurs [NB_JOUEURS];
 
     //Initialisation des joueurs
     for (int i = 0; i < 2; ++i) {

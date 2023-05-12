@@ -23,12 +23,7 @@
 
 #define NB_JOUEURS 2
 
-typedef struct joueurs{
-    char nom[60];
-    int nbTickets;
-    int persoChoisi;
 
-} t_joueurs;
 
 void parc();
 void parc2();
