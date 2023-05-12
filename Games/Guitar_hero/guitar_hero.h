@@ -7,10 +7,13 @@
 
 #endif //ECE_WORLD_GUITAR_HERO_H
 #define bat 3
+#define batt 1
 #define HEIGHT 1080
 #define WIDTH 1920
 
 void playguitar();
+void playguitar1();
+void menuguitar();
 
 #include <allegro.h>
 #include "stdio.h"
