@@ -7,6 +7,7 @@ void anim_horse(){
     BITMAP *buffer;
     BITMAP *cheval[13];
     BITMAP *arriver= load_bitmap("../Games/Course_Chevaux/image/arriver.bmp",NULL);
+    BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Course_Chevaux/image/map0.bmp",NULL);
     BITMAP *menu[2];
     menu[0] = load_bitmap("../Games/Course_Chevaux/image/parchem1.bmp",NULL);
@@ -30,7 +31,8 @@ void anim_horse(){
     int xselect=WIDTH/1.5;
     int j;
     int fin=0;
-
+    int xenter=WIDTH-400;
+    int yenter=HEIGHT-100;
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
     for(int i=0;i<nbCheval;i++){
@@ -83,6 +85,7 @@ void anim_horse(){
             draw_sprite(buffer,select[i][j],xselect,yselect[i]);
             textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "joueur %d fais ton choix enculé!",tour);
         }
+        draw_sprite(buffer,enterkey, xenter, yenter);
         if (key[KEY_UP]) { // Flèche du haut
             option--;
             if (option<0){
@@ -149,7 +152,7 @@ void anim_horse(){
         while (!key[KEY_ENTER] && !key[KEY_ESC]) {
             sprintf(message,"LE CAVALIER %d A WIN LA GAME",memo+1);
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
-
+            draw_sprite(buffer,enterkey, xenter, yenter);
             if(memo==joueur[0] && memo==joueur[1]){
                 fin=1;
                 textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
