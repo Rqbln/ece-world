@@ -30,7 +30,7 @@ add_executable(
         Games/Taupe/taupe.c
         Games/Taupe/taupe.h
         Menu/menu.c
-        Menu/menu.h)
+        Menu/menu.h joueur/joueur.c joueur/joueur.h)
 
 target_link_libraries(ECE-WORLD -lmingw32 -lalleg44)
 
