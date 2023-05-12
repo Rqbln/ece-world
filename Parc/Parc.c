@@ -72,6 +72,7 @@ void parc2(){
     int posx = 0; //position des sprite du personnage
     int actionperso = 0;
     int persochoisit=0;
+    int tourjoueur=0;
     int vitesseimage=0;
     int xbitcoin = 0;
     int ybitcoin = 0;
@@ -408,6 +409,10 @@ void parc2(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
+            }
             cmpt=0;
             cmp=0;
             // Collision détectée !
@@ -432,6 +437,10 @@ void parc2(){
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
+            }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
             }
             cmpt = 0;
             cmp = 0;
@@ -459,6 +468,10 @@ void parc2(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
+            }
             cmpt = 0;
             cmp = 0;
             // Collision détectée !
@@ -483,6 +496,10 @@ void parc2(){
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
+            }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
             }
             cmpt = 0;
             cmp = 0;
@@ -510,6 +527,10 @@ void parc2(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
+            }
             cmpt = 0;
             cmp = 0;
             // Collision détectée !
@@ -534,6 +555,10 @@ void parc2(){
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
+            }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
             }
             cmpt = 0;
             cmp = 0;
@@ -560,6 +585,10 @@ void parc2(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
+            }
             cmpt = 0;
             cmp = 0;
             // Collision détectée !
@@ -585,6 +614,10 @@ void parc2(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
+            }
             cmpt = 0;
             cmp = 0;
             // Collision détectée !
@@ -609,6 +642,10 @@ void parc2(){
             for (int i = 0; i < nbcheval; i++) {
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
+            }
+            tourjoueur+=1;
+            if(tourjoueur>=NB_JOUEURS){
+                tourjoueur=0;
             }
             cmpt = 0;
             cmp = 0;
@@ -808,14 +845,14 @@ void parc2(){
                     posx = 0;
                 }
             }
-            draw_sprite(buffer, pacman[persochoisit][actionperso][posx], xPacman, yPacman);
+            draw_sprite(buffer, pacman[joueurs[tourjoueur].persoChoisi][actionperso][posx], xPacman, yPacman);
         } else {
-            draw_sprite(buffer, pacman[persochoisit][0][0], xPacman, yPacman);
+            draw_sprite(buffer, pacman[joueurs[tourjoueur].persoChoisi][0][0], xPacman, yPacman);
         }
         if (stop == 0) {
             stop_sample(sound[musiquealeatoire]);
             play_sample(ambiance, 255, 128, 1000, 1);
-            for (int i = 0; i < 2; ++i) {
+            for (int i = 0; i < NB_JOUEURS; ++i) {
                 play_sample(effet[i], 255, 128, 1000, 0);
                 while (!key[KEY_ENTER] && stop == 0) {
                     clear_bitmap(buffer2);
@@ -839,20 +876,20 @@ void parc2(){
                     // Rafraîchir l'écran
                     vsync();
                     if(key[KEY_RIGHT]){
-                        persochoisit+=1;
+                        joueurs[i].persoChoisi +=1;
                     }
                     if(key[KEY_LEFT]){
-                        persochoisit-=1;
+                        joueurs[i].persoChoisi-=1;
                     }
-                    if(persochoisit>=grille){
-                        persochoisit=0;
+                    if(joueurs[i].persoChoisi>=grille){
+                        joueurs[i].persoChoisi=0;
                     }
-                    if(persochoisit<0){
-                        persochoisit=4;
+                    if(joueurs[i].persoChoisi<0){
+                        joueurs[i].persoChoisi=4;
                     }
 
                     draw_sprite(buffer, parchemin, ((WIDTH/2)-(parchemin->w)/2), 0);
-                    draw_sprite(buffer, pacman[persochoisit][0][0], ((WIDTH/2)-50), HEIGHT-470);
+                    draw_sprite(buffer, pacman[joueurs[i].persoChoisi][0][0], ((WIDTH/2)-50), HEIGHT-470);
                     blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
                     rest(120);
                 }

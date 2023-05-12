@@ -1,5 +1,6 @@
 //by Baptiste Chesnot
 #include "chevaux.h"
+#include "../../joueur/joueur.c"
 
 void anim_horse(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
@@ -25,8 +26,7 @@ void anim_horse(){
     char nomDuFichier[60];
     int tour=0;
     int option=0;
-    int nbJoueur = 2;
-    int joueur[nbJoueur];
+    int joueur[NB_JOUEURS];
     int xselect=WIDTH/1.5;
     int j;
     int fin=0;
@@ -153,12 +153,18 @@ void anim_horse(){
             if(memo==joueur[0] && memo==joueur[1]){
                 fin=1;
                 textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
+                joueurs[1].nbTickets+=1;
+                joueurs[0].nbTickets+=1;
             }else if(memo==joueur[0]){
                 fin=1;
-                textout_centre_ex(buffer, font, "Le joueur1 a remporter un ticket", WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
+                sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
+                textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
+                joueurs[0].nbTickets+=1;
             }else if(memo==joueur[1]){
                 fin=1;
-                textout_centre_ex(buffer, font, "Le joueur2 a remporter un ticket", WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
+                sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
+                textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
+                joueurs[1].nbTickets+=1;
             }else{fin=0;}
             //textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
