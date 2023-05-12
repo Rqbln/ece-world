@@ -68,9 +68,9 @@ void jeu_taupe(){
     show_mouse(screen);
 
 
-    while (!key[KEY_ENTER]){
+    while (!key[KEY_SPACE]){
         draw_sprite(buffer,fond,0,0);
-        sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
+        sprintf(messageDebut, "Appuyez sur espace pour commencer la partie !");
         textout_centre_ex(buffer,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
         rest(10);
@@ -84,6 +84,13 @@ void jeu_taupe(){
         targets[0].size = TAILLE_INITIALE;
         targets[1].size = TAILLE_INITIALE;
 
+        while (!key[KEY_ENTER]){
+            draw_sprite(buffer,fond,0,0);
+            sprintf(messageDebut, "%s, A toi de jouer. Appuie sur entrée pour commencer.",joueurs[i].nom);
+            textout_centre_ex(buffer,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            rest(10);
+        }
 
         for (int i = 3; i > 0; --i) {
             clear_bitmap(buffer);
@@ -189,9 +196,21 @@ void jeu_taupe(){
             // Attendre un peu pour éviter que les cercles n'apparaissent trop rapidement
             rest(50);
 
-            if (score [i] == 20){
+            if (score [i] >= 3){
+
                 gameOver = 1;
-                clear_bitmap(buffer);
+                while (!key[KEY_ENTER]) {
+                    clear_bitmap(buffer);
+                    draw_sprite(buffer,fond,0,0);
+                    sprintf(messageFin, "Points maximum ! %d points récoltés.",score[i]);
+                    textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+                    sprintf(messageFin, "%s, A toi de jouer. Appuie sur entrée pour commencer.",joueurs[1].nom,score[1]);
+                    textout_centre_ex(buffer,font, messageFin, WIDTH/2, (HEIGHT / 2) + 50, makecol(255, 255, 255), -1);
+
+                    blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+
+                }
+
             }
         }
     }
@@ -204,9 +223,25 @@ void jeu_taupe(){
         sprintf(messageFin, "Points de %s : %d",joueurs[1].nom,score[1]);
         textout_centre_ex(buffer,font, messageFin, WIDTH/2, (HEIGHT / 2) + 100, makecol(255, 255, 255), -1);
 
+        if (score[0] > score[1]) {
+            sprintf(messageFin, "%s a gagné ! +1 ticket", joueurs[0].nom);
+            textout_centre_ex(buffer,font, messageFin, WIDTH/2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
+            joueurs[0].nbTickets++;
+        } else if (score[1] > score[0]) {
+            sprintf(messageFin, "%s a gagné ! +1 ticket", joueurs[1].nom);
+            textout_centre_ex(buffer,font, messageFin, WIDTH/2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
+            joueurs[1].nbTickets++;
+        } else {
+            sprintf(messageFin, "Égalité ! +1 ticket pour %s et %s ", joueurs[0].nom,joueurs[1].nom);
+            textout_centre_ex(buffer,font, messageFin, WIDTH/2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
+            joueurs[0].nbTickets++;
+            joueurs[1].nbTickets++;
+        }
+
         // Mettre à jour l'écran
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
         rest(10); // Pause de 10 ms pour rafraîchir l'écran
         vsync();
     }
+
 }
