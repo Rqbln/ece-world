@@ -1,5 +1,5 @@
 #include "Parc.h"
-#include "../joueur/joueur.c"
+#include "../joueur/joueur.h"
 
 
 

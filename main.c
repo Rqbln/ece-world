@@ -1,10 +1,11 @@
 #include "Init_Allegro/allegro.h"
 #include "Menu/menu.h"
 #include "Parc/Parc.h"
-#include "joueur/joueur.c"
+#include "joueur/joueur.h"
 //#include "Games/Course_Chevaux/chevaux.h"
 //#include "Games/Jackpot/jackpot.h"
 //#include "Games/Ducky/ducky.h"
+
 
 
 int main() {
