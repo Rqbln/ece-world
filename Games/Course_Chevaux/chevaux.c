@@ -1,6 +1,6 @@
 //by Baptiste Chesnot
 #include "chevaux.h"
-#include "../../joueur/joueur.c"
+#include "../../joueur/joueur.h"
 
 void anim_horse(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
