@@ -229,7 +229,7 @@ void parc2(){
         xcenter = pacman[0][0][1]->w / 2;
         ycenter = pacman[0][0][1]->w / 2;
         xcoordonnee = -(ximgfond-xPacman-(pacman[0][0][0]->w)/2);
-        ycoordonnee = -(yimgfond-yPacman-pacman[0][0][0]->h);
+        ycoordonnee = -(yimgfond-yPacman-pacman[0][0][0]->h)-20;
         ycoordonneeb = -(yimgfond-yPacman-(pacman[0][0][0]->h)+50);
         draw_sprite(buffer, fond, ximgfond, yimgfond);
         int pixel_colorb = getpixel(fond, xcoordonnee, ycoordonneeb);
@@ -538,7 +538,7 @@ void parc2(){
         }
         if (xPacman <= (xguitar + (guitar->w)/2) && (xguitar + (guitar->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yguitar) && (yguitar) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
-            playguitar();
+            menuguitar();
             musique = 1;
             yserpent -= pacman[0][0][1]->h;
             yriver -= pacman[0][0][1]->h;

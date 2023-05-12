@@ -122,7 +122,6 @@ void playguitar1(){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    play_sample(musique, 255, 128, 1000, 1);
 
     int nbnote = 4*bat;
     int xnote[nbnote];
@@ -154,6 +153,7 @@ void playguitar1(){
     buffer=create_bitmap(WIDTH,HEIGHT);
 
     for (int tour = 0; tour < nbjoueur; ++tour) {
+        play_sample(musique, 255, 128, 1000, 1);
         memo=0;
         for (int j = 0; j < bat; ++j) {
             for(int i=0;i<nbnote/bat;i++){
