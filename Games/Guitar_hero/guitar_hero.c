@@ -16,9 +16,6 @@ void menuguitar(){
 
 
     //declaration variable
-    int selection = 0; // Index de l'option sélectionnée
-    int num_options = 3; // Nombre total d'options
-    char *options[] = {"Jouer", "Lire les règles", "Quitter"}; // Texte des options
     char nomDeFichier[50];
     int ecart=200;
     int xselect=WIDTH/2-200;
@@ -234,7 +231,7 @@ void playguitar(){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    play_sample(musique, 255, 128, 1000, 1);
+
 
     int nbnote = 4*batt;
     int xnote[nbnote];
@@ -258,9 +255,7 @@ void playguitar(){
     ok[1]=0;
     ok[2]=0;
     ok[3]=0;
-    
-// Joue la musique en boucle
-//play_sample(musique, 255, 128, 100, 1);
+
     // Initialisation de la fonction rand() avec la fonction srand()
     //srand(time(NULL));
     if(!arriver){
@@ -279,6 +274,8 @@ void playguitar(){
     buffer=create_bitmap(WIDTH,HEIGHT);
 
     for (int tour = 0; tour < nbjoueur; ++tour) {
+        stop_sample(musique);
+        play_sample(musique, 255, 128, 1000, 1);
         memo=0;
         for (int j = 0; j < batt; ++j) {
             for(int i=0;i<nbnote/batt;i++){
@@ -292,61 +289,12 @@ void playguitar(){
         while (!key[KEY_ESC] && memo ==0) {
             clear_bitmap(buffer);
             clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
-            // Obtenir les coordonnées de la souris
+
             stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
-            //int x=mouse_x;
-            //int y=mouse_y;
-            //draw_sprite(buffer,arriver,(x - ((arriver->w)/2)),(y - ((arriver->h)/2)));
-            for (int i=0; i<nbnote; i++){
-                // Génération d'un nombre aléatoire compris entre 8 et 20
-                //nombreAleatoire = 8+rand() % 20;
-                ynote[i]+=nombreAleatoire;
-                if(keypressed()){
-                    if(key[KEY_S]){
-                        if (xnote[i] <= (note1 + note->w) && (note1) <= (xnote[i] + note->w) && ynote[i] <= (notey) && (notey) <= (ynote[i] + note->h)){
-                            ynote[i]=-200;
-                            score+=1;
-                            vitesse-=1;
-                            // Collision détectée !
-                        }
-                        else{
-                        }
-                    }
-                    if(key[KEY_D]){
-                        if (xnote[i] <= (note2 + note->w) && (note2) <= (xnote[i] + note->w) && ynote[i] <= (notey + note->h) && (notey) <= (ynote[i] + note->h)){
-                            ynote[i]=-200;
-                            score+=1;
-                            vitesse-=1;
-                            // Collision détectée !
-                        }
-                        else{
-                        }
-                    }
 
-                    if(key[KEY_F]){
-                        if (xnote[i] <= (note3 + note->w) && (note3) <= (xnote[i] + note->w) && ynote[i] <= (notey + note->h) && (notey) <= (ynote[i] + note->h)){
-                            ynote[i]=-200;
-                            score+=1;
-                            vitesse-=1;
-                            // Collision détectée !
-                        }
-                        else{
-                        }
-                    }
-                    if(key[KEY_G]){
-                        if (xnote[i] <= (note4 + note->w) && (note4) <= (xnote[i] + note->w) && ynote[i] <= (notey + note->h) && (notey) <= (ynote[i] + note->h)){
-                            ynote[i]=-200;
-                            score+=1;
-                            vitesse-=1;
-                            // Collision détectée !
-                        }
-                        else{
-                        }
-                    }
-                }
+            for (int i=0; i<nbnote; i++) {
 
-                //textprintf_ex(buffer, font, 50, 50, makecol(255, 255, 255), -1, "score: %d", score);
-
+                ynote[i] += nombreAleatoire;
                 draw_sprite(buffer,note,xnote[i],ynote[i]);
                 draw_sprite(buffer,note,note1,notey);
                 draw_sprite(buffer,note,note2,notey);
@@ -356,6 +304,70 @@ void playguitar(){
                 if (ynote[i] >= HEIGHT ){
                     memo=1;
                     // Collision détectée !
+                }
+            }
+                    if(key[KEY_S] && ok[0]==0){
+                        if (xnote[0] <= (note1 + note->w) && (note1) <= (xnote[0] + note->w) && ynote[0] <= (notey + note->h) && (notey) <= (ynote[0] + note->h)){
+                            ynote[0]=-200;
+                            score+=1;
+                            vitesse-=1;
+                            ok[0]=1;
+                            // Collision détectée !
+                        }
+                        else{
+                            memo=1;
+                        }
+                    }
+                    if(key[KEY_D] && ok[1]==0){
+                        if (xnote[1] <= (note2 + note->w) && (note2) <= (xnote[1] + note->w) && ynote[1] <= (notey + note->h) && (notey) <= (ynote[1] + note->h)){
+                            ynote[1]=-200;
+                            score+=1;
+                            vitesse-=1;
+                            ok[1]=1;
+                            // Collision détectée !
+                        }
+                        else{
+                            memo=1;
+                        }
+                    }
+
+                    if(key[KEY_F]&& ok[2]==0){
+                        if (xnote[2] <= (note3 + note->w) && (note3) <= (xnote[2] + note->w) && ynote[2] <= (notey + note->h) && (notey) <= (ynote[2] + note->h)){
+                            ynote[2]=-200;
+                            score+=1;
+                            vitesse-=1;
+                            // Collision détectée !
+                            ok[2]=1;
+                        }
+                        else{
+                            memo=1;
+                        }
+                    }
+                    if(key[KEY_G]&& ok[3]==0){
+                        if (xnote[3] <= (note4 + note->w) && (note4) <= (xnote[3] + note->w) && ynote[3] <= (notey + note->h) && (notey) <= (ynote[3] + note->h)){
+                            ynote[3]=-200;
+                            score+=1;
+                            vitesse-=1;
+                            // Collision détectée !
+                            ok[3]=1;
+                        }
+                        else{
+                            memo=1;
+                        }
+                    }
+
+
+
+                //textprintf_ex(buffer, font, 50, 50, makecol(255, 255, 255), -1, "score: %d", score);
+
+
+            for (int j = 0; j < 4; ++j) {
+                if (ok[j]==1){
+                    time[j]+=1;
+                    if (time[j]>=5){
+                        ok[j]=0;
+                        time[j]=0;
+                    }
                 }
             }
             textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
