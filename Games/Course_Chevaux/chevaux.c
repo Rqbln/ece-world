@@ -113,6 +113,7 @@ void anim_horse(){
         if (key[KEY_ENTER]) { // Touche Entrée
             rest(50); // Pause pour éviter les mouvements trop rapides
             joueur[tour] = option;
+            joueurs[tour].nbTickets-=1;
             //sprintf("valider, le joueur %d a voté le cheval %d !",tour,option);
             tour+=1;
             textprintf_ex(buffer, font, WIDTH/2, HEIGHT/2, makecol(255, 255, 255), -1, "valider, le joueur %d a voté le cheval %d !",tour,option);
