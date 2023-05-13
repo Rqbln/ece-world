@@ -8,6 +8,7 @@ int gameOver = 0;
 char messageDebut[90];
 char messageFin[180];
 int isClicked = 0;
+int memotickets[NB_JOUEURS];
 
 // Les coordonnées des 6 trous de la pyramide
 int pyramid_x[6] = {WIDTH/2-200, WIDTH/2 -400, WIDTH/2, WIDTH/2 + 400, WIDTH/2 +200, WIDTH/2 };
@@ -50,6 +51,10 @@ void jeu_taupe(){
             allegro_message("Erreur icone");
             exit(EXIT_FAILURE);
         }
+    }
+
+    for (int i = 0; i < NB_JOUEURS; ++i) {
+        memotickets[i]=joueurs[i].nbTickets;
     }
 
     BITMAP *fond = load_bitmap("../Games/Taupe/images/fond.bmp",NULL);
@@ -196,7 +201,7 @@ void jeu_taupe(){
             // Attendre un peu pour éviter que les cercles n'apparaissent trop rapidement
             rest(50);
 
-            if (score [i] >= 3){
+            if (score [i] >= 1){
 
                 gameOver = 1;
                 while (!key[KEY_ENTER]) {
@@ -226,16 +231,16 @@ void jeu_taupe(){
         if (score[0] > score[1]) {
             sprintf(messageFin, "%s a gagné ! +1 ticket", joueurs[0].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
-            joueurs[0].nbTickets++;
+            joueurs[0].nbTickets=memotickets[0]+1;
         } else if (score[1] > score[0]) {
             sprintf(messageFin, "%s a gagné ! +1 ticket", joueurs[1].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
-            joueurs[1].nbTickets++;
+            joueurs[1].nbTickets=memotickets[1]+1;
         } else {
             sprintf(messageFin, "Égalité ! +1 ticket pour %s et %s ", joueurs[0].nom,joueurs[1].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
-            joueurs[0].nbTickets++;
-            joueurs[1].nbTickets++;
+            joueurs[0].nbTickets=memotickets[0]+1;
+            joueurs[1].nbTickets=memotickets[1]+1;
         }
 
         // Mettre à jour l'écran
