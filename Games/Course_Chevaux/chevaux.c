@@ -35,6 +35,7 @@ void anim_horse(){
     int fin=0;
     int xenter=WIDTH-400;
     int yenter=HEIGHT-80;
+    int ticket=0;
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
     for(int i=0;i<nbCheval;i++){
@@ -171,18 +172,28 @@ void anim_horse(){
             if(memo==joueur[0] && memo==joueur[1]){
                 fin=1;
                 textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
-                joueurs[1].nbTickets+=1;
-                joueurs[0].nbTickets+=1;
+                if(ticket==0){
+                    joueurs[1].nbTickets+=1;
+                    joueurs[0].nbTickets+=1;
+                    ticket=1;
+                }
+
             }else if(memo==joueur[0]){
                 fin=1;
                 sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
                 textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
-                joueurs[0].nbTickets+=1;
+                if(ticket==0){
+                    joueurs[0].nbTickets+=1;
+                    ticket=1;
+                }
             }else if(memo==joueur[1]){
                 fin=1;
                 sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
                 textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
-                joueurs[1].nbTickets+=1;
+                if(ticket==0){
+                    joueurs[1].nbTickets+=1;
+                    ticket=1;
+                }
             }else{fin=0;}
             //textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);

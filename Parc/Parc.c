@@ -67,8 +67,8 @@ void parc2(){
     int xcheval[nbcheval];
     int ycheval[nbcheval];
 
-    int xporte = ximgfond + 2000;
-    int yporte = yimgfond + 950;
+    int xporte = ximgfond + 1800;
+    int yporte = yimgfond + 800;
     int posx = 0; //position des sprite du personnage
     int actionperso = 0;
     int persochoisit=0;
@@ -388,7 +388,7 @@ void parc2(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
         //collision activité hippodrome
-        if (xPacman <= (xhippodrome + (hippodrome->w)/2) && (xhippodrome + (hippodrome->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yhippodrome) && (yhippodrome) <= (yPacman + pacman[0][0][1]->h)){
+        if (xPacman <= (xhippodrome + (hippodrome->w)/2) && (xhippodrome + (hippodrome->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yhippodrome+(hippodrome->h)/2) && (yhippodrome+(hippodrome->h)/2) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             //pari();
             anim_horse();
@@ -418,7 +418,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
-        if (xPacman <= (xtir + (tirballon->w)/2) && (xtir + (tirballon->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytir) && (ytir) <= (yPacman + pacman[0][0][1]->h)){
+        if (xPacman <= (xtir + (tirballon->w)/2) && (xtir + (tirballon->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytir+tirballon->h) && (ytir+tirballon->h) <= (yPacman + pacman[0][0][1]->h)){
             shoot();
             stop_sample(sound[musiquealeatoire]);
             musique = 1;
@@ -536,7 +536,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
-        if (xPacman <= (xguitar + (guitar->w)/2) && (xguitar + (guitar->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yguitar) && (yguitar) <= (yPacman + pacman[0][0][1]->h)){
+        if (xPacman <= (xguitar + (guitar->w)/2) && (xguitar + (guitar->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yguitar+(guitar->h)/2) && (yguitar+(guitar->h)/2) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             menuguitar();
             musique = 1;
@@ -565,7 +565,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
-        if (xPacman <= (xcasino + (casino->w)/2) && (xcasino + (casino->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ycasino) && (ycasino) <= (yPacman + pacman[0][0][1]->h)){
+        if (xPacman <= (xcasino + (casino->w)/2) && (xcasino + (casino->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ycasino+(casino->h)/2) && (ycasino+(casino->h)/2) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             jackpot();
             musique = 1;
