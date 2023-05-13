@@ -906,8 +906,8 @@ void parc2(){
         //textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[1]);
         stop = 1;
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
-        textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", joueurs[0].nom);
-        textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", joueurs[1].nom);
+        textprintf_ex(buffer, font, 50, 200, makecol(255, 255, 255), -1, "%s, Tickets : %d", joueurs[0].nom, joueurs[0].nbTickets);
+        textprintf_ex(buffer, font, 1700, 200, makecol(255, 255, 255), -1, "%s, Tickets : %d", joueurs[1].nom, joueurs[1].nbTickets);
         stop=1;
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         if (key[KEY_SPACE]) {
