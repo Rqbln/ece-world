@@ -4,6 +4,7 @@
 
 void anim_horse(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
+    //initialisation des BITMAP
     BITMAP *buffer;
     BITMAP *cheval[13];
     BITMAP *arriver= load_bitmap("../Games/Course_Chevaux/image/arriver.bmp",NULL);
@@ -13,9 +14,11 @@ void anim_horse(){
     menu[0] = load_bitmap("../Games/Course_Chevaux/image/parchem1.bmp",NULL);
     menu[1] = load_bitmap("../Games/Course_Chevaux/image/parchem2.bmp",NULL);
     BITMAP *select[10][2];
+    //initialisation des SAMPLE
     SAMPLE *musicparis= load_sample("../Games/Course_Chevaux/image/pascheval.wav");
     SAMPLE *musiccourse= load_sample("../Games/Course_Chevaux/image/coursecommente.wav");
     SAMPLE *musicarrive= load_sample("../Games/Course_Chevaux/image/coursearriver.wav");
+    //initialisation des variable
     int position[nbCheval];
     int xcheval[nbCheval];
     int ycheval[nbCheval];
@@ -57,9 +60,8 @@ void anim_horse(){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-
-    if(!arriver){
-        allegro_message("../Games/Course_Chevaux/image/arriver.bmp");
+    if(!arriver && !fond){
+        allegro_message("image/arriver et fond");
         exit(EXIT_FAILURE);
     }
     for(int i=0;i<12;i++){
@@ -70,20 +72,14 @@ void anim_horse(){
             exit(EXIT_FAILURE);
         }
     }
-    if(!fond){
-        allegro_message("../Games/Course_Chevaux/image/map0.bmp ");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
     buffer=create_bitmap(WIDTH,HEIGHT);
     play_sample(musicparis, 255, 128, 1000, 1);
-    while (tour < 2) {
+    while (tour < 2) { //menu pour les paris avant la course
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
         draw_sprite(buffer,arriver,xArriver,yArriver);
         draw_sprite(buffer,menu[tour],WIDTH-850,0);
-        //for (int tour = 0; tour < nbJoueur; ++tour) {
         for (int i=0; i<nbCheval; i++){
             draw_sprite(buffer,cheval[0],xcheval[0],ycheval[i]);
             if (option==i){
@@ -113,12 +109,10 @@ void anim_horse(){
         if (key[KEY_ENTER]) { // Touche Entrée
             rest(50); // Pause pour éviter les mouvements trop rapides
             joueur[tour] = option;
-            joueurs[tour].nbTickets-=1;
+            joueurs[tour].nbTickets-=1; //retire un ticket a chaque joueur
             //sprintf("valider, le joueur %d a voté le cheval %d !",tour,option);
             tour+=1;
             textprintf_ex(buffer, font, WIDTH/2, HEIGHT/2, makecol(255, 255, 255), -1, "valider, le joueur %d a voté le cheval %d !",tour,option);
-
-            //textout_centre_ex(buffer, font, "valider, le joueur %d a voté le cheval %d !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
             rest(250); // Pause pour éviter les mouvements trop rapides
         }
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
@@ -126,7 +120,7 @@ void anim_horse(){
     }
 
 
-    while (fin==0 && !key[KEY_ESC]){
+    while (fin==0 && !key[KEY_ESC]){//initialise la course(position et music)
         stop_sample(musicarrive);
         stop_sample(musicparis);
         play_sample(musiccourse, 255, 128, 1000, 1);
@@ -136,40 +130,43 @@ void anim_horse(){
             ycheval[i] = i * 55 + HEIGHT * 0.31;
         }
         memo=20;
-        while (!key[KEY_ENTER] && memo ==20) {
+        while (memo ==20) {//boucle qui depend de memo. memo prendra par la suite la valeur du cavalier vainqueur en attendant il a le nombre quelconque 20
             clear_bitmap(buffer);
             clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
             // Obtenir les coordonnées de la souris
             stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
-            draw_sprite(buffer,arriver,xArriver,yArriver);
+            draw_sprite(buffer,arriver,xArriver,yArriver);//affiche la ligne d arrivée
             for (int i=0; i<nbCheval; i++){
                 // Génération d'un nombre aléatoire compris entre 8 et 20
                 nombreAleatoire = 8+rand() % 20;
                 position[i]++;
-                xcheval[i]+=nombreAleatoire;
-
+                xcheval[i]+=nombreAleatoire;//deplacement chevaux
                 if(position[i]>11){
                     position[i]=1;
                 }
                 draw_sprite(buffer,cheval[position[i]],xcheval[i],ycheval[i]);
                 if (xcheval[i] <= (xArriver + arriver->w) && xArriver*1.01 <= (xcheval[i] + cheval[0]->w) && ycheval[i] <= (yArriver + arriver->h) && yArriver <= (ycheval[i] + cheval[0]->h)){
                     memo=i;
-                    // Collision détectée !
                 }
             }
-            blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+            blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);//applique le buffer sur l ecran
+            //permet d accelerer la partie
             if (key[KEY_SPACE]) {
                 rest(15);
             }
             else
                 rest(55); // Pause de 10 ms pour rafraîchir l'écran
         }
+        //gestion music
         stop_sample(musiccourse);
         play_sample(musicarrive, 255, 128, 1000, 1);
         while (!key[KEY_ENTER] && !key[KEY_ESC]) {
+            //affiche le cavalier vainqueur
             sprintf(message,"LE CAVALIER %d A WIN LA GAME",memo+1);
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             draw_sprite(buffer,enterkey, xenter, yenter);
+
+            //condition de fin de partie et attribution des points
             if(memo==joueur[0] && memo==joueur[1]){
                 fin=1;
                 textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
@@ -184,7 +181,7 @@ void anim_horse(){
                 sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
                 textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
                 if(ticket==0){
-                    joueurs[0].nbTickets+=1;
+                    joueurs[0].nbTickets+=2;
                     ticket=1;
                 }
             }else if(memo==joueur[1]){
@@ -192,14 +189,14 @@ void anim_horse(){
                 sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
                 textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
                 if(ticket==0){
-                    joueurs[1].nbTickets+=1;
+                    joueurs[1].nbTickets+=2;
                     ticket=1;
                 }
-            }else{fin=0;}
-            //textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
-            blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+            }else{fin=0;} //permet de securiser la boucle
+            blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);//applique le buffer sur l ecran
             rest(100); // Pause de 10 ms pour rafraîchir l'écran
         }
     }
+    rest(200); // Pause pour eviter de capter plusieur fois la touche echap
     stop_sample(musicarrive);
 }

@@ -1,7 +1,8 @@
+//by Baptiste Chesnot
 #include "guitar_hero.h"
 void menuguitar(){
+    //innitialisation des BITMAP
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
-    clear_to_color(buffer, makecol(255, 255, 255)); // Fond blanc
     BITMAP *fond = load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
     BITMAP *selectstart[2];
     BITMAP *selectrules[2];
@@ -13,8 +14,6 @@ void menuguitar(){
     }
     play_sample(sound, 255, 128, 1000, 1);
 
-
-
     //declaration variable
     char nomDeFichier[50];
     int ecart=200;
@@ -23,7 +22,6 @@ void menuguitar(){
     int yselectrules=HEIGHT/2;
     int yselectexit=HEIGHT/2+ecart;
     int option=0;
-
 
     //creation des touche de selection
     for(int i=0;i<2;i++){
@@ -37,7 +35,7 @@ void menuguitar(){
         sprintf(nomDeFichier,"../Games/Guitar_hero/image/selectmode2%d.bmp",i);
         selectrules[i]= load_bitmap(nomDeFichier,NULL);
         if(!selectrules[i]){
-            allegro_message("../../image/selectrules%d (Personnalisé).bmp",i);
+            allegro_message("../../image/selectrules%d.bmp",i);
             exit(EXIT_FAILURE);
         }
         sprintf(nomDeFichier,"../Games/Guitar_hero/image/selectexit%d.bmp",i);
