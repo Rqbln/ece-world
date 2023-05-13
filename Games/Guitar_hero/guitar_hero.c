@@ -5,8 +5,10 @@ void menuguitar(){
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
     BITMAP *fond = load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
     BITMAP *selectstart[2];
+    BITMAP *selectstart1[2];
     BITMAP *selectrules[2];
     BITMAP *selectexit[2];
+    BITMAP *regle = load_bitmap("../Games/Guitar_hero/image/parcheminGH.bmp",NULL);
     SAMPLE *sound = load_wav("../Musics/Wav/Menu.wav");
     if (!sound) {
         allegro_message("Erreur lors du chargement du fichier WAV\n");
@@ -18,7 +20,8 @@ void menuguitar(){
     char nomDeFichier[50];
     int ecart=200;
     int xselect=WIDTH/2-200;
-    int yselectstart=HEIGHT/2-ecart;
+    int yselectstart=HEIGHT/2-2*ecart;
+    int yselectstart1=HEIGHT/2-ecart;
     int yselectrules=HEIGHT/2;
     int yselectexit=HEIGHT/2+ecart;
     int option=0;
@@ -28,11 +31,17 @@ void menuguitar(){
         sprintf(nomDeFichier,"../Games/Guitar_hero/image/selectmode1%d.bmp",i);
         selectstart[i]= load_bitmap(nomDeFichier,NULL);
         if(!selectstart[i]){
-            allegro_message("../../Menu/image/selectstart%d (Personnalisé).bmp",i);
+            allegro_message("../../Menu/image/selectstart1%d (Personnalisé).bmp",i);
+            exit(EXIT_FAILURE);
+        }
+        sprintf(nomDeFichier,"../Games/Guitar_hero/image/selectmode2%d.bmp",i);
+        selectstart1[i]= load_bitmap(nomDeFichier,NULL);
+        if(!selectstart1[i]){
+            allegro_message("../../Menu/image/selectstart2%d (Personnalisé).bmp",i);
             exit(EXIT_FAILURE);
         }
 
-        sprintf(nomDeFichier,"../Games/Guitar_hero/image/selectmode2%d.bmp",i);
+        sprintf(nomDeFichier,"../Games/Guitar_hero/image/selectregle%d.bmp",i);
         selectrules[i]= load_bitmap(nomDeFichier,NULL);
         if(!selectrules[i]){
             allegro_message("../../image/selectrules%d.bmp",i);
@@ -48,20 +57,31 @@ void menuguitar(){
 
     // Boucle principale
     while (!key[KEY_ESC]) {
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         stretch_blit(fond, buffer, 0, 0, fond->w, fond->h, 0, 0, WIDTH, HEIGHT);
         switch (option) {
             case 0:
                 draw_sprite(buffer,selectstart[1],xselect,yselectstart);
+                draw_sprite(buffer,selectstart1[0],xselect,yselectstart1);
                 draw_sprite(buffer,selectrules[0],xselect,yselectrules);
                 draw_sprite(buffer,selectexit[0],xselect,yselectexit);
                 break;
             case 1:
                 draw_sprite(buffer,selectstart[0],xselect,yselectstart);
-                draw_sprite(buffer,selectrules[1],xselect,yselectrules);
+                draw_sprite(buffer,selectstart1[1],xselect,yselectstart1);
+                draw_sprite(buffer,selectrules[0],xselect,yselectrules);
                 draw_sprite(buffer,selectexit[0],xselect,yselectexit);
                 break;
             case 2:
                 draw_sprite(buffer,selectstart[0],xselect,yselectstart);
+                draw_sprite(buffer,selectstart1[0],xselect,yselectstart1);
+                draw_sprite(buffer,selectrules[1],xselect,yselectrules);
+                draw_sprite(buffer,selectexit[0],xselect,yselectexit);
+                break;
+            case 3:
+                draw_sprite(buffer,selectstart[0],xselect,yselectstart);
+                draw_sprite(buffer,selectstart1[0],xselect,yselectstart1);
                 draw_sprite(buffer,selectrules[0],xselect,yselectrules);
                 draw_sprite(buffer,selectexit[1],xselect,yselectexit);
                 break;
@@ -80,7 +100,7 @@ void menuguitar(){
         }
         if (key[KEY_DOWN]) { // Flèche du bas
             option++;
-            if (option>2){
+            if (option>3){
                 option=0;
             }
             rest(250); // Pause pour éviter les mouvements trop rapides
@@ -94,6 +114,13 @@ void menuguitar(){
                 stop_sample(sound);
                 playguitar();
             } else if (option == 2) { // Option Quitter
+                //stop_sample(sound);
+                while(!key[KEY_SPACE]){
+                    draw_sprite(buffer,regle,((WIDTH/2)-(regle->w)/2),-50);
+                    blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+                }
+
+            } else{
                 stop_sample(sound);
                 rest(250); // Pause pour éviter les mouvements trop rapides
                 //allegro_exit(); // Quitte Allegro
