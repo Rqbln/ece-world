@@ -10,6 +10,8 @@ void snake() {
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
     BITMAP *fond = load_bitmap("../Games/Snake/images/fond.bmp",NULL);
     char filename[80];
+    int memotickets[NB_JOUEURS];
+
 
     for (int i = 0; i < NB_JOUEURS; ++i) {
         memotickets[i]=joueurs[i].nbTickets;

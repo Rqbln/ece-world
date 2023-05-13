@@ -8,13 +8,16 @@ int gameOver = 0;
 char messageDebut[90];
 char messageFin[180];
 int isClicked = 0;
-int memotickets[NB_JOUEURS];
+
+
 
 // Les coordonnées des 6 trous de la pyramide
 int pyramid_x[6] = {WIDTH/2-200, WIDTH/2 -400, WIDTH/2, WIDTH/2 + 400, WIDTH/2 +200, WIDTH/2 };
 int pyramid_y[6] = {3*HEIGHT/7, 2*HEIGHT/3, 2*HEIGHT/3, 2*HEIGHT/3, 3*HEIGHT/7, HEIGHT/5};
 int pyramid_index = 0;
 int maxTargets = 1;
+int memotickets[NB_JOUEURS];
+
 
 typedef struct Target {
     int x, y, size, pyramid_index, isBusy;
@@ -201,7 +204,7 @@ void jeu_taupe(){
             // Attendre un peu pour éviter que les cercles n'apparaissent trop rapidement
             rest(50);
 
-            if (score [i] >= 1){
+            if (score [i] >= 30){
 
                 gameOver = 1;
                 while (!key[KEY_ENTER]) {
