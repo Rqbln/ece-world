@@ -10,6 +10,11 @@ void snake() {
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
     BITMAP *fond = load_bitmap("../Games/Snake/images/fond.bmp",NULL);
     char filename[80];
+
+    for (int i = 0; i < NB_JOUEURS; ++i) {
+        memotickets[i]=joueurs[i].nbTickets;
+    }
+
     //Snake 1
         for (int i = 0; i < 4; i++) {
             sprintf(filename, "../Games/Snake/images/snake1_%d.bmp",i);
@@ -263,24 +268,24 @@ void snake() {
         if (gagnant == 1){
             sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[0].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-            joueurs[0].nbTickets++;
+            joueurs[0].nbTickets=memotickets[0]+1;
         }
 
         else if (gagnant == 2) {
             sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[1].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-            joueurs[1].nbTickets++;
+            joueurs[1].nbTickets=memotickets[1]+1;
         }
         else {
             if (score1 == 5) {
                 sprintf(messageFin, "%s a atteint 5 points, fin de la partie !",joueurs[0].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-                joueurs[0].nbTickets++;
+                joueurs[0].nbTickets=memotickets[0]+1;
             }
             else if (score2 == 5){
                 sprintf(messageFin, "%s a atteint 5 points, fin de la partie !",joueurs[1].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-                joueurs[1].nbTickets++;
+                joueurs[1].nbTickets=memotickets[1]+1;
             }
         }
 
