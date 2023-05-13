@@ -9,7 +9,10 @@
 #define NUM_ICONS 4
 void load_icon();
 void load_slotmachine(char *path);
+void anime();
 int tourner_roues();
+void Jplayer1(int *s1);
+void Jplayer2(int *s2);
 void jackpot();
 
 //il faut que tu utilise les :

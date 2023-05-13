@@ -145,8 +145,11 @@ void player1(int *score1){ // game du P1
     set_trans_blender(255, 0, 255, 255);
     drawing_mode(DRAW_MODE_TRANS, NULL, 0, 0);
     draw_trans_sprite(buffer, player1, (SCREEN_W - player1->w) / 2, (SCREEN_H - player1->h) / 2);
+    char message[80];
+    sprintf(message,"%s a toi de jouer, ramasse le plus de canards !",joueurs[0].nom);
+    textout_centre_ex(buffer, font, message, SCREEN_W / 2-60, SCREEN_H /2 +100, makecol(255, 255, 255), -1);
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    rest (1000);
+    rest (2500);
     // Pour le compteur de 20 secondes
     clock_t depart_temps = clock();
     double temps_actuel = 0.0;
@@ -233,8 +236,11 @@ void player2(int *score2){ // game du P2
     set_trans_blender(255, 0, 255, 255);
     drawing_mode(DRAW_MODE_TRANS, NULL, 0, 0);
     draw_trans_sprite(buffer, player2, (SCREEN_W - player2->w) / 2, (SCREEN_H - player2->h) / 2);
+    char message[80];
+    sprintf(message,"%s a toi de jouer, ramasse le plus de canards !",joueurs[1].nom);
+    textout_centre_ex(buffer, font, message, SCREEN_W / 2-60, SCREEN_H /2 +100, makecol(255, 255, 255), -1);
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    rest (1000);
+    rest (2500);
     // Pour le compteur de 20 secondes
     clock_t depart_temps = clock();
     double temps_actuel = 0.0;
@@ -313,10 +319,12 @@ void ducky(){ // remplace le main
         sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
         textout_centre_ex(buffer, font, message, SCREEN_W / 2, SCREEN_H /2, makecol(255, 255, 255), -1);
         joueurs[0].nbTickets+=1;
+        joueurs[1].nbTickets-=1;
     } else if (s1<s2){
         sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
         textout_centre_ex(buffer, font, message, SCREEN_W / 2, SCREEN_H /2, makecol(255, 255, 255), -1);
         joueurs[1].nbTickets+=1;
+        joueurs[0].nbTickets-=1;
     } else {
         textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", SCREEN_W / 2, SCREEN_H/2, makecol(255, 255, 255), -1);
         joueurs[1].nbTickets+=1;
