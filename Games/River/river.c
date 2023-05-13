@@ -2,7 +2,7 @@
 #include "river.h"
 #include<time.h>
 #include <stdlib.h>
-void river()
+void rivier()
 {
     srand(time(NULL));
     int gameover;
