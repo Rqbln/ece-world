@@ -5,4 +5,4 @@
 #define WIDTH 1920
 #define HEIGHT 1080
 #include <allegro.h>
-void turtle();
+void rivier();
