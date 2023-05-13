@@ -160,7 +160,7 @@ void jeu_taupe(){
                         targets[j].y = pyramid_y[targets[j].pyramid_index];
                         targets[j].isBusy = 1;  // Marquez la nouvelle position comme occupée
 
-                        if (score [i] % 5 == 0 && maxTargets < 6) {
+                        if (score [i] % 7 == 0 && maxTargets < 6) {
                             maxTargets++;
                             do {
                                 newIndex = rand()%6;
