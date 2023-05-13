@@ -1,6 +1,7 @@
 // PECHE AUX CANARDS LOLA LE GALL
 
 #include "ducky.h"
+#include "../../joueur/joueur.h"
 
 #define NCANARD 40 // Nombre de canards
 #define TX 60 // Largeur canards
@@ -306,14 +307,20 @@ void ducky(){ // remplace le main
 
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
     draw_sprite(buffer, fond, 0, 0);
-
+    char message[50];
     // on detecte la victoire d'un des deux joueurs et on affiche le résultat
     if (s1>s2){
-        textout_ex(buffer, font, "Player 1 gagne", SCREEN_W/2, SCREEN_H/2, makecol(255, 255, 255), -1);
+        sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
+        textout_centre_ex(buffer, font, message, SCREEN_W / 2, SCREEN_H /2, makecol(255, 255, 255), -1);
+        joueurs[0].nbTickets+=1;
     } else if (s1<s2){
-        textout_ex(buffer, font, "Player 2 gagne", SCREEN_W/2, SCREEN_H/2, makecol(255, 255, 255), -1);
+        sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
+        textout_centre_ex(buffer, font, message, SCREEN_W / 2, SCREEN_H /2, makecol(255, 255, 255), -1);
+        joueurs[1].nbTickets+=1;
     } else {
-        textout_ex(buffer, font, "Personne ne gagne", SCREEN_W/2, SCREEN_H/2, makecol(255, 255, 255), -1);
+        textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", SCREEN_W / 2, SCREEN_H/2, makecol(255, 255, 255), -1);
+        joueurs[1].nbTickets+=1;
+        joueurs[0].nbTickets+=1;
     }
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
