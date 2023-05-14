@@ -1,5 +1,6 @@
 //by Baptiste Chesnot
 #include "guitar_hero.h"
+#include "../../joueur/joueur.h"
 void menuguitar(){
     //innitialisation des BITMAP
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
@@ -147,6 +148,7 @@ void playguitar1(){
     BITMAP *arriver= load_bitmap("../Games/Guitar_hero/image/gratte.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/musique0.wav");
+    BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     set_trans_blender(0, 0, 0, 128);
     if (!musique) {
         allegro_message("Erreur : impossible de charger la musique");
@@ -164,6 +166,9 @@ void playguitar1(){
     int vitesse;
     int nbjoueur=2;
     int joueurscore[nbjoueur];
+    int ticket=0;
+    int xenter=WIDTH-400;
+    int yenter=HEIGHT-80;
 // Joue la musique en boucle
 //play_sample(musique, 255, 128, 100, 1);
     // Initialisation de la fonction rand() avec la fonction srand()
@@ -184,6 +189,7 @@ void playguitar1(){
     buffer=create_bitmap(WIDTH,HEIGHT);
 
     for (int tour = 0; tour < nbjoueur; ++tour) {
+        joueurs[tour].nbTickets-=1;
         play_sample(musique, 255, 128, 1000, 1);
         memo=0;
         for (int j = 0; j < bat; ++j) {
@@ -225,25 +231,42 @@ void playguitar1(){
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
         }
-        while (!key[KEY_ESC]) {
+        while (!key[KEY_ENTER]) {
+            draw_sprite(buffer,enterkey,xenter,yenter);
             stop_sample(musique);
             sprintf(message,"Perdu enculé");
-            joueurscore[tour] = score;
+            joueurs[tour].score_guitare[joueurs[tour].nb_essaie_guitare]=score;
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             rest(100); // Pause de 10 ms pour rafraîchir l'écran
         }
-
+        joueurs[tour].nb_essaie_guitare+=1;
     }
     rest(150); // Pause de 10 ms pour rafraîchir l'écran
     clear_bitmap(buffer);
     clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
     while (!key[KEY_ESC]) {
-        if (joueurscore[0]<joueurscore[1]){
-            sprintf(message,"joueur 2 a gagné 1 ticket");
+        if (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]<joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
+            sprintf(message,"%s a gagné 1 ticket",joueurs[1].nom);
+            if(ticket==0){
+                joueurs[1].nbTickets+=2;
+                ticket=1;
+            }
+        }
+        else if(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]>joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
+            sprintf(message,"%s a gagné 1 ticket",joueurs[0].nom);
+            if(ticket==0){
+                joueurs[0].nbTickets+=2;
+                ticket=1;
+            }
         }
         else {
-            sprintf(message,"joueur 1 a gagné 1 ticket");
+            sprintf(message,"egalite");
+            if(ticket==0){
+                joueurs[0].nbTickets+=1;
+                joueurs[1].nbTickets+=1;
+                ticket=1;
+            }
         }
         textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
@@ -252,12 +275,12 @@ void playguitar1(){
     rest(150); // Pause de 10 ms pour rafraîchir l'écran
 }
 void playguitar(){
-    #include "../../joueur/joueur.h"
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
     BITMAP *note= load_bitmap("../Games/Guitar_hero/image/bille0.bmp",NULL);;
     BITMAP *arriver= load_bitmap("../Games/Guitar_hero/image/gratte.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
+    BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/musique0.wav");
     FONT *police = load_font("arial.pcx", NULL, NULL);
     set_trans_blender(0, 0, 0, 128);
@@ -283,6 +306,8 @@ void playguitar(){
     int note4=3*155+WIDTH*0.34;
     int notey=HEIGHT/1.5;
     int ticket=0;
+    int xenter=WIDTH-400;
+    int yenter=HEIGHT-80;
 
     int ok[4];
     ok[0]=0;
@@ -407,6 +432,7 @@ void playguitar(){
             rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
         }
         while (!key[KEY_ENTER]) {
+            draw_sprite(buffer,enterkey,xenter,yenter);
             stop_sample(musique);
             sprintf(message,"Perdu enculé");
             joueurs[tour].score_guitare[joueurs[tour].nb_essaie_guitare]=score;

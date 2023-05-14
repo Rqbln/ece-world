@@ -18,7 +18,7 @@ int main() {
 
     //Initialisation des joueurs
     for (int i = 0; i < 2; ++i) {
-        joueurs[i].nbTickets=0;
+        joueurs[i].nbTickets=5;
         joueurs[i].persoChoisi=0;
         //Nom choisi dans le Parc.c
     }
