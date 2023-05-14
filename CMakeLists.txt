@@ -30,7 +30,15 @@ add_executable(
         Games/Taupe/taupe.c
         Games/Taupe/taupe.h
         Menu/menu.c
-        Menu/menu.h joueur/joueur.c joueur/joueur.h)
+        Menu/menu.h
+        joueur/joueur.c
+        joueur/joueur.h
+        Sauvegarde/sauvegarde.c
+        Sauvegarde/sauvegarde.h)
 
-target_link_libraries(ECE-WORLD -lmingw32 -lalleg44)
+find_package(PkgConfig REQUIRED)
+pkg_search_module(ALLEGRO REQUIRED allegro)
+include_directories(${ALLEGRO_INCLUDE_DIRS})
+target_link_libraries(ECE-WORLD ${ALLEGRO_LIBRARIES})
+
 

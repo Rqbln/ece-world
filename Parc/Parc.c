@@ -345,7 +345,7 @@ void parc2(){
         draw_sprite(buffer, taupe, xtaupe, ytaupe);
         draw_sprite(buffer, guitar, xguitar, yguitar);
         draw_sprite(buffer, casino, xcasino, ycasino);
-        draw_sprite(buffer, river, xriver, yriver);
+        draw_sprite(buffer, river1, xriver, yriver);
         draw_sprite(buffer, serpent, xserpent, yserpent);
         draw_sprite(buffer, bitcoin[posbitcoin], xbitcoin, ybitcoin);
         //draw_sprite(buffer, portail[posbitcoin], xportail, yportail);
