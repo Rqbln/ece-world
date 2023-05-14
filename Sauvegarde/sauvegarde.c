@@ -32,7 +32,7 @@ void deserializePlayers(const char* serializedData, t_joueurs* players) { //dés
 void saveGame(const t_joueurs* players, const char* saveFileName) {
     // Modifiez le chemin du fichier de sauvegarde pour inclure le dossier "saves" à la racine du projet
     char saveFilePath[100]; // Modifier la taille selon vos besoins
-    snprintf(saveFilePath, sizeof(saveFilePath), "saves/%s.sav", saveFileName);
+    snprintf(saveFilePath, sizeof(saveFilePath), "../saves/%s.sav", saveFileName);
 
     FILE* file = fopen(saveFilePath, "wb");
     if (file == NULL) {
@@ -59,7 +59,7 @@ void saveGame(const t_joueurs* players, const char* saveFileName) {
 void loadGame(t_joueurs* players, const char* saveFileName) {
     // Modifiez le chemin du fichier de sauvegarde pour inclure le dossier "saves" à la racine du projet
     char saveFilePath[100]; // Modifier la taille selon vos besoins
-    snprintf(saveFilePath, sizeof(saveFilePath), "saves/%s.sav", saveFileName);
+    snprintf(saveFilePath, sizeof(saveFilePath), "../saves/%s.sav", saveFileName);
 
     FILE* file = fopen(saveFilePath, "rb");
     if (file == NULL) {

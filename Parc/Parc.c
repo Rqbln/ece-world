@@ -934,8 +934,39 @@ void parc2(){
             blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
 
             if (key[KEY_1]) {
+
+                char saveFileName[100];
+                // Afficher le menu de pause
+                while (!key[KEY_ENTER]){
+                clear(buffer);
+                draw_sprite(buffer, fondmap, ximgfond, yimgfond);
+                rectfill(buffer, (WIDTH / 2) - 100, (HEIGHT / 2) - 100, (WIDTH / 2) + 100, (HEIGHT / 2) + 100,
+                         makecol(0, 0, 0));
+                textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 - 40, makecol(255, 255, 255), -1,"MENU PAUSE");
+                textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1,"Nom de la sauvegarde : ");
+                textout_centre_ex(buffer, font, text_input, WIDTH / 2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
+                // Lire la saisie clavier
+                //draw_sprite(buffer, bulle[i], (xbarbare[i] + barbare[i]->w), ybarbare[i]);
+
+                blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+                while (keypressed()) {
+                    int cle = readkey();
+                    if (cle >> 8 == KEY_BACKSPACE && strlen(text_input) > 0) {
+                        text_input[strlen(text_input) - 1] = '\0';
+                    } else if (strlen(text_input) < 128 && (cle & 0xFF) >= ' ' && (cle & 0xFF) <= '~') {
+                        text_input[strlen(text_input)] = cle & 0xFF;
+                    }
+                }
+                // Rafraîchir l'écran
+                vsync();
+                blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+                rest(120);
+            }
+
+                sprintf(saveFileName,"%s",text_input);
+                memset(text_input, '\0', sizeof(text_input)); //effacer tout le tableau
                 // Option de sauvegarde
-                saveGame(joueurs, "my_save"); // Sauvegarder le jeu (adapté à votre structure de joueurs et nom de sauvegarde)
+                saveGame(joueurs, saveFileName); // Sauvegarder le jeu (adapté à votre structure de joueurs et nom de sauvegarde)
                 isPaused = 0; // Reprendre le jeu
             } else if (key[KEY_2]) {
                 // Option de chargement

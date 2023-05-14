@@ -29,8 +29,8 @@ int main() {
     //anim_horse();
     //jackpot();
     //playguitar();
-    menuguitar();
-    //menu();
+    //menuguitar();
+    menu();
     /*while (!key[KEY_ESC] && !gameOver) { // Boucle principale du jeu
         clear_bitmap(buffer); // Efface le contenu du bitmap
 
