@@ -16,9 +16,9 @@ void anim_horse(){
     menu[1] = load_bitmap("../Games/Course_Chevaux/image/parchem2.bmp",NULL);
     BITMAP *select[10][2];
     //initialisation des SAMPLE
-    SAMPLE *musicparis= load_sample("../Games/Course_Chevaux/image/pascheval.wav");
-    SAMPLE *musiccourse= load_sample("../Games/Course_Chevaux/image/coursecommente.wav");
-    SAMPLE *musicarrive= load_sample("../Games/Course_Chevaux/image/coursearriver.wav");
+    SAMPLE *musicparis= load_sample("../Games/Course_Chevaux/musique/pascheval.wav");
+    SAMPLE *musiccourse= load_sample("../Games/Course_Chevaux/musique/coursecommente.wav");
+    SAMPLE *musicarrive= load_sample("../Games/Course_Chevaux/musique/coursearriver.wav");
     //initialisation des variable
     int position[nbCheval];
     int xcheval[nbCheval];
