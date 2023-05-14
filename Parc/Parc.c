@@ -1,9 +1,11 @@
 #include "Parc.h"
 #include "../joueur/joueur.h"
+#include "../Sauvegarde/sauvegarde.h"
 
 
 
 void parc2(){
+    int isPaused = 0; // Variable pour indiquer si le jeu est en pause
     int buffersizew = WIDTH / 6;
     int buffersizeh = HEIGHT / 8;
     BITMAP *buffer2= create_bitmap(buffersizew, buffersizeh);
@@ -910,9 +912,45 @@ void parc2(){
         textprintf_ex(buffer, font, 1700, 200, makecol(255, 255, 255), -1, "%s, Tickets : %d", joueurs[1].nom, joueurs[1].nbTickets);
         stop=1;
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+
+        if (key[KEY_P]) {
+            isPaused = 1; // Mettre le jeu en pause
+            rest(200); // Attendre un peu pour éviter les pressions répétées de la touche P
+        }
+
+        // Si le jeu est en pause
+        while (isPaused) {
+            clear_keybuf(); // Effacer le tampon des touches pressées pendant la pause
+
+            // Afficher le menu de pause
+            clear(buffer);
+            draw_sprite(buffer, fondmap, ximgfond, yimgfond);
+            rectfill(buffer,(WIDTH/2)-100,(HEIGHT/2)-100,(WIDTH/2)+100,(HEIGHT/2)+100, makecol(0,0,0));
+            textprintf_centre_ex(buffer, font, WIDTH/2, HEIGHT/2 - 40, makecol(255, 255, 255), -1, "MENU PAUSE");
+            textprintf_centre_ex(buffer, font, WIDTH/2, HEIGHT/2     , makecol(255, 255, 255), -1, "1 - Sauvegarder");
+            textprintf_centre_ex(buffer, font, WIDTH/2, HEIGHT/2 + 20, makecol(255, 255, 255), -1, "2 - Charger");
+            textprintf_centre_ex(buffer, font, WIDTH/2, HEIGHT/2 + 40, makecol(255, 255, 255), -1, "3 - Reprise");
+
+            blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+
+            if (key[KEY_1]) {
+                // Option de sauvegarde
+                saveGame(joueurs, "my_save"); // Sauvegarder le jeu (adapté à votre structure de joueurs et nom de sauvegarde)
+                isPaused = 0; // Reprendre le jeu
+            } else if (key[KEY_2]) {
+                // Option de chargement
+                loadGame(joueurs, "my_save"); // Charger le jeu (adapté à votre structure de joueurs et nom de sauvegarde)
+                isPaused = 0; // Reprendre le jeu
+            } else if (key[KEY_3]) {
+                // Option de reprise
+                isPaused = 0; // Reprendre le jeu
+            }
+
+            rest(100); // Pause de 100 ms pour rafraîchir l'écran
+        }
         if (key[KEY_SPACE]) {
             rest(10);
         } else
-            rest(60); // Pause de 10 ms pour rafraîchir l'écran
+        rest(60); // Pause de 10 ms pour rafraîchir l'écran
     }
 }
