@@ -14,4 +14,4 @@
 char* serializePlayers(const t_joueurs* players);
 void deserializePlayers(const char* serializedData, t_joueurs* players);
 void saveGame(const t_joueurs* players, const char* saveFileName);
-void loadGame(t_joueurs* players, const char* saveFileName) ;
+void loadGame(t_joueurs* players, const char* loadFileName) ;
