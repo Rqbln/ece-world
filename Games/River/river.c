@@ -5,21 +5,22 @@
 void river()
 {
     srand(time(NULL));
+    clock_t start,end;
+    double elapsed;
     int gameover;
+    char mess[50];
     int temps;
-    int restx =10;
-    char winmessage [64];
     double joueurscore[2];
     int frogw=195; //Largeur du bmp de la grenouille
     int frogx=500;
     int frogy=730;
-    int frogvxy=2; //vitesse grenouille
+    int frogvxy=10; //vitesse grenouille
     //position et vitesse des bûches (1,2,3,4 = bûches normales ; 5,6,7,8= bûches grandes)
     int log[2][8]; //Position de chaque bûche [1][x] = position en abscisse ; [2][x] = position en ordonnée
     int logw[8]; //Largeurs des bûches
     int logx0left=-600; //Position d'apparition des bûches de gauche en x
     int logx0right=2200; //Position d'apparition des bûches de droite en x
-    int dlog=1;
+    int dlog=5;
     int logh=124;
     int randbmp[8];//Aléatoire taille
     int randtime[8]; //Aléatoire temps apparition
@@ -38,7 +39,6 @@ void river()
     int pixelR=0;
     int pixelG=0;
     int pixelB=0;
-    int tolerance =10;
 
     // Chargement des images
     BITMAP* background = load_bitmap("../Games/River/image/background.bmp", NULL);
@@ -65,7 +65,34 @@ void river()
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
     clear_to_color(buffer, makecol(0, 0, 0));
     draw_sprite(buffer, frog, frogx, frogy);
+    while (!key[KEY_ENTER]){
+        draw_sprite(buffer,background,0,0);
+        sprintf(mess, "Appuyez sur entrée pour commencer la partie !");
+        textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
+        draw_sprite(buffer, frog, frogx, frogy);
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        rest(10);
+    }
+    for (int i = 3; i > 0; --i) {
+        clear_bitmap(buffer);
+        draw_sprite(buffer,background,0,0);
+        sprintf(mess, "%d", i);
+        textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
+        draw_sprite(buffer, frog, frogx, frogy);
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        rest(1000);
+    }
     for (int turn = 0; turn < 2; ++turn) {
+        gameover=0;
+        if (turn=1) {
+            while (!key[KEY_ENTER]){
+                draw_sprite(buffer,background,0,0);
+                textprintf_ex(buffer, font, 600, 500, makecol(255, 255, 255), -1, "A %s de jouer, appuie sur 'Entrée'",joueurs[turn].nom);
+                draw_sprite(buffer, frog, frogx, frogy);
+                blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+                rest(10);
+            }
+        }
 
         for (int i = 0; i < 9; ++i) {
             switch (i) {
@@ -101,6 +128,8 @@ void river()
                     log[0][i]=logx0left;
                     log[1][i]=95;
                     break;
+                default:
+                    break;
             }
         }
         //attribution aléatoire de bmp bûches (moyenne ou grande)
@@ -109,10 +138,11 @@ void river()
         }
         //Génération de nombre pour apparition aléatoire au niveau du temps
         for (int i = 0; i < 9; ++i) {
-            randtime[i] = rand() % 20000;
+            randtime[i] = rand() % 10000;
         }
         gameover=0;
         // Création du buffer
+
         // Boucle principale du jeu-------------------------------------------------------------------------
         while (!key[KEY_ESC] &&gameover==0) {
 
@@ -121,21 +151,26 @@ void river()
             pixelR = getr(couleurPixel);
             pixelG = getg(couleurPixel);
             pixelB = getb(couleurPixel);
-            // Vérifiez si les composantes de couleur correspondent avec une tolérance
-            if (frogy<700 && frogy>100 && pixelR == couleurRm && pixelG == couleurGm && pixelB == couleurBm ){
+            // Vérifiez si les composantes de couleur correspondent et que frog se trouve bine sur une buche
+            if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm && pixelB == couleurBm)&& !((frogx + frogw / 2) > log[0][logfrog] && (frogx + frogw / 2) < log[0][logfrog] + logw[logfrog] &&
+                                                                                                                   (frogy + frogw) > log[1][logfrog] && (frogy + frogw) < log[1][logfrog] + 124) ){
 
                 while (!key[KEY_ENTER]){
-                    textout_centre_ex(buffer, font, "Hors écran!", SCREEN_W / 2, SCREEN_H / 2, makecol(255, 0, 0), -1);
-                    rest(10);
+                    draw_sprite(buffer,background,0,0);
+                    textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "Perdu ! à %s de jouer",joueurs[1].nom);
+                    draw_sprite(buffer, frog, frogx, frogy);
+                    blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
                 }
                 gameover = 1;
                 frogx=500;
                 frogy=730;
             }
+            start=clock();
             draw_sprite(buffer, frog, 100, 100);
             //Réatribution aléatoire pour les bûches non encore apparues
             for (int i = 0; i < 9; ++i) {
-                if (randtime[i] > 40) randtime[i] = rand() % 16000;
+                if (randtime[i] > 40) randtime[i] = rand() % 12000;
             }
             // Copie de l'image dans le back buffer
             blit(background, buffer, 0, 0, 0, 0, background->w, background->h);
@@ -152,7 +187,6 @@ void river()
             if (key[KEY_D] && frogx < 1800) {
                 frogx = frogx + frogvxy;
             }
-            rest(10);
             //buche générée puis on la fait dériver
             for (int i = 0; i < 9; ++i) {
 
@@ -160,17 +194,15 @@ void river()
 
                     if (randbmp[i] == 1) {
                         draw_sprite(buffer, log0, log[0][i], log[1][i]);
-                    } else draw_sprite(buffer, log1, log[1][i], log[0][i]);
-                    log[0][i] += 1;
-                    rest(10);
+                    } else draw_sprite(buffer, log1, log[0][i], log[1][i]);
+                    log[0][i] += dlog;
                 }
 
                 if ((i == 2 || i == 6) && randtime[i] < 40) {
                     if (randbmp[i] == 1) {
                         draw_sprite(buffer, log0, log[0][i], log[1][i]);
                     } else draw_sprite(buffer, log1, log[0][i], log[1][i]);
-                    log[0][i] -= 1;
-                    rest(10);
+                    log[0][i] -= dlog;
                 }
             }
             //Dérivation de la grenouille si bûche
@@ -184,11 +216,11 @@ void river()
                     logfrog = i;
                     //bûches allant de gauche à droite
                     if (i == 1 || i == 4 || i == 5 || i == 7 || i == 8) {
-                        frogx += 1;
+                        frogx += dlog;
                     }
                     //bûches allant de droite à gauche
                     if (i == 2 || i == 3 || i == 6) {
-                        frogx -= 1;
+                        frogx -= dlog;
                     }
 
                 }
@@ -206,11 +238,13 @@ void river()
                 if ((i == 1 || i == 4 || i==2 || i==3 || i == 5 || i==6 || i == 7 || i == 8) && randtime[i] < 40) {
                     // Dessinez un rectangle marron superposé à la bûche
                     rectfill(buffer, log[0][i], log[1][i], log[0][i] + logw[i], log[1][i] + logh, makecol(couleurRm, couleurGm, couleurBm));
+                    if (randbmp[i]==0)draw_sprite(buffer, log1, log[0][i], log[1][i]);
+                    else  draw_sprite(buffer, log0, log[0][i], log[1][i]);
                 }
             }
             //Condition de défaite (Hors écran puis rivère)
 
-            if (frogx + frogw / 2 < 0 && frogy + frogw < 600) {
+            if (frogx + frogw / 2 < -50 && frogy + frogw > 2200) {
 
                 while (!key[KEY_ENTER]){
 
@@ -226,17 +260,15 @@ void river()
                 frogx=500;
                 frogy=730;
             }
-            if ((frogx < -40 || frogx > 1750) && (frogy + frogw < 700 && frogy + frogw > 50) && ((logfrog > 0))) {
-                textout_centre_ex(buffer, font, "Hors écran!", SCREEN_W / 2, SCREEN_H / 2, makecol(255, 0, 0), -1);
-            }
-
             //Condition victoire
             if (frogy + frogw <= 50) {
-                do {
+                while (!key[KEY_ENTER]){
+                    draw_sprite(buffer,background,0,0);
                     textprintf_ex(screen, font, (background->w/2)+100, (background->h/2)+200, makecol(255, 255, 0), -1, "Traversée réussi pour le J%d en %.2f s",turn+1);
                     textprintf_ex(screen, font, (background->w/2)+100, (background->h/2)+250, makecol(255, 0, 0), -1, "Appuyez sur une échap pour continuer !");
+                    blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
                     rest(10);
-                } while (!key[KEY_ENTER]);
+                }
                 gameover = 1;
                 frogx=500;
                 frogy=730;
@@ -244,12 +276,12 @@ void river()
             //Apparition et réapparition des büches aléatoirement
             for (int i = 0; i < 9; ++i) {
                 if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && log[1][i] > SCREEN_W) {
-                    randtime[i] = rand() % 16000;
+                    randtime[i] = rand() % 12000;
                     log[0][i] = logx0left;
                 }
                 if ((i == 2 || i == 6) && log[1][i] < -577) {
                     log[0][i] = logx0right;
-                    randtime[i] = rand() % 16000;
+                    randtime[i] = rand() % 12000;
                 }
             }
             draw_sprite(buffer, frog, frogx, frogy);
@@ -257,7 +289,6 @@ void river()
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
             // Affichage du buffer principal
             vsync();
-            rest(250);
         }
         textprintf_ex(screen, font, (background->w/2), (background->h/2), makecol(255, 255, 0), -1, "Le J%d a remporté 1 ticket ! Quelle vitesse !");
         gameover=0;
