@@ -5,4 +5,6 @@
 #define WIDTH 1920
 #define HEIGHT 1080
 #include <allegro.h>
-void rivier();
+#include<time.h>
+#include <stdlib.h>
+void river();
