@@ -9,6 +9,7 @@ void menuguitar(){
     BITMAP *selectrules[2];
     BITMAP *selectexit[2];
     BITMAP *regle = load_bitmap("../Games/Guitar_hero/image/parcheminGH.bmp",NULL);
+    BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *sound = load_wav("../Musics/Wav/Menu.wav");
     if (!sound) {
         allegro_message("Erreur lors du chargement du fichier WAV\n");
@@ -25,6 +26,8 @@ void menuguitar(){
     int yselectrules=HEIGHT/2;
     int yselectexit=HEIGHT/2+ecart;
     int option=0;
+    int xenter=WIDTH-400;
+    int yenter=HEIGHT-80;
 
     //creation des touche de selection
     for(int i=0;i<2;i++){
@@ -66,24 +69,28 @@ void menuguitar(){
                 draw_sprite(buffer,selectstart1[0],xselect,yselectstart1);
                 draw_sprite(buffer,selectrules[0],xselect,yselectrules);
                 draw_sprite(buffer,selectexit[0],xselect,yselectexit);
+                draw_sprite(buffer,enterkey,xenter,yenter);
                 break;
             case 1:
                 draw_sprite(buffer,selectstart[0],xselect,yselectstart);
                 draw_sprite(buffer,selectstart1[1],xselect,yselectstart1);
                 draw_sprite(buffer,selectrules[0],xselect,yselectrules);
                 draw_sprite(buffer,selectexit[0],xselect,yselectexit);
+                draw_sprite(buffer,enterkey,xenter,yenter);
                 break;
             case 2:
                 draw_sprite(buffer,selectstart[0],xselect,yselectstart);
                 draw_sprite(buffer,selectstart1[0],xselect,yselectstart1);
                 draw_sprite(buffer,selectrules[1],xselect,yselectrules);
                 draw_sprite(buffer,selectexit[0],xselect,yselectexit);
+                draw_sprite(buffer,enterkey,xenter,yenter);
                 break;
             case 3:
                 draw_sprite(buffer,selectstart[0],xselect,yselectstart);
                 draw_sprite(buffer,selectstart1[0],xselect,yselectstart1);
                 draw_sprite(buffer,selectrules[0],xselect,yselectrules);
                 draw_sprite(buffer,selectexit[1],xselect,yselectexit);
+                draw_sprite(buffer,enterkey,xenter,yenter);
                 break;
         }
 
@@ -94,7 +101,7 @@ void menuguitar(){
         if (key[KEY_UP]) { // Flèche du haut
             option--;
             if (option<0){
-                option=2;
+                option=3;
             }
             rest(250); // Pause pour éviter les mouvements trop rapides
         }
@@ -115,10 +122,12 @@ void menuguitar(){
                 playguitar();
             } else if (option == 2) { // Option Quitter
                 //stop_sample(sound);
-                while(!key[KEY_SPACE]){
+                rest(250); // Pause pour éviter les mouvements trop rapides
+                while(!key[KEY_ENTER]){
                     draw_sprite(buffer,regle,((WIDTH/2)-(regle->w)/2),-50);
                     blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
                 }
+                rest(250); // Pause pour éviter les mouvements trop rapides
 
             } else{
                 stop_sample(sound);

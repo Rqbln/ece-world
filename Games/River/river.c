@@ -39,12 +39,6 @@ void river()
     int pixelG=0;
     int pixelB=0;
     int tolerance =10;
-    // Initialisation d'Allegro
-    allegro_init();
-    install_keyboard();
-    set_color_depth(32);
-    set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, 1920, 1080, 0, 0);
-
 
     // Chargement des images
     BITMAP* background = load_bitmap("../Games/River/image/background.bmp", NULL);
@@ -76,36 +70,36 @@ void river()
         for (int i = 0; i < 9; ++i) {
             switch (i) {
                 case 1:
-                    log[1][i]=logx0left;
-                    log[2][i]=95+logh*4;
+                    log[0][i]=logx0left;
+                    log[1][i]=95+logh*4;
                     break;
                 case 2:
-                    log[1][i]=logx0right;
-                    log[2][i]=95+logh*3;
+                    log[0][i]=logx0right;
+                    log[1][i]=95+logh*3;
                     break;
                 case 3:
-                    log[1][i]=logx0right;
-                    log[2][i]=95+logh*3;
+                    log[0][i]=logx0right;
+                    log[1][i]=95+logh*3;
                     break;
                 case 4:
-                    log[1][i]=logx0left;
-                    log[2][i]=95+logh*2;
+                    log[0][i]=logx0left;
+                    log[1][i]=95+logh*2;
                     break;
                 case 5:
-                    log[1][i]=logx0left;
-                    log[2][i]=95+logh*2;
+                    log[0][i]=logx0left;
+                    log[1][i]=95+logh*2;
                     break;
                 case 6:
-                    log[1][i]=logx0right;
-                    log[2][i]=95+logh;
+                    log[0][i]=logx0right;
+                    log[1][i]=95+logh;
                     break;
                 case 7:
-                    log[1][i]=logx0left;
-                    log[2][i]=95;
+                    log[0][i]=logx0left;
+                    log[1][i]=95;
                     break;
                 case 8:
-                    log[1][i]=logx0left;
-                    log[2][i]=95;
+                    log[0][i]=logx0left;
+                    log[1][i]=95;
                     break;
             }
         }
@@ -121,6 +115,7 @@ void river()
         // Création du buffer
         // Boucle principale du jeu-------------------------------------------------------------------------
         while (!key[KEY_ESC] &&gameover==0) {
+
             couleurPixel = getpixel(background, (frogx+frogw)/2, frogy+frogw);
 // Extraire les composantes R, G et B de la valeur de couleur
             pixelR = getr(couleurPixel);
@@ -164,46 +159,43 @@ void river()
                 if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && randtime[i] < 40) {
 
                     if (randbmp[i] == 1) {
-                        draw_sprite(buffer, log0, log[1][i], log[2][i]);
-                    } else draw_sprite(buffer, log1, log[1][i], log[2][i]);
-                    log[1][i] += 1;
-                    rest(100);
+                        draw_sprite(buffer, log0, log[0][i], log[1][i]);
+                    } else draw_sprite(buffer, log1, log[1][i], log[0][i]);
+                    log[0][i] += 1;
+                    rest(10);
                 }
 
                 if ((i == 2 || i == 6) && randtime[i] < 40) {
                     if (randbmp[i] == 1) {
-                        draw_sprite(buffer, log0, log[1][i], log[2][i]);
-                    } else draw_sprite(buffer, log1, log[1][i], log[2][i]);
-                    log[1][i] -= 1;
-                    rest(100);
+                        draw_sprite(buffer, log0, log[0][i], log[1][i]);
+                    } else draw_sprite(buffer, log1, log[0][i], log[1][i]);
+                    log[0][i] -= 1;
+                    rest(10);
                 }
             }
-            rest(100);
             //Dérivation de la grenouille si bûche
             for (int i = 0; i < 9; ++i) {
                 //attribution de la longueur de la buche en fonction de sa taille effective
                 if (randbmp[i] == 1) logw[i] = 577;
                 else logw[i] = 390;
 
-                if ((frogx + frogw / 2) > log[1][i] && (frogx + frogw / 2) < log[1][i] + logw[i] &&
-                    (frogy + frogw) > log[2][i] && (frogy + frogw) < log[2][i] + 124) {
+                if ((frogx + frogw / 2) > log[0][i] && (frogx + frogw / 2) < log[0][i] + logw[i] &&
+                    (frogy + frogw) > log[1][i] && (frogy + frogw) < log[1][i] + 124) {
                     logfrog = i;
                     //bûches allant de gauche à droite
                     if (i == 1 || i == 4 || i == 5 || i == 7 || i == 8) {
                         frogx += 1;
-                        rest(100);
                     }
                     //bûches allant de droite à gauche
                     if (i == 2 || i == 3 || i == 6) {
                         frogx -= 1;
-                        rest(100);
                     }
 
                 }
             }
             for (int i = 0; i < 9; ++i) {
-                if ((frogx + frogw / 2) > log[1][i] && (frogx + frogw / 2) < log[1][i] + logw[i] &&
-                    (frogy + frogw) > log[2][i] && (frogy + frogw) < log[2][i] + 124) {
+                if ((frogx + frogw / 2) > log[0][i] && (frogx + frogw / 2) < log[0][i] + logw[i] &&
+                    (frogy + frogw) > log[1][i] && (frogy + frogw) < log[1][i] + 124) {
                     logfrog = i;
                 }
 
@@ -213,7 +205,7 @@ void river()
                 // Vérifiez si la bûche est en mouvement
                 if ((i == 1 || i == 4 || i==2 || i==3 || i == 5 || i==6 || i == 7 || i == 8) && randtime[i] < 40) {
                     // Dessinez un rectangle marron superposé à la bûche
-                    rectfill(buffer, log[1][i], log[2][i], log[1][i] + logw[i], log[2][i] + logh, makecol(couleurRm, couleurGm, couleurBm));
+                    rectfill(buffer, log[0][i], log[1][i], log[0][i] + logw[i], log[1][i] + logh, makecol(couleurRm, couleurGm, couleurBm));
                 }
             }
             //Condition de défaite (Hors écran puis rivère)
@@ -253,10 +245,10 @@ void river()
             for (int i = 0; i < 9; ++i) {
                 if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && log[1][i] > SCREEN_W) {
                     randtime[i] = rand() % 16000;
-                    log[1][i] = logx0left;
+                    log[0][i] = logx0left;
                 }
                 if ((i == 2 || i == 6) && log[1][i] < -577) {
-                    log[1][i] = logx0right;
+                    log[0][i] = logx0right;
                     randtime[i] = rand() % 16000;
                 }
             }
