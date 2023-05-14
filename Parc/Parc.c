@@ -596,7 +596,7 @@ void parc2(){
         }
         if (xPacman <= (xriver + (river->w)/2) && (xriver + (river->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yriver) && (yriver) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
-            rivier();
+            river();
             musique = 1;
             yguitar -= pacman[0][0][1]->h;
             yserpent -= pacman[0][0][1]->h;

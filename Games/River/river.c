@@ -1,8 +1,8 @@
 //-~-~-~-~-~-~-~TURTLE RIVER-~-~-~-~-~-~-~-~-~-
 #include "river.h"
-#include<time.h>
-#include <stdlib.h>
-void rivier()
+#include "../../Init_Allegro/allegro.h"
+#include "../../joueur/joueur.h"
+void river()
 {
     srand(time(NULL));
     int gameover;
@@ -47,29 +47,24 @@ void rivier()
 
 
     // Chargement des images
-    BITMAP* background = load_bitmap("../image/background.bmp", NULL);
+    BITMAP* background = load_bitmap("../Games/River/image/background.bmp", NULL);
     if(!background){
         allegro_message("../Games/River/image/background.bmp");
         exit(EXIT_FAILURE);
     }
-    BITMAP* frog= load_bitmap("../image/frog.bmp",NULL);
+    BITMAP* frog= load_bitmap("../Games/River/image/frog.bmp",NULL);
     if(!frog){
         allegro_message("../Games/River/image/frog.bmp");
         exit(EXIT_FAILURE);
     }
-    BITMAP* log0= load_bitmap("../image/log0.bmp",NULL);
+    BITMAP* log0= load_bitmap("../Games/River/image/log0.bmp",NULL);
     if(!log0){
         allegro_message("../Games/River/image/log0.bmp");
         exit(EXIT_FAILURE);
     }
-    BITMAP* log1= load_bitmap("../image/log1.bmp",NULL);
+    BITMAP* log1= load_bitmap("../Games/River/image/log1.bmp",NULL);
     if(!log1){
         allegro_message("../Games/River/image/log1.bmp");
-        exit(EXIT_FAILURE);
-    }
-    BITMAP* panneau= load_bitmap("../image/panneau.bmp",NULL);
-    if(!log1){
-        allegro_message("../Games/River/image/panneau.bmp");
         exit(EXIT_FAILURE);
     }
 
@@ -231,7 +226,6 @@ void rivier()
                     // Dessinez les autres éléments du jeu sur le buffer
 
                     // Affichage du "panneau"
-                    draw_sprite(buffer, panneau, (background->w/2), (background->h/2) + 100);
                     textout_centre_ex(buffer, font, "Hors écran!", SCREEN_W / 2, SCREEN_H / 2, makecol(255, 0, 0), -1);
                     // Blit du buffer sur l'écran
                     blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
@@ -247,7 +241,6 @@ void rivier()
             //Condition victoire
             if (frogy + frogw <= 50) {
                 do {
-                    draw_sprite(buffer, panneau,(background->w/2), (background->h/2)+100 );
                     textprintf_ex(screen, font, (background->w/2)+100, (background->h/2)+200, makecol(255, 255, 0), -1, "Traversée réussi pour le J%d en %.2f s",turn+1);
                     textprintf_ex(screen, font, (background->w/2)+100, (background->h/2)+250, makecol(255, 0, 0), -1, "Appuyez sur une échap pour continuer !");
                     rest(10);
@@ -281,6 +274,5 @@ void rivier()
     destroy_bitmap(background);
     destroy_bitmap(buffer);
     destroy_bitmap(frog);
-    destroy_bitmap(panneau);
 
 }
