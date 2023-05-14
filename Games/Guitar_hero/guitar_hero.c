@@ -252,6 +252,7 @@ void playguitar1(){
     rest(150); // Pause de 10 ms pour rafraîchir l'écran
 }
 void playguitar(){
+    #include "../../joueur/joueur.h"
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
     BITMAP *note= load_bitmap("../Games/Guitar_hero/image/bille0.bmp",NULL);;
@@ -276,14 +277,13 @@ void playguitar(){
     int score;
     int vitesse;
     int nbjoueur=2;
-    int joueurscore[nbjoueur];
     int note1=0*155+WIDTH*0.34;
     int note2=1*155+WIDTH*0.34;
     int note3=2*155+WIDTH*0.34;
     int note4=3*155+WIDTH*0.34;
     int notey=HEIGHT/1.5;
+    int ticket=0;
 
-    int time[4];
     int ok[4];
     ok[0]=0;
     ok[1]=0;
@@ -308,6 +308,7 @@ void playguitar(){
     buffer=create_bitmap(WIDTH,HEIGHT);
 
     for (int tour = 0; tour < nbjoueur; ++tour) {
+        joueurs[tour].nbTickets-=1;
         stop_sample(musique);
         play_sample(musique, 255, 128, 1000, 1);
         memo=0;
@@ -340,99 +341,106 @@ void playguitar(){
                     // Collision détectée !
                 }
             }
-                if (key[KEY_S] && ok[0] == 0) {
-                    if (xnote[0] <= (note1 + note->w) && (note1) <= (xnote[0] + note->w) &&
-                        ynote[0] <= (notey + note->h) && (notey) <= (ynote[0] + note->h)) {
-                        ynote[0] = -200;
-                        score += 1;
-                        vitesse -= 1;
-                        ok[0] = 1;
-                        // Collision détectée !
-                    } else {
-                        memo = 1;
-                    }
+            if (key[KEY_G] && ok[0] == 0) {
+                if (xnote[0] <= (note1 + note->w) && (note1) <= (xnote[0] + note->w) &&
+                    ynote[0] <= (notey + note->h) && (notey) <= (ynote[0] + note->h)) {
+                    ynote[0] = -200;
+                    score += 1;
+                    vitesse -= 1;
+                    ok[0] = 1;
+                    // Collision détectée !
+                } else {
+                    memo = 1;
                 }
-                if (key[KEY_D] && ok[1] == 0) {
-                    if (xnote[1] <= (note2 + note->w) && (note2) <= (xnote[1] + note->w) &&
-                        ynote[1] <= (notey + note->h) && (notey) <= (ynote[1] + note->h)) {
-                        ynote[1] = -200;
-                        score += 1;
-                        vitesse -= 1;
-                        ok[1] = 1;
-                        // Collision détectée !
-                    } else {
-                        memo = 1;
-                    }
+            }
+            if (key[KEY_H] && ok[1] == 0) {
+                if (xnote[1] <= (note2 + note->w) && (note2) <= (xnote[1] + note->w) &&
+                    ynote[1] <= (notey + note->h) && (notey) <= (ynote[1] + note->h)) {
+                    ynote[1] = -200;
+                    score += 1;
+                    vitesse -= 1;
+                    ok[1] = 1;
+                    // Collision détectée !
+                } else {
+                    memo = 1;
                 }
+            }
 
-                if (key[KEY_F] && ok[2] == 0) {
-                    if (xnote[2] <= (note3 + note->w) && (note3) <= (xnote[2] + note->w) &&
-                        ynote[2] <= (notey + note->h) && (notey) <= (ynote[2] + note->h)) {
-                        ynote[2] = -200;
-                        score += 1;
-                        vitesse -= 1;
-                        // Collision détectée !
-                        ok[2] = 1;
-                    } else {
-                        memo = 1;
-                    }
+            if (key[KEY_J] && ok[2] == 0) {
+                if (xnote[2] <= (note3 + note->w) && (note3) <= (xnote[2] + note->w) &&
+                    ynote[2] <= (notey + note->h) && (notey) <= (ynote[2] + note->h)) {
+                    ynote[2] = -200;
+                    score += 1;
+                    vitesse -= 1;
+                    // Collision détectée !
+                    ok[2] = 1;
+                } else {
+                    memo = 1;
                 }
-                if (key[KEY_G] && ok[3] == 0) {
-                    if (xnote[3] <= (note4 + note->w) && (note4) <= (xnote[3] + note->w) &&
-                        ynote[3] <= (notey + note->h) && (notey) <= (ynote[3] + note->h)) {
-                        ynote[3] = -200;
-                        score += 1;
-                        vitesse -= 1;
-                        // Collision détectée !
-                        ok[3] = 1;
-                    } else {
-                        memo = 1;
-                    }
+            }
+            if (key[KEY_K] && ok[3] == 0) {
+                if (xnote[3] <= (note4 + note->w) && (note4) <= (xnote[3] + note->w) &&
+                    ynote[3] <= (notey + note->h) && (notey) <= (ynote[3] + note->h)) {
+                    ynote[3] = -200;
+                    score += 1;
+                    vitesse -= 1;
+                    // Collision détectée !
+                    ok[3] = 1;
+                } else {
+                    memo = 1;
                 }
-                if (!key[KEY_S]) {
-                    ok[0] = 0;
-                }
-                if (!key[KEY_D]) {
-                    ok[1] = 0;
-                }
-                if (!key[KEY_F]) {
-                    ok[2] = 0;
-                }
-                if (!key[KEY_G]) {
-                    ok[3] = 0;
-                }
-
-            /*for (int j = 0; j < 4; ++j) {
-                if (ok[j]==1){
-                    time[j]+=1;
-                    if (time[j]>=5){
-                        ok[j]=0;
-                        time[j]=0;
-                    }
-                }
-            }*/
+            }
+            if (!key[KEY_G]) {
+                ok[0] = 0;
+            }
+            if (!key[KEY_H]) {
+                ok[1] = 0;
+            }
+            if (!key[KEY_J]) {
+                ok[2] = 0;
+            }
+            if (!key[KEY_K]) {
+                ok[3] = 0;
+            }
             textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
         }
-        while (!key[KEY_ESC]) {
+        while (!key[KEY_ENTER]) {
             stop_sample(musique);
             sprintf(message,"Perdu enculé");
-            joueurscore[tour] = score;
+            joueurs[tour].score_guitare[joueurs[tour].nb_essaie_guitare]=score;
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             rest(100); // Pause de 10 ms pour rafraîchir l'écran
         }
+        joueurs[tour].nb_essaie_guitare+=1;
     }
     rest(150); // Pause de 10 ms pour rafraîchir l'écran
     clear_bitmap(buffer);
     clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
     while (!key[KEY_ESC]) {
-        if (joueurscore[0]<joueurscore[1]){
-            sprintf(message,"joueur 2 a gagné 1 ticket");
+        if (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]<joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
+            sprintf(message,"%s a gagné 1 ticket",joueurs[1].nom);
+            if(ticket==0){
+                joueurs[1].nbTickets+=2;
+                ticket=1;
+            }
+        }
+        else if(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]>joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
+            sprintf(message,"%s a gagné 1 ticket",joueurs[0].nom);
+            if(ticket==0){
+                joueurs[0].nbTickets+=2;
+                ticket=1;
+            }
         }
         else {
-            sprintf(message,"joueur 1 a gagné 1 ticket");
+            sprintf(message,"egalite");
+            if(ticket==0){
+                joueurs[0].nbTickets+=1;
+                joueurs[1].nbTickets+=1;
+                ticket=1;
+            }
         }
         textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);

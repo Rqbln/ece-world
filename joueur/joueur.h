@@ -7,6 +7,13 @@ typedef struct joueurs{
     char nom[60];
     int nbTickets;
     int persoChoisi;
+    int score_guitare[10];
+    int nb_essaie_guitare;
+    int score_chevaux[10];
+    int score_snake[10];
+    int score_canard[10];
+    int score_ballon[10];
+    int score_taupe[10];
 } t_joueurs;
 
 extern t_joueurs joueurs[NB_JOUEURS];
