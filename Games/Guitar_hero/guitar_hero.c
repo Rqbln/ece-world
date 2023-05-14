@@ -389,12 +389,6 @@ void playguitar(){
                             memo=1;
                         }
                     }
-
-
-
-                //textprintf_ex(buffer, font, 50, 50, makecol(255, 255, 255), -1, "score: %d", score);
-
-
             for (int j = 0; j < 4; ++j) {
                 if (ok[j]==1){
                     time[j]+=1;
