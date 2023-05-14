@@ -1,11 +1,13 @@
 #include <time.h>
 #include <stdlib.h>
 #include "shoot.h"
-
+#include "../../Init_Allegro/allegro.h"
+#include "../../joueur/joueur.h"
 void shoot() {
     srand(time(NULL));
     //Données joueurs
     int nbjoueur=2;
+    char mess[50];
     double joueurscore[nbjoueur];
     //Autres
     int turn[2];
@@ -50,12 +52,24 @@ void shoot() {
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
     clear_to_color(buffer, makecol(0, 0, 0));
     //écran d'explication
-    rest(2000);
 
-    readkey();
-    rest(2000);
     // Boucle principale du jeu
     for (int turn = 0; turn < 2; ++turn) {
+        while (!key[KEY_ENTER]){
+            draw_sprite(buffer,background,0,0);
+            sprintf(mess, "Chevalier %s appuyez sur Entrée pour débuter votre tour !",joueurs[turn].nom);
+            textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            rest(10);
+        }
+        for (int i = 3; i > 0; --i) {
+            clear_bitmap(buffer);
+            draw_sprite(buffer,background,0,0);
+            sprintf(mess, "%d", i);
+            textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            rest(1000);
+        }
         int random_num = rand() % 2 == 0 ? 1 : -1;
         for (int i = 0; i < 5; ++i) {
             baloonxy[0][i]=1920/2;
@@ -76,7 +90,7 @@ void shoot() {
             if(gameover==0) {
                 end_time =clock();
                 elapsed_time = ((end_time-start_time)/CLOCKS_PER_SEC)*5.33;
-                textprintf_ex(screen, font, 10, 1050, makecol(255, 0, 0), -1, "J%d : %.2f secondes écoulées", turn + 1,elapsed_time);
+                textprintf_ex(screen, font, 10, 1050, makecol(255, 0, 0), -1, "%s : %.2f secondes écoulées", joueurs[turn].nom,elapsed_time);
             }
             rest(5);
             // Copie de l'image dans le back buffer
@@ -112,7 +126,7 @@ void shoot() {
             end_time =clock();
             if (end >= 5) {
                 joueurscore[turn]=((end_time-start_time)/CLOCKS_PER_SEC)*5.33;
-                textprintf_ex(screen, font, background->w/2, background->h/2, makecol(255, 255, 0), -1, "J%d : SCORE : %.2f s", turn+1,joueurscore[turn]);
+                textprintf_ex(screen, font, background->w/2, background->h/2, makecol(255, 255, 0), -1, "%s : SCORE : %.2f s", joueurs[turn].nom,joueurscore[turn]);
                 if (turn==0) {
                     textprintf_ex(screen, font, (background->w / 2) - 80, (background->h / 2) + 100, makecol(255, 0, 255),-1, "Appuyez sur une touche, au tour du J2 !");
                     rest(1000);
@@ -124,10 +138,12 @@ void shoot() {
                     rest(200);
                     readkey();
                     if (joueurscore[0]<joueurscore[1]) {
-                        textprintf_ex(screen, font, (background->w/2)-80, (background->h/2)+200, makecol(255, 255, 0), -1, "Le J1 a remporté 1 ticket ! Quelle vitesse !");
+                        textprintf_ex(screen, font, (background->w/2)-80, (background->h/2)+200, makecol(255, 255, 0), -1, "%s a remporté 1 ticket ! Quelle vitesse !",joueurs[0].nom);
+                        joueurs[0].nbTickets++;
                     }
                     else {
-                        textprintf_ex(screen, font, (background->w/2)-200, (background->h/2)+200, makecol(255, 255, 0), -1, "Le J2 a remporté 1 ticket ! Quelle vitesse !");
+                        textprintf_ex(screen, font, (background->w/2)-200, (background->h/2)+200, makecol(255, 255, 0), -1, "%s a remporté 1 ticket ! Quelle vitesse !",joueurs[1].nom);
+                        joueurs[1].nbTickets++;
                     }
                 }
 
