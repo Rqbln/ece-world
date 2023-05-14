@@ -117,6 +117,7 @@ void menu() {
                 // TODO: Ajouter le code pour lancer le jeu
                 stop_sample(sound);
                 parc2();
+                play_sample(sound, 255, 128, 1000, 1);
             } else if (option == 1) { // Option Lire les règles
                 // TODO: Ajouter le code pour afficher les règles
             } else if (option == 2) { // Option Quitter

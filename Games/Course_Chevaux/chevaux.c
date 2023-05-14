@@ -9,6 +9,7 @@ void anim_horse(){
     BITMAP *cheval[13];
     BITMAP *arriver= load_bitmap("../Games/Course_Chevaux/image/arriver.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
+    BITMAP *spacekey= load_bitmap("../Games/Course_Chevaux/image/spacekey1.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Course_Chevaux/image/map0.bmp",NULL);
     BITMAP *menu[2];
     menu[0] = load_bitmap("../Games/Course_Chevaux/image/parchem1.bmp",NULL);
@@ -149,6 +150,7 @@ void anim_horse(){
                     memo=i;
                 }
             }
+            draw_sprite(buffer,spacekey, xenter/2, yenter);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);//applique le buffer sur l ecran
             //permet d accelerer la partie
             if (key[KEY_SPACE]) {
