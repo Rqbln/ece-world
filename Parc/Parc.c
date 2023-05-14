@@ -20,7 +20,7 @@ void parc2(){
     BITMAP *hippodrome = load_bitmap("../Parc/image/batiment/hippodrome2.bmp", NULL);  //image des attractions/mini-jeux
     BITMAP *guitar = load_bitmap("../Parc/image/batiment/concert2.bmp", NULL);
     BITMAP *casino = load_bitmap("../Parc/image/batiment/casino0.bmp", NULL);
-    BITMAP *river = load_bitmap("../Parc/image/batiment/lac1.bmp", NULL);
+    BITMAP *river1 = load_bitmap("../Parc/image/batiment/lac1.bmp", NULL);
     BITMAP *serpent = load_bitmap("../Parc/image/batiment/river0.bmp", NULL);
     BITMAP *tirballon = load_bitmap("../Parc/image/batiment/futuroscope0.bmp", NULL);
     BITMAP *labyrinthe = load_bitmap("../Parc/image/batiment/labyrinthe0.bmp", NULL);
@@ -594,7 +594,7 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
-        if (xPacman <= (xriver + (river->w)/2) && (xriver + (river->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yriver) && (yriver) <= (yPacman + pacman[0][0][1]->h)){
+        if (xPacman <= (xriver + (river1->w)/2) && (xriver + (river1->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yriver) && (yriver) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             river();
             musique = 1;
