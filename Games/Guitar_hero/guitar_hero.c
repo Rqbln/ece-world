@@ -1,6 +1,50 @@
 //by Baptiste Chesnot
 #include "guitar_hero.h"
 #include "../../joueur/joueur.h"
+void animation_guitare(){
+    BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
+    BITMAP *dragon = load_bitmap("../Games/Guitar_hero/image/tete_dragon.bmp",NULL);;
+    BITMAP *witcher = load_bitmap("../Games/Guitar_hero/image/witcher_dos.bmp",NULL);
+    BITMAP *fond = load_bitmap("../Games/Guitar_hero/image/image_dragon.bmp",NULL);
+    SAMPLE *vol = load_wav("../Games/Guitar_hero/musique/vole.wav");
+    SAMPLE *grondement1 = load_wav("../Games/Guitar_hero/musique/grondement1.wav");
+    SAMPLE *grondement2 = load_wav("../Games/Guitar_hero/musique/grondement2.wav");
+
+    if(!grondement2){
+        allegro_message("../../image/gdment2.bmp");
+        exit(EXIT_FAILURE);
+    }
+    if(!vol){
+        allegro_message("../../image/vol.bmp");
+        exit(EXIT_FAILURE);
+    }
+    play_sample(grondement1, 255, 128, 1000, 1);
+    while (!key[KEY_ENTER]) {
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,dragon,0,0);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+    }
+    stop_sample(grondement1);
+    rest(250); // Pause pour éviter les mouvements trop rapides
+    play_sample(vol, 255, 128, 1000, 1);
+    while (!key[KEY_ENTER]) {
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,witcher,0,0);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+    }
+    stop_sample(vol);
+    rest(250); // Pause pour éviter les mouvements trop rapides
+    play_sample(grondement2, 255, 128, 1000, 1);
+    while (!key[KEY_ENTER]) {
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,fond,0,0);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+    }
+    stop_sample(grondement2);
+}
 void menuguitar(){
     //innitialisation des BITMAP
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
@@ -119,7 +163,9 @@ void menuguitar(){
                 stop_sample(sound);
                 playguitar1();
             } else if (option == 1) { // Option Lire les règles
+                rest(250); // Pause pour éviter les mouvements trop rapides
                 stop_sample(sound);
+                animation_guitare();
                 playguitar();
             } else if (option == 2) { // Option Quitter
                 //stop_sample(sound);
@@ -144,9 +190,9 @@ void menuguitar(){
 void playguitar1(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
-    BITMAP *note= load_bitmap("../Games/Guitar_hero/image/bille0.bmp",NULL);;
-    BITMAP *arriver= load_bitmap("../Games/Guitar_hero/image/gratte.bmp",NULL);
+    BITMAP *note= load_bitmap("../Games/Guitar_hero/image/boulefeu.bmp",NULL);;
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
+    BITMAP *gratte= load_bitmap("../Games/Guitar_hero/image/gratte.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/musique0.wav");
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     set_trans_blender(0, 0, 0, 128);
@@ -173,8 +219,8 @@ void playguitar1(){
 //play_sample(musique, 255, 128, 100, 1);
     // Initialisation de la fonction rand() avec la fonction srand()
     srand(time(NULL));
-    if(!arriver){
-        allegro_message("../image/arriver.bmp");
+    if(!gratte){
+        allegro_message("../image/gratte.bmp");
         exit(EXIT_FAILURE);
     }
     if(!note){
@@ -208,7 +254,7 @@ void playguitar1(){
             stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,WIDTH,HEIGHT);
             int x=mouse_x;
             int y=mouse_y;
-            draw_sprite(buffer,arriver,(x - ((arriver->w)/2)),(y - ((arriver->h)/2)));
+            draw_sprite(buffer,gratte,(x - ((gratte->w)/2)),(y - ((gratte->h)/2)));
             for (int i=0; i<nbnote; i++){
                 // Génération d'un nombre aléatoire compris entre 8 et 20
                 //nombreAleatoire = 8+rand() % 20;
@@ -277,8 +323,8 @@ void playguitar1(){
 void playguitar(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
-    BITMAP *note= load_bitmap("../Games/Guitar_hero/image/bille0.bmp",NULL);;
-    BITMAP *arriver= load_bitmap("../Games/Guitar_hero/image/gratte.bmp",NULL);
+    BITMAP *note= load_bitmap("../Games/Guitar_hero/image/boulefeu.bmp",NULL);
+    BITMAP *bouclier= load_bitmap("../Games/Guitar_hero/image/boulefeu1.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/musique0.wav");
@@ -315,12 +361,8 @@ void playguitar(){
     ok[2]=0;
     ok[3]=0;
 
+    srand(time(NULL));
     // Initialisation de la fonction rand() avec la fonction srand()
-    //srand(time(NULL));
-    if(!arriver){
-        allegro_message("../image/arriver.bmp");
-        exit(EXIT_FAILURE);
-    }
     if(!note){
         allegro_message("../image/note.bmp");
         exit(EXIT_FAILURE);
@@ -356,10 +398,10 @@ void playguitar(){
 
                 ynote[i] += nombreAleatoire;
                 draw_sprite(buffer,note,xnote[i],ynote[i]);
-                draw_sprite(buffer,note,note1,notey);
-                draw_sprite(buffer,note,note2,notey);
-                draw_sprite(buffer,note,note3,notey);
-                draw_sprite(buffer,note,note4,notey);
+                draw_sprite(buffer,bouclier,note1,notey);
+                draw_sprite(buffer,bouclier,note2,notey);
+                draw_sprite(buffer,bouclier,note3,notey);
+                draw_sprite(buffer,bouclier,note4,notey);
 
                 if (ynote[i] >= HEIGHT ){
                     memo=1;
@@ -369,7 +411,7 @@ void playguitar(){
             if (key[KEY_G] && ok[0] == 0) {
                 if (xnote[0] <= (note1 + note->w) && (note1) <= (xnote[0] + note->w) &&
                     ynote[0] <= (notey + note->h) && (notey) <= (ynote[0] + note->h)) {
-                    ynote[0] = -200;
+                    ynote[0] = -300+ rand() % 250;
                     score += 1;
                     vitesse -= 1;
                     ok[0] = 1;
@@ -381,7 +423,7 @@ void playguitar(){
             if (key[KEY_H] && ok[1] == 0) {
                 if (xnote[1] <= (note2 + note->w) && (note2) <= (xnote[1] + note->w) &&
                     ynote[1] <= (notey + note->h) && (notey) <= (ynote[1] + note->h)) {
-                    ynote[1] = -200;
+                    ynote[1] = -300+ rand() % 250;
                     score += 1;
                     vitesse -= 1;
                     ok[1] = 1;
@@ -394,7 +436,7 @@ void playguitar(){
             if (key[KEY_J] && ok[2] == 0) {
                 if (xnote[2] <= (note3 + note->w) && (note3) <= (xnote[2] + note->w) &&
                     ynote[2] <= (notey + note->h) && (notey) <= (ynote[2] + note->h)) {
-                    ynote[2] = -200;
+                    ynote[2] = -300+ rand() % 250;
                     score += 1;
                     vitesse -= 1;
                     // Collision détectée !
@@ -406,7 +448,7 @@ void playguitar(){
             if (key[KEY_K] && ok[3] == 0) {
                 if (xnote[3] <= (note4 + note->w) && (note4) <= (xnote[3] + note->w) &&
                     ynote[3] <= (notey + note->h) && (notey) <= (ynote[3] + note->h)) {
-                    ynote[3] = -200;
+                    ynote[3] = -300+ rand() % 250;
                     score += 1;
                     vitesse -= 1;
                     // Collision détectée !
@@ -429,6 +471,9 @@ void playguitar(){
             }
             textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+            if (vitesse<1){
+                vitesse=1;
+            }
             rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
         }
         while (!key[KEY_ENTER]) {
