@@ -325,7 +325,7 @@ void playguitar(){
     BITMAP *buffer;
     BITMAP *note= load_bitmap("../Games/Guitar_hero/image/boulefeu.bmp",NULL);
     BITMAP *bouclier= load_bitmap("../Games/Guitar_hero/image/boulefeu1.bmp",NULL);
-    BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
+    BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/tetedragon1.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/musique0.wav");
     FONT *police = load_font("arial.pcx", NULL, NULL);
