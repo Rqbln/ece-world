@@ -276,7 +276,6 @@ void snake() {
                 saveMiniGame(joueurs,"Snake",score1,0);
                 sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-                loadHighScore(highscore);
             }
         }
 
@@ -288,7 +287,7 @@ void snake() {
                 saveMiniGame(joueurs,"Snake",score2,1);
                 sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-                loadHighScore(highscore);
+
             }
         }
 
@@ -302,7 +301,6 @@ void snake() {
                     saveMiniGame(joueurs,"Snake",score1,0);
                     sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
                     textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-                    loadHighScore(highscore);
                 }
             }
             else if (score2 == 5){
@@ -314,9 +312,9 @@ void snake() {
                     saveMiniGame(joueurs,"Snake",score2,1);
                     sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
                     textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-                    loadHighScore(highscore);
                 }
             }
+            loadHighScore(highscore);
         }
 
 
