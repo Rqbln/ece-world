@@ -52,9 +52,8 @@ void animation_guitarEnd(){
     BITMAP *witcher = load_bitmap("../Games/Guitar_hero/image/witcher_face.bmp",NULL);;
     BITMAP *blonde = load_bitmap("../Games/Guitar_hero/image/daenerys.bmp",NULL);
     BITMAP *fond = load_bitmap("../Games/Guitar_hero/image/image_dragon.bmp",NULL);
-    SAMPLE *vol = load_wav("../Games/Guitar_hero/musique/vole.wav");
-    SAMPLE *grondement1 = load_wav("../Games/Guitar_hero/musique/grondement1.wav");
-    SAMPLE *grondement2 = load_wav("../Games/Guitar_hero/musique/grondement2.wav");
+    SAMPLE *victoire = load_wav("../Games/Guitar_hero/musique/victoire.wav");
+    SAMPLE *bonus = load_wav("../Games/Guitar_hero/musique/bonus.wav");
     char message[50];
     int xbitcoin = WIDTH/2;
     int ybitcoin = (HEIGHT/2)+70;
@@ -69,13 +68,8 @@ void animation_guitarEnd(){
             exit(EXIT_FAILURE);
         }
     }
-
-    if(!grondement2){
-        allegro_message("../../image/gdment2.bmp");
-        exit(EXIT_FAILURE);
-    }
-    if(!vol){
-        allegro_message("../../image/vol.bmp");
+    if(!victoire){
+        allegro_message("../../image/victoire.bmp");
         exit(EXIT_FAILURE);
     }
 
@@ -104,7 +98,7 @@ void animation_guitarEnd(){
             loadHighScore(highscore);
         }
     }
-    play_sample(grondement1, 255, 128, 1000, 1);
+    play_sample(victoire, 255, 128, 1000, 1);
     while (!key[KEY_ENTER]) {
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
@@ -112,9 +106,8 @@ void animation_guitarEnd(){
         textout_centre_ex(buffer, font, message, 1400, 200, makecol(0, 0, 0), -1);
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
     }
-    stop_sample(grondement1);
     rest(250); // Pause pour éviter les mouvements trop rapides
-    play_sample(vol, 255, 128, 1000, 1);
+    play_sample(bonus, 255, 128, 1000, 0);
     while (!key[KEY_ENTER] && (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1] != joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
         cmpt+=1;
         posbitcoin += 1;
@@ -136,10 +129,8 @@ void animation_guitarEnd(){
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
         rest(time); // Pause pour éviter les mouvements trop rapides
     }
-    stop_sample(vol);
+    stop_sample(victoire);
     rest(250); // Pause pour éviter les mouvements trop rapides
-    play_sample(grondement2, 255, 128, 1000, 1);
-    stop_sample(grondement2);
 }
 void menuguitar(){
     //innitialisation des BITMAP
@@ -152,7 +143,7 @@ void menuguitar(){
     BITMAP *selectexit[2];
     BITMAP *regle = load_bitmap("../Games/Guitar_hero/image/parcheminGH.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
-    SAMPLE *sound = load_wav("../Musics/Wav/Menu.wav");
+    SAMPLE *sound = load_wav("../Games/Guitar_hero/musique/westworld.wav");
     if (!sound) {
         allegro_message("Erreur lors du chargement du fichier WAV\n");
         exit(EXIT_FAILURE);
@@ -260,11 +251,13 @@ void menuguitar(){
             if (option == 0) { // Option Jouer
                 stop_sample(sound);
                 playguitar1();
+                play_sample(sound, 255, 128, 1000, 1);
             } else if (option == 1) { // Option Lire les règles
                 rest(250); // Pause pour éviter les mouvements trop rapides
                 stop_sample(sound);
                 animation_guitare();
                 playguitar();
+                play_sample(sound, 255, 128, 1000, 1);
             } else if (option == 2) { // Option Quitter
                 //stop_sample(sound);
                 rest(250); // Pause pour éviter les mouvements trop rapides
