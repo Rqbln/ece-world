@@ -332,6 +332,12 @@ void ducky(){ // remplace le main
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
     BITMAP * r;
     r= load_bitmap("../Games/Ducky/IMAGES/reglesd.bmp",NULL);
+    if (!r) {
+        //blindage
+        allegro_message("Erreur image fond");
+        exit(EXIT_FAILURE);
+    }
+
     while (!key[KEY_ENTER]){
         draw_sprite(buffer, fond, 0, 0);
         draw_sprite(buffer, r, (SCREEN_W - r->w) / 2, (SCREEN_H - r->h) / 2);

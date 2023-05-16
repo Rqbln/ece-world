@@ -95,7 +95,10 @@ void Jplayer1(int *s1){
     load_slotmachine("../Games/Jackpot/IMAGES/SLOTREELS.bmp");
     load_icon();
 
-    // boucle principale
+
+
+
+  // boucle principale
     while (!key[KEY_ESC] && fin<5 ) {
         if (key[KEY_ENTER]) {
             fin++;
@@ -176,16 +179,39 @@ void Jplayer2(int *s2){
 
 void jackpot(){
     int s1, s2;
-    Jplayer1(&s1);
-    Jplayer2(&s2);
-    BITMAP *fond;
-    fond= load_bitmap("../Games/Jackpot/IMAGES/fond3.bmp",NULL);
-    if (!fond) { //blindage
+
+
+    BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
+
+    BITMAP * r;
+    r= load_bitmap("../Games/Jackpot/IMAGES/reglesj.bmp",NULL);
+    if (!r) {
+        //blindage
         allegro_message("Erreur image fond");
         exit(EXIT_FAILURE);
     }
+    BITMAP *fond;
+    fond= load_bitmap("../Games/Jackpot/IMAGES/fond3.bmp",NULL);
+    if (!fond) {
+        //blindage
+        allegro_message("Erreur image fond");
+        exit(EXIT_FAILURE);
+    }
+    while (!key[KEY_ENTER]){
+        draw_sprite(buffer, fond, 0, 0);
+        draw_sprite(buffer, r, (SCREEN_W - r->w) / 2, (SCREEN_H - r->h) / 2);
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
-    BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    }
+    // enft drawtranssprite ca enleve tous le rouge
+    // noot noot
+    //merci
+    //
+
+
+    Jplayer1(&s1);
+    Jplayer2(&s2);
+
     draw_sprite(buffer, fond, 0, 0);
     char message[50];
 
@@ -212,4 +238,5 @@ void jackpot(){
 
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
+    destroy_bitmap(r);
 }
