@@ -16,6 +16,7 @@ typedef struct joueurs{
     int score_ballon[10];
     int score_taupe[10];
 } t_joueurs;
+
 typedef struct statistiques{
     char nom[60];
     int best_score_guitare[10];

@@ -2,6 +2,7 @@
 #include "Menu/menu.h"
 #include "Parc/Parc.h"
 #include "joueur/joueur.h"
+#include "Sauvegarde/sauvegarde.h"
 //#include "Games/Course_Chevaux/chevaux.h"
 //#include "Games/Jackpot/jackpot.h"
 //#include "Games/Ducky/ducky.h"
@@ -22,6 +23,11 @@ int main() {
         joueurs[i].persoChoisi=0;
         //Nom choisi dans le Parc.c
     }
+
+    for (int i = 0; i < MAX_HIGH_SCORES; i++) {
+        highscore[i].score = 0;
+    }
+
     //ducky();
     //jeu_taupe();
     //snake();
