@@ -18,7 +18,8 @@ void load_icon() { // sous programme pour charger les icones
     }
 }
 
-void load_slotmachine(char *path) { // charger la machine a sous en transparence
+void load_slotmachine(char *path) {
+    // charger la machine a sous en transparence
     BITMAP *slotmachine = NULL;
     slotmachine = load_bitmap(path, NULL);
     if (!slotmachine) { //blindage
@@ -31,14 +32,18 @@ void load_slotmachine(char *path) { // charger la machine a sous en transparence
     destroy_bitmap(slotmachine);
 }
 void anime(){
-    for (int j;j<10;j++){
+    int rand_icon;
+    for (int j =0; j<10;j++){
     for ( int i = 0;i<3; i++){
-    draw_sprite(screen, icons[i],  807+ i * (77 + 41+i*i), 525);
-    }rest( 180);
+        rand_icon= rand() % NUM_ICONS;
+        draw_sprite(screen, icons[rand_icon],  807+ i * (77 + 41+i*i), 525);
+    }rest( 80);
 }}
-int tourner_roues() {// tourner les roues de manière aleatoire
+int tourner_roues() {
+    // tourner les roues de manière aleatoire
     srand(time(NULL));
-    int last_rand = -1; // valeure d'icone impossible
+    int last_rand = -1;
+    // valeure d'icone impossible
     int win = 1;
     int rand_icon;
     for (int i = 0; i < 3; i++) { // 3 car 3 roues
@@ -46,11 +51,14 @@ int tourner_roues() {// tourner les roues de manière aleatoire
             rand_icon=2;
         }
         else{
-            rand_icon= rand() % NUM_ICONS; // choix d'une icone aléatoire
+            rand_icon= rand() % NUM_ICONS;
+            // choix d'une icone aléatoire
         }
 
-        draw_sprite(screen, icons[rand_icon],  807+ i * (77 + 41+i*i), 525);// le calcule de la position NE PAS HESITER A CHANGER CAR JE L'AI TROUVER AU HASARD
-        if (last_rand != -1 && last_rand != rand_icon) { // detecter la victoire
+        draw_sprite(screen, icons[rand_icon],  807+ i * (77 + 41+i*i), 525);
+        // le calcule de la position NE PAS HESITER A CHANGER CAR JE L'AI TROUVER AU HASARD
+        if (last_rand != -1 && last_rand != rand_icon) {
+            // detecter la victoire
             win = 0;
         }
         last_rand=rand_icon;
@@ -92,6 +100,7 @@ void Jplayer1(int *s1){
         if (key[KEY_ENTER]) {
             fin++;
             //anime();
+            anime();
             int win = tourner_roues();
             if (win==1) {
                 *s1+=1;
@@ -116,7 +125,8 @@ void Jplayer2(int *s2){
     // ici on charge toutes les images
     BITMAP *fond;
     fond= load_bitmap("../Games/Jackpot/IMAGES/fond3.bmp",NULL);
-    if (!fond) { //blindage
+    if (!fond) {
+        //blindage
         allegro_message("Erreur image fond");
         exit(EXIT_FAILURE);
     }
@@ -145,6 +155,7 @@ void Jplayer2(int *s2){
         if (key[KEY_ENTER]) {
             fin++;
             //anime();
+            anime();
             int win = tourner_roues();
             if (win==1) {
                 *s2+=1;
@@ -196,7 +207,8 @@ void jackpot(){
     }
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    rest(2000);//Attendre 2 secondes avant de quitter
+    rest(2000);
+    //Attendre 2 secondes avant de quitter
 
     destroy_bitmap(fond);
     destroy_bitmap(buffer);

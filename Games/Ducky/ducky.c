@@ -1,16 +1,26 @@
 // PECHE AUX CANARDS LOLA LE GALL
 
+
+
+
+
+
+
 #include "ducky.h"
 #include "../../joueur/joueur.h"
 
-#define NCANARD 40 // Nombre de canards
-#define TX 60 // Largeur canards
-#define TY 70 // Hauteur canards
+#define NCANARD 40
+// Nombre de canards
+#define TX 60
+// Largeur canards
+#define TY 70
+// Hauteur canards
 
 
 
 
-void aleaDepCanard(t_canard* canard){ // generer les deplacements aléatoire des canards
+void aleaDepCanard(t_canard* canard){
+    // generer les deplacements aléatoire des canards
     int newDepX;
     int newDepY;
     do{
@@ -22,7 +32,8 @@ void aleaDepCanard(t_canard* canard){ // generer les deplacements aléatoire des
 }
 
 
-t_canard* creerCanard(){ //on alloue un canard
+t_canard* creerCanard(){
+    //on alloue un canard
     t_canard* canard;
     canard = malloc(sizeof(t_canard));
     if(canard==NULL){
@@ -58,7 +69,8 @@ void actualiserCanard(t_canard* canard){
 
 
 
-void dessinerCanard(BITMAP* buffer, t_canard* canard){ // dessiner un seul canard
+void dessinerCanard(BITMAP* buffer, t_canard* canard){
+    // dessiner un seul canard
     int posX = canard->posX;
     int posY = canard->posY;
 
@@ -74,14 +86,16 @@ void dessinerCanard(BITMAP* buffer, t_canard* canard){ // dessiner un seul canar
     destroy_bitmap(canardimage);
 }
 
-void remplirTab(t_canard* colonies[NCANARD]){ // on remplit un tableau de N canards
+void remplirTab(t_canard* colonies[NCANARD]){
+    // on remplit un tableau de N canards
     for (int fourmis=0; fourmis<NCANARD; fourmis++){
         colonies[fourmis] = creerCanard();
     }
 }
 
 
-int collision(t_canard *c1, t_canard *c2){ // on dectecte les collisions
+int collision(t_canard *c1, t_canard *c2){
+    // on dectecte les collisions
     if(c1 == c2) return 0;
 
     if(c1->posX < c2->posX && c1->posX+TX > c2->posX && c1->posY < c2->posY && c1->posY+TY > c2->posY) return 1;
@@ -107,18 +121,21 @@ void actualiserTab(t_canard* colonies[NCANARD]){
 }
 
 
-void dessinerTab(BITMAP* buffer, t_canard* colonies[NCANARD]){// on dessine touts les canards
+void dessinerTab(BITMAP* buffer, t_canard* colonies[NCANARD]){
+    // on dessine touts les canards
     for(int canards = 0; canards<NCANARD; canards++){
         dessinerCanard(buffer,colonies[canards]);
     }
 }
 
-int canardClicked(t_canard* canard, int mouseX, int mouseY) { // detection d'un canard attrapé
+int canardClicked(t_canard* canard, int mouseX, int mouseY) {
+    // detection d'un canard attrapé
     return mouseX >= canard->posX && mouseX <= canard->posX + TX &&
            mouseY >= canard->posY && mouseY <= canard->posY + TY;
 }
 
-void player1(int *score1){ // game du P1
+void player1(int *score1){
+    // game du P1
     t_canard* colonies[NCANARD];
     *score1=0;
     remplirTab(colonies);
@@ -150,6 +167,7 @@ void player1(int *score1){ // game du P1
     textout_centre_ex(buffer, font, message, SCREEN_W / 2-60, SCREEN_H /2 +100, makecol(255, 255, 255), -1);
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     rest (2500);
+
     // Pour le compteur de 20 secondes
     clock_t depart_temps = clock();
     double temps_actuel = 0.0;
@@ -209,7 +227,8 @@ void player1(int *score1){ // game du P1
 
 }
 
-void player2(int *score2){ // game du P2
+void player2(int *score2){
+    // game du P2
     t_canard* colonies[NCANARD];
     *score2=0;
     remplirTab(colonies);
@@ -241,6 +260,7 @@ void player2(int *score2){ // game du P2
     textout_centre_ex(buffer, font, message, SCREEN_W / 2-60, SCREEN_H /2 +100, makecol(255, 255, 255), -1);
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     rest (2500);
+
     // Pour le compteur de 20 secondes
     clock_t depart_temps = clock();
     double temps_actuel = 0.0;
@@ -321,6 +341,7 @@ void ducky(){ // remplace le main
     // enft drawtranssprite ca enleve tous le rouge
     // noot noot
     //merci
+    //
 
 
 
@@ -346,7 +367,8 @@ void ducky(){ // remplace le main
     }
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    rest(2000);//Attendre 2 secondes avant de quitter
+    rest(2000);
+    //Attendre 2 secondes avant de quitter
 
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
