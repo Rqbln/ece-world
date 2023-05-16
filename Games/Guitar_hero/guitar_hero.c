@@ -82,15 +82,15 @@ void animation_guitarEnd(){
     if (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]<joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
         sprintf(message,"%s",joueurs[1].nom);
         joueurs[1].nbTickets+=2;
-        if (highscore[2].score <= (joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
-            saveMiniGame(joueurs,"Guitar",(joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]),0);
+        if (highscore[2].score < (joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
+            saveMiniGame(joueurs,"Guitar",(joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]),1);
             loadHighScore(highscore);
         }
     }
     else if(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]>joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
         sprintf(message,"%s",joueurs[0].nom);
         joueurs[0].nbTickets+=2;
-        if (highscore[2].score <= (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
+        if (highscore[2].score < (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
             saveMiniGame(joueurs,"Guitar",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
             loadHighScore(highscore);
         }
@@ -99,6 +99,10 @@ void animation_guitarEnd(){
         sprintf(message,"egalite");
         joueurs[0].nbTickets+=1;
         joueurs[1].nbTickets+=1;
+        if (highscore[2].score < (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
+            saveMiniGame(joueurs,"Guitar",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
+            loadHighScore(highscore);
+        }
     }
     play_sample(grondement1, 255, 128, 1000, 1);
     while (!key[KEY_ENTER]) {
@@ -392,12 +396,20 @@ void playguitar1(){
                 joueurs[1].nbTickets+=2;
                 ticket=1;
             }
+            if (highscore[2].score < (joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
+                saveMiniGame(joueurs,"Guitar1",(joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]),1);
+                loadHighScore(highscore);
+            }
         }
         else if(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]>joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
             sprintf(message,"%s a gagné 1 ticket",joueurs[0].nom);
             if(ticket==0){
                 joueurs[0].nbTickets+=2;
                 ticket=1;
+            }
+            if (highscore[2].score < (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
+                saveMiniGame(joueurs,"Guitar1",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
+                loadHighScore(highscore);
             }
         }
         else {
@@ -406,6 +418,10 @@ void playguitar1(){
                 joueurs[0].nbTickets+=1;
                 joueurs[1].nbTickets+=1;
                 ticket=1;
+            }
+            if (highscore[2].score < (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
+                saveMiniGame(joueurs,"Guitar1",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
+                loadHighScore(highscore);
             }
         }
         textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
