@@ -1,6 +1,7 @@
 //by Baptiste Chesnot
 #include "guitar_hero.h"
 #include "../../joueur/joueur.h"
+#include "../../Sauvegarde/sauvegarde.h"
 void animation_guitare(){
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
     BITMAP *dragon = load_bitmap("../Games/Guitar_hero/image/tete_dragon.bmp",NULL);;
@@ -81,10 +82,18 @@ void animation_guitarEnd(){
     if (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]<joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
         sprintf(message,"%s",joueurs[1].nom);
         joueurs[1].nbTickets+=2;
+        if (highscore[2].score <= (joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
+            saveMiniGame(joueurs,"Guitar",(joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]),0);
+            loadHighScore(highscore);
+        }
     }
     else if(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]>joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
         sprintf(message,"%s",joueurs[0].nom);
         joueurs[0].nbTickets+=2;
+        if (highscore[2].score <= (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
+            saveMiniGame(joueurs,"Guitar",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
+            loadHighScore(highscore);
+        }
     }
     else {
         sprintf(message,"egalite");
