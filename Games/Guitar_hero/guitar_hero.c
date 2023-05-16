@@ -45,10 +45,94 @@ void animation_guitare(){
     }
     stop_sample(grondement2);
 }
+void animation_guitarEnd(){
+    BITMAP *bitcoin[8];
+    BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
+    BITMAP *witcher = load_bitmap("../Games/Guitar_hero/image/witcher_face.bmp",NULL);;
+    BITMAP *blonde = load_bitmap("../Games/Guitar_hero/image/daenerys.bmp",NULL);
+    BITMAP *fond = load_bitmap("../Games/Guitar_hero/image/image_dragon.bmp",NULL);
+    SAMPLE *vol = load_wav("../Games/Guitar_hero/musique/vole.wav");
+    SAMPLE *grondement1 = load_wav("../Games/Guitar_hero/musique/grondement1.wav");
+    SAMPLE *grondement2 = load_wav("../Games/Guitar_hero/musique/grondement2.wav");
+    char message[50];
+    int xbitcoin = WIDTH/2;
+    int ybitcoin = (HEIGHT/2)+70;
+    int posbitcoin = 0;
+    int cmpt=0;
+    int time=50;
+    for (int j = 0; j < 8; j++) {
+        sprintf(message, "../Games/bitcoin/bitcoin%d.bmp", j);
+        bitcoin[j] = load_bitmap(message, NULL);
+        if (!bitcoin[j]) {
+            allegro_message("../image/bitcoin/bitcoin%d.bmp", j);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    if(!grondement2){
+        allegro_message("../../image/gdment2.bmp");
+        exit(EXIT_FAILURE);
+    }
+    if(!vol){
+        allegro_message("../../image/vol.bmp");
+        exit(EXIT_FAILURE);
+    }
+
+    if (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]<joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
+        sprintf(message,"%s",joueurs[1].nom);
+        joueurs[1].nbTickets+=2;
+    }
+    else if(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]>joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
+        sprintf(message,"%s",joueurs[0].nom);
+        joueurs[0].nbTickets+=2;
+    }
+    else {
+        sprintf(message,"egalite");
+        joueurs[0].nbTickets+=1;
+        joueurs[1].nbTickets+=1;
+    }
+    play_sample(grondement1, 255, 128, 1000, 1);
+    while (!key[KEY_ENTER]) {
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,witcher,0,0);
+        textout_centre_ex(buffer, font, message, 1400, 200, makecol(0, 0, 0), -1);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+    }
+    stop_sample(grondement1);
+    rest(250); // Pause pour éviter les mouvements trop rapides
+    play_sample(vol, 255, 128, 1000, 1);
+    while (!key[KEY_ENTER] && (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1] != joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
+        cmpt+=1;
+        posbitcoin += 1;
+        if (posbitcoin >= 8) {
+            posbitcoin = 0;
+        }
+        if(cmpt>30 && cmpt<50){
+            ybitcoin-=6;
+        }
+        if(cmpt>=50){
+            time =15;
+            xbitcoin-=WIDTH/80;
+            ybitcoin-=HEIGHT/80;
+        }
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,blonde,0,0);
+        draw_sprite(buffer, bitcoin[posbitcoin], xbitcoin, ybitcoin);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+        rest(time); // Pause pour éviter les mouvements trop rapides
+    }
+    stop_sample(vol);
+    rest(250); // Pause pour éviter les mouvements trop rapides
+    play_sample(grondement2, 255, 128, 1000, 1);
+    stop_sample(grondement2);
+}
 void menuguitar(){
     //innitialisation des BITMAP
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
     BITMAP *fond = load_bitmap("../Games/Guitar_hero/image/fondguitar3.bmp",NULL);
+    BITMAP *fond2 = load_bitmap("../Games/Guitar_hero/image/tetedragon1.bmp",NULL);
     BITMAP *selectstart[2];
     BITMAP *selectstart1[2];
     BITMAP *selectrules[2];
@@ -117,6 +201,7 @@ void menuguitar(){
                 draw_sprite(buffer,enterkey,xenter,yenter);
                 break;
             case 1:
+                draw_sprite(buffer,fond2,0,0);
                 draw_sprite(buffer,selectstart[0],xselect,yselectstart);
                 draw_sprite(buffer,selectstart1[1],xselect,yselectstart1);
                 draw_sprite(buffer,selectrules[0],xselect,yselectrules);
@@ -327,7 +412,7 @@ void playguitar(){
     BITMAP *bouclier= load_bitmap("../Games/Guitar_hero/image/boulefeu1.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/tetedragon1.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
-    SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/musique0.wav");
+    SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/kingGT.wav");
     FONT *police = load_font("arial.pcx", NULL, NULL);
     set_trans_blender(0, 0, 0, 128);
     if (!musique) {
@@ -351,7 +436,6 @@ void playguitar(){
     int note3=2*155+WIDTH*0.34;
     int note4=3*155+WIDTH*0.34;
     int notey=HEIGHT/1.5;
-    int ticket=0;
     int xenter=WIDTH-400;
     int yenter=HEIGHT-80;
 
@@ -490,32 +574,6 @@ void playguitar(){
     rest(150); // Pause de 10 ms pour rafraîchir l'écran
     clear_bitmap(buffer);
     clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
-    while (!key[KEY_ESC]) {
-        if (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]<joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
-            sprintf(message,"%s a gagné 1 ticket",joueurs[1].nom);
-            if(ticket==0){
-                joueurs[1].nbTickets+=2;
-                ticket=1;
-            }
-        }
-        else if(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]>joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]){
-            sprintf(message,"%s a gagné 1 ticket",joueurs[0].nom);
-            if(ticket==0){
-                joueurs[0].nbTickets+=2;
-                ticket=1;
-            }
-        }
-        else {
-            sprintf(message,"egalite");
-            if(ticket==0){
-                joueurs[0].nbTickets+=1;
-                joueurs[1].nbTickets+=1;
-                ticket=1;
-            }
-        }
-        textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
-        blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
-        rest(100); // Pause de 10 ms pour rafraîchir l'écran
-    }
+    animation_guitarEnd();
     rest(150); // Pause de 10 ms pour rafraîchir l'écran
 }
