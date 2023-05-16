@@ -32,8 +32,10 @@ void parc2(){
 
 
     SAMPLE *sound[nbMusique];
+    sound[0] = load_wav("../Parc/musique/GameTrone.wav");//GameTrone  HouseDragon
     SAMPLE *effet[2];
     SAMPLE *ambiance = load_wav("../Parc/musique/ambiance.wav");
+
 
     barbare[0] = load_bitmap("../Parc/image/pnjbarbare/barbare0.bmp", NULL);
     //barbare[0]=load_bitmap("../Parc/imagepnj/perso0/action0/0.bmp",NULL);
@@ -188,14 +190,14 @@ void parc2(){
         }
     }
     //musique parc
-    for (int i = 0; i < nbMusique; i++) {
+    /*for (int i = 0; i < nbMusique; i++) {
         sprintf(nomDeFichier, "../Parc/musique/musique%d.wav", i);
         sound[i] = load_wav(nomDeFichier);
         if (!sound[i]) {
             allegro_message("../musique%d.wav", i);
             exit(EXIT_FAILURE);
         }
-    }
+    }*/
     //sprite perso
     for (int g = 0; g < grille; ++g) {
         for (int a = 0; a < action; ++a) {

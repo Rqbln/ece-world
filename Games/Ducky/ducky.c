@@ -302,8 +302,6 @@ void player2(int *score2){ // game du P2
 void ducky(){ // remplace le main
     srand(time(NULL));
     int s1, s2;
-    player1(&s1);
-    player2(&s2);
     BITMAP *fond;
     fond= load_bitmap("../Games/Ducky/IMAGES/fond.bmp",NULL);
     if (!fond) { //blindage
@@ -312,6 +310,22 @@ void ducky(){ // remplace le main
     }
 
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    BITMAP * r;
+    r= load_bitmap("../Games/Ducky/IMAGES/reglesd.bmp",NULL);
+    while (!key[KEY_ENTER]){
+        draw_sprite(buffer, fond, 0, 0);
+        draw_sprite(buffer, r, (SCREEN_W - r->w) / 2, (SCREEN_H - r->h) / 2);
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    }
+    // enft drawtranssprite ca enleve tous le rouge
+    // noot noot
+    //merci
+
+
+
+    player1(&s1);
+    player2(&s2);
     draw_sprite(buffer, fond, 0, 0);
     char message[50];
     // on detecte la victoire d'un des deux joueurs et on affiche le résultat
@@ -336,4 +350,5 @@ void ducky(){ // remplace le main
 
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
+    destroy_bitmap(r);
 }

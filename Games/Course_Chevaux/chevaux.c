@@ -75,6 +75,7 @@ void anim_horse(){
     }
     buffer=create_bitmap(WIDTH,HEIGHT);
     play_sample(musicparis, 255, 128, 1000, 1);
+
     while (tour < 2) { //menu pour les paris avant la course
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
@@ -112,6 +113,7 @@ void anim_horse(){
             joueur[tour] = option;
             joueurs[tour].nbTickets-=1; //retire un ticket a chaque joueur
             //sprintf("valider, le joueur %d a voté le cheval %d !",tour,option);
+            joueurs[tour].nb_essaie_chevaux+=1;
             tour+=1;
             textprintf_ex(buffer, font, WIDTH/2, HEIGHT/2, makecol(255, 255, 255), -1, "valider, le joueur %d a voté le cheval %d !",tour,option);
             rest(250); // Pause pour éviter les mouvements trop rapides
@@ -175,6 +177,8 @@ void anim_horse(){
                 if(ticket==0){
                     joueurs[1].nbTickets+=1;
                     joueurs[0].nbTickets+=1;
+                    joueurs[0].score_chevaux[joueurs[0].nb_essaie_chevaux-1]=0;
+                    joueurs[1].score_chevaux[joueurs[1].nb_essaie_chevaux-1]=0;
                     ticket=1;
                 }
 
@@ -182,11 +186,15 @@ void anim_horse(){
                 fin=1;
                 sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
                 textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
+                joueurs[0].score_chevaux[joueurs[0].nb_essaie_chevaux-1]=1;
+                joueurs[1].score_chevaux[joueurs[1].nb_essaie_chevaux-1]=0;
                 if(ticket==0){
                     joueurs[0].nbTickets+=2;
                     ticket=1;
                 }
             }else if(memo==joueur[1]){
+                joueurs[0].score_chevaux[joueurs[0].nb_essaie_chevaux-1]=0;
+                joueurs[1].score_chevaux[joueurs[1].nb_essaie_chevaux-1]=1;
                 fin=1;
                 sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
                 textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
