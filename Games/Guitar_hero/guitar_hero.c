@@ -1,7 +1,5 @@
 //by Baptiste Chesnot
 #include "guitar_hero.h"
-#include "../../joueur/joueur.h"
-#include "../../Sauvegarde/sauvegarde.h"
 void animation_guitare(){
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
     BITMAP *dragon = load_bitmap("../Games/Guitar_hero/image/tete_dragon.bmp",NULL);;

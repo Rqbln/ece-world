@@ -8,6 +8,7 @@
 #include "../Games/Guitar_hero/guitar_hero.h"
 #include "../Games/Ducky/ducky.h"
 #include "../Games/River/river.h"
+#include "../ScoreTab/scoreTab.h"
 
 #ifndef PROJET_ALGO2_PARC_H
 #define PROJET_ALGO2_PARC_H

@@ -17,3 +17,5 @@ void menuguitar();
 
 #include <allegro.h>
 #include "stdio.h"
+#include "../../joueur/joueur.h"
+#include "../../Sauvegarde/sauvegarde.h"
