@@ -426,6 +426,7 @@ void playguitar1(){
 void playguitar(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
+    BITMAP *compteur[10];
     BITMAP *note= load_bitmap("../Games/Guitar_hero/image/boulefeu.bmp",NULL);
     BITMAP *bouclier= load_bitmap("../Games/Guitar_hero/image/boulefeu1.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/tetedragon1.bmp",NULL);
@@ -439,6 +440,12 @@ void playguitar(){
         exit(EXIT_FAILURE);
     }
 
+    int score;
+    int score1=0;
+    int score2=0;
+    int score3=0;
+    int xcompteur=0;
+    int ycompteur=0;
 
     int nbnote = 4*batt;
     int xnote[nbnote];
@@ -446,7 +453,8 @@ void playguitar(){
     int nombreAleatoire=20;
     int memo;
     char message[50];
-    int score;
+    char nomDeFichier[50];
+
     int vitesse;
     int nbjoueur=2;
     int note1=0*155+WIDTH*0.34;
@@ -475,6 +483,14 @@ void playguitar(){
         exit(EXIT_FAILURE);
     }
     buffer=create_bitmap(WIDTH,HEIGHT);
+    for(int i=0;i<10;i++){
+        sprintf(nomDeFichier,"../Games/Guitar_hero/compteur/%d.bmp",i);
+        compteur[i]= load_bitmap(nomDeFichier,NULL);
+        if(!compteur[i]){
+            allegro_message("../Games/compteur/%d.bmp",i);
+            exit(EXIT_FAILURE);
+        }
+    }
 
     for (int tour = 0; tour < nbjoueur; ++tour) {
         joueurs[tour].nbTickets-=1;
@@ -571,6 +587,12 @@ void playguitar(){
             if (!key[KEY_K]) {
                 ok[3] = 0;
             }
+            score1=score%10;
+            score2=((score-score1)/10)%10;
+            score3=((score-(score1+ 10*score2))/100)%10;
+            draw_sprite(buffer,compteur[score3],xcompteur,ycompteur);
+            draw_sprite(buffer,compteur[score2],xcompteur+(compteur[0]->w),ycompteur);
+            draw_sprite(buffer,compteur[score1],xcompteur+2*(compteur[0]->w),ycompteur);
             textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             if (vitesse<1){
