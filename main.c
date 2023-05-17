@@ -27,8 +27,7 @@ int main() {
     for (int i = 0; i < MAX_HIGH_SCORES; i++) {
         highscore[i].score = 0;
     }
-    tableau_score();
-
+    //tableau_score();
     //ducky();
     //jeu_taupe();
     //snake();
