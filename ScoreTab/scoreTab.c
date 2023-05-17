@@ -25,7 +25,7 @@ void tableau_score(){
     int xcompteur=0;
     int ycompteur=0;
     int numlettre=0;
-    int nblettre=20;
+    int nblettre=30;
     int xlettre=0;
     int ylettre=0;
     char message[8][nblettre];
@@ -68,14 +68,14 @@ void tableau_score(){
         draw_sprite(buffer,compteur[score2],xcompteur+(compteur[0]->w),ycompteur);
         draw_sprite(buffer,compteur[score1],xcompteur+2*(compteur[0]->w),ycompteur);
         textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
-        sprintf(message[0], "Baptiste");
+        sprintf(message[0], "ERIKA");
         sprintf(message[1], "JeanMarie");
         sprintf(message[2], "Lenazy");
         sprintf(message[3], "Z");
-        sprintf(message[4], "ERIKA");
-        sprintf(message[5], "Baptiste le bg");
-        sprintf(message[6], "Baptiste");
-        sprintf(message[7], "Baptiste");
+        sprintf(message[4], "la mere de lulu");
+        sprintf(message[5], "vit dans");
+        sprintf(message[6], "un ananas dans la mer");
+        sprintf(message[7], "Baptiste ce bg");
 
         for (int j = 0; j < 8; ++j) {
             nblettre = strlen(message[j]);
