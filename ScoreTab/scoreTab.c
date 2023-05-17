@@ -7,7 +7,7 @@ void tableau_score(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
     BITMAP *compteur[10];
-    BITMAP *lettre[27];
+    BITMAP *lettre[27];//+10 pour les chiffre
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/tetedragon1.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/kingGT.wav");
@@ -48,8 +48,12 @@ void tableau_score(){
             exit(EXIT_FAILURE);
         }
     }
-    for(int i=0;i<27;i++){
-        sprintf(nomDeFichier,"../ScoreTab/lettre/%c.bmp",i+97);
+    for(int i=0;i<27;i++){ //+10
+        if (i<27){
+            sprintf(nomDeFichier,"../ScoreTab/lettre/%c.bmp",i+97);
+        } else{
+            sprintf(nomDeFichier,"../ScoreTab/lettre/%d.bmp",i-27);
+        }
         lettre[i]= load_bitmap(nomDeFichier,NULL);
         if(!lettre[i]){
             allegro_message("../Games/lettre/%c.bmp",i+97);
@@ -75,21 +79,25 @@ void tableau_score(){
         sprintf(message[4], "la mere de lulu");
         sprintf(message[5], "vit dans");
         sprintf(message[6], "un ananas dans la mer");
-        sprintf(message[7], "Baptiste ce bg");
+        sprintf(message[7], "Zaptiste ce bg01234");
 
         for (int j = 0; j < 8; ++j) {
             nblettre = strlen(message[j]);
             for (int i = 0; i < nblettre; ++i) {
+
                 numlettre = (message[j][i] - '0')-49;
                 if (numlettre<0 || numlettre>25){
                     if (numlettre>-33 && numlettre<-6){
                         numlettre+=32;
                     }
+                    else if(numlettre>-50 && numlettre<-39) {
+                        numlettre+=49;//26+49 pour les chiffre on remplace 49 par ca
+                    }
                     else{
                         numlettre=26;
                     }
                 }
-                printf("Caractere : %c, Entier : %d\n", message[j][i], numlettre);
+                printf("Caractere : %c, Entier : %d\n", message[j][i], (message[j][i] - '0'));
                 ylettre=j*(lettre[0]->h);
                 xlettre=i*(lettre[0]->w);
                 draw_sprite(buffer,lettre[numlettre],xlettre,ylettre);
