@@ -34,11 +34,9 @@ add_executable(
         joueur/joueur.c
         joueur/joueur.h
         Sauvegarde/sauvegarde.c
-        Sauvegarde/sauvegarde.h)
+        Sauvegarde/sauvegarde.h
+        ScoreTab/scoreTab.c
+        ScoreTab/scoreTab.h)
 
-find_package(PkgConfig REQUIRED)
-pkg_search_module(ALLEGRO REQUIRED allegro)
-include_directories(${ALLEGRO_INCLUDE_DIRS})
-target_link_libraries(ECE-WORLD ${ALLEGRO_LIBRARIES})
-
+target_link_libraries(ECE-WORLD -lmingw32 -lalleg44)
 
