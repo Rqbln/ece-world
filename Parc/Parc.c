@@ -25,7 +25,8 @@ void parc2(){
     BITMAP *labyrinthe = load_bitmap("../Parc/image/batiment/labyrinthe0.bmp", NULL);
     BITMAP *taupe = load_bitmap("../Parc/image/batiment/cirque0.bmp", NULL);
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
-    BITMAP *panneau = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
+    BITMAP *panneau = load_bitmap("../Parc/image/batiment/telephone0.bmp", NULL);
+    BITMAP *enterkey = load_bitmap("../Parc/image/enterkey.bmp", NULL);
 
 
     SAMPLE *sound[nbMusique];
@@ -68,9 +69,11 @@ void parc2(){
     int ycanard = yimgfond + 2100;
     int xcheval[nbcheval];
     int ycheval[nbcheval];
+    int xenter=WIDTH-400;
+    int yenter=HEIGHT-80;
 
-    int xpanneau = ximgfond + 1840;
-    int ypanneau = yimgfond + 1900;
+    int xpanneau = ximgfond + 3060;
+    int ypanneau = yimgfond + 1930;
 
     int xchateauEnd = ximgfond + 3350;
     int ychateauEnd = yimgfond + 2060;
@@ -691,9 +694,15 @@ void parc2(){
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
-        if (xPacman <= (xpanneau + (panneau->w)/2)
-        &&(xpanneau + (panneau->w)/2) <= (xPacman + pacman[0][0][1]->w)
-        && yPacman <= (ypanneau)
+        if (xPacman <= (xpanneau + panneau->w)
+            &&(xpanneau) <= (xPacman + pacman[0][0][1]->w)
+            && yPacman <= (ypanneau + panneau->h)
+            && (ypanneau) <= (yPacman + pacman[0][0][1]->h)){
+            draw_sprite(buffer,enterkey,xenter,yenter);
+        }
+        if (xPacman <= (xpanneau + panneau->w)
+        &&(xpanneau) <= (xPacman + pacman[0][0][1]->w)
+        && yPacman <= (ypanneau + panneau->h)
         && (ypanneau) <= (yPacman + pacman[0][0][1]->h)
         && key[KEY_ENTER]){
             stop_sample(sound[musiquealeatoire]);
