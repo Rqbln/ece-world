@@ -12,6 +12,7 @@ void anim_horse(){
     BITMAP *spacekey= load_bitmap("../Games/Course_Chevaux/image/spacekey1.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Course_Chevaux/image/map0.bmp",NULL);
     BITMAP *menu[2];
+    BITMAP *lettre[27];//+10 pour les chiffre
     menu[0] = load_bitmap("../Games/Course_Chevaux/image/parchem1.bmp",NULL);
     menu[1] = load_bitmap("../Games/Course_Chevaux/image/parchem2.bmp",NULL);
     BITMAP *select[10][2];
@@ -20,6 +21,11 @@ void anim_horse(){
     SAMPLE *musiccourse= load_sample("../Games/Course_Chevaux/musique/coursecommente.wav");
     SAMPLE *musicarrive= load_sample("../Games/Course_Chevaux/musique/coursearriver.wav");
     //initialisation des variable
+    int numlettre=0;
+    int nblettre=30;
+    int xlettre=0;
+    int ylettre=0;
+    char message[nblettre];
     int position[nbCheval];
     int xcheval[nbCheval];
     int ycheval[nbCheval];
@@ -28,7 +34,6 @@ void anim_horse(){
     int memo;
     int xArriver=WIDTH*0.95;
     int yArriver=HEIGHT*0.35;
-    char message[50];
     int yselect[nbCheval];
     char nomDuFichier[60];
     int tour=0;
@@ -70,6 +75,18 @@ void anim_horse(){
         cheval[i]= load_bitmap(nomDeFichier,NULL);
         if(!cheval[i]){
             allegro_message("../Games/Course_Chevaux/image/cheval%d.bmp",i);
+            exit(EXIT_FAILURE);
+        }
+    }
+    for(int i=0;i<27;i++){ //+10
+        if (i<27){
+            sprintf(nomDeFichier,"../Games/Course_Chevaux/lettre/%c.bmp",i+97);
+        } else{
+            sprintf(nomDeFichier,"../Games/Course_Chevaux/lettre/%d.bmp",i-27);
+        }
+        lettre[i]= load_bitmap(nomDeFichier,NULL);
+        if(!lettre[i]){
+            allegro_message("../Games/lettre/%c.bmp",i+97);
             exit(EXIT_FAILURE);
         }
     }
@@ -166,9 +183,30 @@ void anim_horse(){
         play_sample(musicarrive, 255, 128, 1000, 1);
         while (!key[KEY_ENTER] && !key[KEY_ESC]) {
             //affiche le cavalier vainqueur
-            sprintf(message,"LE CAVALIER %d A WIN LA GAME",memo+1);
+            sprintf(message,"  LE CAVALIER %d A WIN  ",memo+1);
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             draw_sprite(buffer,enterkey, xenter, yenter);
+            nblettre = strlen(message);
+            for (int i = 0; i < nblettre; ++i) {
+
+                numlettre = (message[i] - '0')-49;
+                if (numlettre<0 || numlettre>25){
+                    if (numlettre>-33 && numlettre<-6){
+                        numlettre+=32;
+                    }
+                    else if(numlettre>-50 && numlettre<-39) {
+                        numlettre+=49;//26+49 pour les chiffre on remplace 49 par ca
+                    }
+                    else{
+                        numlettre=26;
+                    }
+                }
+                printf("Caractere : %c, Entier : %d\n", message[i], (message[i] - '0'));
+                ylettre=j*(lettre[0]->h);
+                xlettre=i*(lettre[0]->w);
+                draw_sprite(buffer,lettre[numlettre],xlettre,ylettre);
+            }
+
 
             //condition de fin de partie et attribution des points
             if(memo==joueur[0] && memo==joueur[1]){
