@@ -20,6 +20,7 @@
 #define WIDTH 1920
 #define nbMusique 1//6
 #define nbcheval 6
+#define nbdragon 1
 
 #define grille 5
 #define action 16

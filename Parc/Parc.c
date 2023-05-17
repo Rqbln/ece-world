@@ -27,6 +27,7 @@ void parc2(){
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
     BITMAP *panneau = load_bitmap("../Parc/image/batiment/telephone0.bmp", NULL);
     BITMAP *enterkey = load_bitmap("../Parc/image/enterkey.bmp", NULL);
+    BITMAP *dragon[4][3];
 
 
     SAMPLE *sound[nbMusique];
@@ -53,6 +54,14 @@ void parc2(){
     int yserpent = yimgfond + 830;
     int xguitar = ximgfond + 2260;
     int yguitar = yimgfond + 510;
+    int xdragon = xguitar;
+    int ydragon = yguitar;
+    int xdrag = 0;
+    int ydrag = 0;
+    int posdrag=0;
+    int directdrag=0;
+    int cmptdrag=0;
+    int cmpdrag=0;
     int xriver = ximgfond + 2310;
     int yriver = yimgfond + 2020;
     int xcasino = ximgfond + 2680;
@@ -183,6 +192,16 @@ void parc2(){
         if (!cheval[i]) {
             allegro_message("../Games/Course_Chevaux/image/cheval%d.bmp", i);
             exit(EXIT_FAILURE);
+        }
+    }
+    for (int j = 0; j < 4; ++j) {
+        for (int i = 0; i < 3; i++) {
+            sprintf(nomDeFichier, "../Parc/image/dragon/direction%d/%d.bmp", j, i);
+            dragon[j][i] = load_bitmap(nomDeFichier, NULL);
+            if (!dragon[j][i]) {
+                allegro_message("../Games/image/dragon%d%d.bmp", j, i);
+                exit(EXIT_FAILURE);
+            }
         }
     }
     //bruit barbare
@@ -349,7 +368,8 @@ void parc2(){
             dx=15;
             dy=8;
         }*/
-
+        xdragon = xguitar-30;
+        ydragon = yguitar-60;
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         // Obtenir les coordonnées de la souris
@@ -372,7 +392,56 @@ void parc2(){
         draw_sprite(buffer, serpent, xserpent, yserpent);
         draw_sprite(buffer, bitcoin[posbitcoin], xbitcoin, ybitcoin);
         draw_sprite(buffer,panneau,xpanneau,ypanneauM);
+        //draw_sprite(buffer,dragon[0][0],xdragon,ydragon);
         //draw_sprite(buffer, portail[posbitcoin], xportail, yportail);
+
+        //gestion dragon
+
+        if (cmptdrag >= 30) {
+            cmptdrag = 0;
+            cmpdrag += 1;
+            if (cmpdrag >= 4) {
+                cmpdrag = 0;
+            }
+        }
+        cmptdrag += 1;
+        if (cmpdrag == 0) {
+            directdrag=0;
+            xdrag += 9/3 ;
+            ydrag -= 5 ;
+            xdragon+=xdrag;
+            ydragon+=ydrag;
+            draw_sprite(buffer, dragon[directdrag][posdrag], xdragon, ydragon);
+        }
+        else if(cmpdrag==1){
+            directdrag=2;
+            xdrag += 9 ;
+            ydrag += 5/3;
+            xdragon+=xdrag;
+            ydragon+=ydrag;
+            draw_sprite(buffer, dragon[directdrag][posdrag], xdragon, ydragon);
+        }
+        else if(cmpdrag==2){
+            directdrag=1;
+            xdrag -= 9/3;
+            ydrag += 5 ;
+            xdragon+=xdrag;
+            ydragon+=ydrag;
+            draw_sprite(buffer, dragon[directdrag][posdrag], xdragon, ydragon);
+        }
+        else {
+            directdrag=3;
+            xdrag -= 9 ;
+            ydrag -= 5/3;
+            xdragon+=xdrag;
+            ydragon+=ydrag;
+            draw_sprite(buffer, dragon[directdrag][posdrag], xdragon, ydragon);
+        }
+
+        posdrag += 1;
+        if (posdrag >= 3) {
+            posdrag = 0;
+        }
 
         //gestion mini chevaux
         for (int i = 0; i < nbcheval; ++i) {
