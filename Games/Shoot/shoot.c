@@ -224,8 +224,16 @@ void shoot() {
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
     }
-
+    if ((highscore[7].score)/100 >= joueurscore[0]*100) {
+        saveMiniGame(joueurs,"Shoot",joueurscore[0]*100,0);
+        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+    }
+    else if ((highscore[7].score)/100 >= joueurscore[0]*100) {
+        saveMiniGame(joueurs,"Shoot",joueurscore[1]*100,1);
+        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(255, 255, 255), -1, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+    }
     // Libération des ressources
     destroy_bitmap(background);
     destroy_bitmap(buffer);
+    loadHighScore(highscore);
 }
