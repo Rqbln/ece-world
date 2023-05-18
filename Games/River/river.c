@@ -2,6 +2,7 @@
 #include "river.h"
 #include "../../Init_Allegro/allegro.h"
 #include "../../joueur/joueur.h"
+#include "../../ScoreTab/scoreTab.h"
 void river()
 {
     srand(time(NULL));

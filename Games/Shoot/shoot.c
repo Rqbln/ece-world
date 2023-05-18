@@ -156,10 +156,11 @@ void shoot() {
             //Condition de "Victoire"
             end_time =clock();
             if (end >= 5) {
+
                 joueurscore[turn]=((end_time-start_time)/CLOCKS_PER_SEC)*5.33;
-                textprintf_ex(screen, font, background->w/2, background->h/2, makecol(255, 255, 0), -1, "%s : SCORE : %.2f s", joueurs[turn].nom,joueurscore[turn]);
+                textprintf_ex(screen, font, background->w/2, background->h/2, makecol(255, 255, 255), -1, "%s : SCORE : %.2f s", joueurs[turn].nom,joueurscore[turn]);
                 if (turn==0) {
-                    textprintf_ex(screen, font, (background->w / 2) - 80, (background->h / 2) + 100, makecol(255, 0, 255),-1, "Appuyez sur une touche, au tour du J2 !");
+                    textprintf_ex(screen, font, (background->w / 2) - 80, (background->h / 2) + 100, makecol(255, 255, 255),-1, "Appuyez sur une touche, au tour de %s !",joueurs[1].nom);
                     rest(1000);
                     readkey();
 
@@ -188,12 +189,13 @@ void shoot() {
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         else if (joueurscore[0]==joueurscore[1]) {
-            textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "Personne n'a gagné le combat, les chevaliers reprennent leurs tickets",joueurs[0].nom,joueurscore[0]);
+            textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "Personne n'a gagné le combat :(",joueurs[0].nom,joueurscore[0]);
+            textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Le roi babouin se suicide de tristesse",joueurs[0].nom,joueurscore[0]);
             joueurs[0].nbTickets++;
             joueurs[1].nbTickets++;
         }
         else {
-            textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[1]);
+            textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a été le plus vif !",joueurs[0].nom,joueurscore[1]);
             joueurs[1].nbTickets=joueurs[1].nbTickets+2;
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
