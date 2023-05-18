@@ -3,11 +3,12 @@
 #include "shoot.h"
 #include "../../Init_Allegro/allegro.h"
 #include "../../joueur/joueur.h"
+#include "../../ScoreTab/scoreTab.h"
 void shoot() {
     srand(time(NULL));
     //Données joueurs
     int nbjoueur=2;
-    char mess[50];
+    char mess[80];
     double joueurscore[nbjoueur];
     //Autres
     int turn[2];
@@ -47,6 +48,16 @@ void shoot() {
         allegro_message("../Games/Shoot/image/viseur.bmp");
         exit(EXIT_FAILURE);
     }
+    BITMAP* scroll = load_bitmap("../Games/Shoot/image/scroll.bmp", NULL);
+    if(!viseur){
+        allegro_message("../Games/Shoot/image/scroll.bmp");
+        exit(EXIT_FAILURE);
+    }
+    BITMAP* scores = load_bitmap("../Games/Shoot/image/scores.bmp", NULL);
+    if(!viseur){
+        allegro_message("../Games/Shoot/image/scores.bmp");
+        exit(EXIT_FAILURE);
+    }
 
     // Création du buffer
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
@@ -55,12 +66,27 @@ void shoot() {
 
     // Boucle principale du jeu
     for (int turn = 0; turn < 2; ++turn) {
+//Coût de la participation=1 bitcoin
+        joueurs[turn].nbTickets--;
+
         while (!key[KEY_ENTER]){
             draw_sprite(buffer,background,0,0);
-            sprintf(mess, "Chevalier %s appuyez sur Entrée pour débuter votre tour !",joueurs[turn].nom);
-            textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            //Affichage règles
+            if (turn==0) draw_sprite(buffer,scroll,WIDTH/2-200,HEIGHT/2-200);
+
+            sprintf(mess, "Appuyez sur entrée pour commencer le tour de %s !",joueurs[turn].nom);
+            textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
             blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-            rest(10);
+
+        }
+        if (turn==0) {
+            for (int i = 0; i < 300; ++i) {
+                draw_sprite(buffer,background,0,0);
+                draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200-2*i);
+                sprintf(mess, "Appuyez sur entrée pour commencer le tour de %s !",joueurs[turn].nom);
+                textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
+                blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            }
         }
         for (int i = 3; i > 0; --i) {
             clear_bitmap(buffer);
@@ -133,19 +159,6 @@ void shoot() {
                     readkey();
 
                 }
-                else {
-                    textprintf_ex(screen, font, (background->w/2)-80, (background->h/2)+100, makecol(255, 0, 255), -1, "Appuyez sur une touche, pour voir les scores !");
-                    rest(200);
-                    readkey();
-                    if (joueurscore[0]<joueurscore[1]) {
-                        textprintf_ex(screen, font, (background->w/2)-80, (background->h/2)+200, makecol(255, 255, 0), -1, "%s a remporté 1 ticket ! Quelle vitesse !",joueurs[0].nom);
-                        joueurs[0].nbTickets++;
-                    }
-                    else {
-                        textprintf_ex(screen, font, (background->w/2)-200, (background->h/2)+200, makecol(255, 255, 0), -1, "%s a remporté 1 ticket ! Quelle vitesse !",joueurs[1].nom);
-                        joueurs[1].nbTickets++;
-                    }
-                }
 
 
                 readkey();
@@ -158,10 +171,53 @@ void shoot() {
         }
         start_time = time(NULL);
     }
-    while (!key[KEY_ESC]) {
-        textprintf_ex(screen, font, (background->w/2)-80, (background->h/2)+250, makecol(rand()%255, rand()%255, rand()%255), -1, "Cliquez sur échap pour retourner au parc !");
-        rest(20);
+    while (!(key[KEY_ESC])) {
+        draw_sprite(buffer,background,0,0);
+        draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200);
+        textprintf_ex(buffer, font, (WIDTH/2)-50, (HEIGHT/2)-75, makecol(0, 0, 0), -1, "%s : %.2f s",joueurs[0].nom,joueurscore[0]);
+        textprintf_ex(buffer, font, (WIDTH/2)-50, (HEIGHT/2)-50, makecol(0, 0, 0), -1, "%s : %.2f s",joueurs[1].nom,joueurscore[1]);
+        draw_sprite(buffer, viseur, viseur->w, viseur->h);
+        if (joueurscore[0]<joueurscore[1]){
+            textprintf_ex(buffer, font, (WIDTH/2)-20, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a été le plus rapide !",joueurs[0].nom,joueurscore[0]);
+            joueurs[0].nbTickets=joueurs[0].nbTickets+2;
+            textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
+        }
+        else if (joueurscore[0]==joueurscore[1]) {
+            textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "Personne n'a gagné le combat, les chevaliers reprennent leurs tickets",joueurs[0].nom,joueurscore[0]);
+            joueurs[0].nbTickets++;
+            joueurs[1].nbTickets++;
+        }
+        else {
+            textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[1]);
+            joueurs[1].nbTickets=joueurs[1].nbTickets+2;
+            textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
+        }
+        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-8, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <échap> pour retourner au parc !");
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
     }
+    for (int i = 0; i < 300; ++i) {
+        draw_sprite(buffer,background,0,0);
+        draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200-2*i);
+        textprintf_ex(buffer, font, (WIDTH/2)-50, (HEIGHT/2)-75-2*i, makecol(0, 0, 0), -1, "%s : %.2f s",joueurs[0].nom,joueurscore[0]);
+        textprintf_ex(buffer, font, (WIDTH/2)-50, (HEIGHT/2)-50-2*i, makecol(0, 0, 0), -1, "%s : %.2f s",joueurs[1].nom,joueurscore[1]);
+        draw_sprite(buffer, viseur, viseur->w, viseur->h);
+        if (joueurscore[0]<joueurscore[1]){
+            textprintf_ex(buffer, font, (WIDTH/2)-20, (HEIGHT/2)-25-2*i, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[0]);
+            textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15-2*i, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
+        }
+        else if (joueurscore[0]==joueurscore[1]) {
+            textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-25-2*i, makecol(0, 0, 0), -1, "Personne n'a gagné le combat, les chevaliers reprennent leurs tickets",joueurs[0].nom,joueurscore[0]);
+        }
+        else {
+            textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25-2*i, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[1]);
+            textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15-2*i, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
+        }
+        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-8-2*i, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <échap> pour retourner au parc !");
+        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+    }
+
     // Libération des ressources
     destroy_bitmap(background);
     destroy_bitmap(buffer);
