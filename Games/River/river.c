@@ -304,7 +304,7 @@ void river()
             //Condition victoire
             if (frogy + frogw <= 50) {
                 end=(double) clock();
-                joueurscore[turn]=(double)((end-start)/CLOCKS_PER_SEC)*5.33;
+                joueurscore[turn]=(double)((end-start)/CLOCKS_PER_SEC)*4;
                 while (!key[KEY_ENTER]){
                     draw_sprite(buffer,background,0,0);
                     sprintf(mess, "Traversée réussie pour %s en %.2f s ! Bravo !",joueurs[turn].nom,joueurscore[turn]);
@@ -380,7 +380,17 @@ void river()
         }
         textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-8, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <échap> pour retourner au parc !");
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-
+        //Enregistrement du meilleur score s'il y a lieu
+        if ((highscore[6].score)/100 >= joueurscore[0]*100) {
+            saveMiniGame(joueurs,"River",joueurscore[0]*100,0);
+            sprintf(mess, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+            textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
+        }
+        else if ((highscore[6].score)/100 >= joueurscore[1]*100) {
+            saveMiniGame(joueurs,"River",joueurscore[1]*100,1);
+            sprintf(mess, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+            textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
+        }
     }
     for (int i = 0; i < 300; ++i) {
         draw_sprite(buffer,background,0,0);
@@ -407,5 +417,5 @@ void river()
     destroy_bitmap(background);
     destroy_bitmap(buffer);
     destroy_bitmap(frog);
-
+    loadHighScore(highscore);
 }
