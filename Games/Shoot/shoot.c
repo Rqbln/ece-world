@@ -58,6 +58,11 @@ void shoot() {
         allegro_message("../Games/Shoot/image/scores.bmp");
         exit(EXIT_FAILURE);
     }
+    BITMAP* regles = load_bitmap("../Games/Shoot/image/regles.bmp", NULL);
+    if(!viseur){
+        allegro_message("../Games/Shoot/image/regles.bmp");
+        exit(EXIT_FAILURE);
+    }
 
     // Création du buffer
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
@@ -72,7 +77,7 @@ void shoot() {
         while (!key[KEY_ENTER]){
             draw_sprite(buffer,background,0,0);
             //Affichage règles
-            if (turn==0) draw_sprite(buffer,scroll,WIDTH/2-200,HEIGHT/2-200);
+            if (turn==0) draw_sprite(buffer,regles,WIDTH/2-200,HEIGHT/2-200);
 
             sprintf(mess, "Appuyez sur entrée pour commencer le tour de %s !",joueurs[turn].nom);
             textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
@@ -82,7 +87,7 @@ void shoot() {
         if (turn==0) {
             for (int i = 0; i < 300; ++i) {
                 draw_sprite(buffer,background,0,0);
-                draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200-2*i);
+                draw_sprite(buffer, regles, WIDTH / 2 - 200, HEIGHT / 2 - 200-2*i);
                 sprintf(mess, "Appuyez sur entrée pour commencer le tour de %s !",joueurs[turn].nom);
                 textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
                 blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -203,14 +208,14 @@ void shoot() {
         textprintf_ex(buffer, font, (WIDTH/2)-50, (HEIGHT/2)-50-2*i, makecol(0, 0, 0), -1, "%s : %.2f s",joueurs[1].nom,joueurscore[1]);
         draw_sprite(buffer, viseur, viseur->w, viseur->h);
         if (joueurscore[0]<joueurscore[1]){
-            textprintf_ex(buffer, font, (WIDTH/2)-20, (HEIGHT/2)-25-2*i, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[0]);
+            textprintf_ex(buffer, font, (WIDTH/2)-20, (HEIGHT/2)-25-2*i, makecol(0, 0, 0), -1, "%s a été le plus vif !",joueurs[0].nom,joueurscore[0]);
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15-2*i, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         else if (joueurscore[0]==joueurscore[1]) {
             textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-25-2*i, makecol(0, 0, 0), -1, "Personne n'a gagné le combat, les chevaliers reprennent leurs tickets",joueurs[0].nom,joueurscore[0]);
         }
         else {
-            textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25-2*i, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[1]);
+            textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25-2*i, makecol(0, 0, 0), -1, "%s a été le plus vif !",joueurs[0].nom,joueurscore[1]);
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15-2*i, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-8-2*i, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <échap> pour retourner au parc !");
