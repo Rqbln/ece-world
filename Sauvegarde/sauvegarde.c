@@ -50,7 +50,6 @@ void saveGame(const t_joueurs* players, const char* saveFileName) {
         fwrite(serializedData, sizeof(char), dataSize, file);
         free(serializedData); // Libérez la mémoire allouée
 
-        printf("Le jeu a été sauvegardé avec succès dans '%s'.\n", saveFilePath);
     } else {
         fprintf(stderr, "Erreur lors de la sérialisation des données.\n");
     }
@@ -124,7 +123,6 @@ void saveMiniGame (const t_joueurs* players, const char* saveFileName, int score
         fwrite(serializedData, sizeof(char), dataSize, file);
         free(serializedData); // Libérez la mémoire allouée
 
-        printf("Le jeu a été sauvegardé avec succès dans '%s'.\n", saveFilePath);
     } else {
         fprintf(stderr, "Erreur lors de la sérialisation des données.\n");
     }
