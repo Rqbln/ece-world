@@ -195,11 +195,11 @@ void river()
         }
         //attribution aléatoire de bmp bûches (moyenne ou grande)
         for (int i = 0; i < 9; ++i) {
-            randbmp[i] = rand() % 1;
+            randbmp[i] = rand() % 2;
         }
         //Génération de nombre pour apparition aléatoire au niveau du temps
         for (int i = 0; i < 9; ++i) {
-            randtime[i] = rand() % randmax;
+            randtime[i] = rand() % 10000;
         }
         // Création du buffer
 
@@ -215,25 +215,34 @@ void river()
             if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm && pixelB == couleurBm)&& !((frogx + frogw / 2) > log[0][logfrog] && (frogx + frogw / 2) < log[0][logfrog] + logw[logfrog] &&
                                                                                                                          (frogy + frogw) > log[1][logfrog] && (frogy + frogw) < log[1][logfrog] + 124) ){
                 play_sample(death, 255, 128, 1000, 0);
+                joueurscore[turn]=1000;
                 while (!key[KEY_ENTER]){
                     draw_sprite(buffer,background,0,0);
                     textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "Perdu ! à %s de jouer",joueurs[1].nom);
-                    draw_sprite(buffer, frog_ded, frogx, frogy);
+
                     for (int i = 0; i < 9; ++i) {
 
-                        if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && randtime[i] < randlimit) {
+                        if ((i == 1 || i == 4 || i==2 || i==3 || i == 5 || i==6 || i == 7 || i == 8) && randtime[i] < 40) {
+                            // Dessinez un rectangle marron superposé à la bûche
+                            rectfill(buffer, log[0][i], log[1][i], log[0][i] + logw[i], log[1][i] + logh, makecol(couleurRm, couleurGm, couleurBm));
+                            if (randbmp[i]==0)draw_sprite(buffer, log1, log[0][i], log[1][i]);
+                            else  draw_sprite(buffer, log0, log[0][i], log[1][i]);
+                        }
+
+                        if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && randtime[i] < 40) {
 
                             if (randbmp[i] == 1) {
                                 draw_sprite(buffer, log0, log[0][i], log[1][i]);
                             } else draw_sprite(buffer, log1, log[0][i], log[1][i]);
                         }
 
-                        if ((i == 2 || i == 6) && randtime[i] < randlimit) {
+                        if ((i == 2 || i == 6) && randtime[i] < 40) {
                             if (randbmp[i] == 1) {
                                 draw_sprite(buffer, log0, log[0][i], log[1][i]);
                             } else draw_sprite(buffer, log1, log[0][i], log[1][i]);
                         }
                     }
+                    draw_sprite(buffer, frog_ded, frogx, frogy);
                     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
                 }
@@ -244,7 +253,7 @@ void river()
             draw_sprite(buffer, frog, 100, 100);
             //Réatribution aléatoire pour les bûches non encore apparues
             for (int i = 0; i < 9; ++i) {
-                if (randtime[i] > randlimit) randtime[i] = rand() % randmax;
+                if (randtime[i] > 40) randtime[i] = rand() % 12000;
             }
             // Copie de l'image dans le back buffer
             blit(background, buffer, 0, 0, 0, 0, background->w, background->h);
@@ -264,7 +273,7 @@ void river()
             //buche générée puis on la fait dériver
             for (int i = 0; i < 9; ++i) {
 
-                if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && randtime[i] < randlimit) {
+                if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && randtime[i] < 40) {
 
                     if (randbmp[i] == 1) {
                         draw_sprite(buffer, log0, log[0][i], log[1][i]);
@@ -272,15 +281,15 @@ void river()
                     log[0][i] += dlog;
                 }
 
-                if ((i == 2 || i == 6) && randtime[i] < randlimit) {
+                if ((i == 2 || i == 6) && randtime[i] < 40) {
                     if (randbmp[i] == 1) {
                         draw_sprite(buffer, log0, log[0][i], log[1][i]);
                     } else draw_sprite(buffer, log1, log[0][i], log[1][i]);
-                    log[0][i] -= dlog;
+                    log[0][i] -=dlog;
                 }
             }
             //Dérivation de la grenouille si bûche
-            for (int i = 0; i < 9; ++i) {
+            for (int i = 1; i < 9; ++i) {
                 //attribution de la longueur de la buche en fonction de sa taille effective
                 if (randbmp[i] == 1) logw[i] = 577;
                 else logw[i] = 390;
@@ -307,13 +316,24 @@ void river()
 
             }
             //Rectangle marron en dessous des bûches
-            for (int i = 0; i < 9; ++i) {
+            for (int i = 1; i < 9; ++i) {
                 // Vérifiez si la bûche est en mouvement
                 if ((i == 1 || i == 4 || i==2 || i==3 || i == 5 || i==6 || i == 7 || i == 8) && randtime[i] < 40) {
                     // Dessinez un rectangle marron superposé à la bûche
                     rectfill(buffer, log[0][i], log[1][i], log[0][i] + logw[i], log[1][i] + logh, makecol(couleurRm, couleurGm, couleurBm));
                     if (randbmp[i]==0)draw_sprite(buffer, log1, log[0][i], log[1][i]);
                     else  draw_sprite(buffer, log0, log[0][i], log[1][i]);
+                }
+            }
+            //Apparition et réapparition des büches aléatoirement
+            for (int i = 1; i < 9; ++i) {
+                if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && log[0][i] > SCREEN_W) {
+                    randtime[i] =rand()%10000;
+                    log[0][i] = logx0left;
+                }
+                if ((i == 2 ||i==3|| i == 6) && log[0][i] < -577) {
+                    log[0][i] = logx0right;
+                    randtime[i] =rand()%10000;
                 }
             }
             //Condition de défaite (Hors écran puis rivère)
@@ -347,14 +367,14 @@ void river()
                     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
                     for (int i = 0; i < 9; ++i) {
 
-                        if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && randtime[i] < 400) {
+                        if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && randtime[i] < 40) {
 
                             if (randbmp[i] == 1) {
                                 draw_sprite(buffer, log0, log[0][i], log[1][i]);
                             } else draw_sprite(buffer, log1, log[0][i], log[1][i]);
                         }
 
-                        if ((i == 2 || i == 6) && randtime[i] < 400) {
+                        if ((i == 2 || i == 6) && randtime[i] < 40) {
                             if (randbmp[i] == 1) {
                                 draw_sprite(buffer, log0, log[0][i], log[1][i]);
                             } else draw_sprite(buffer, log1, log[0][i], log[1][i]);
@@ -369,17 +389,6 @@ void river()
                 frogx=500;
                 frogy=730;
             }
-            //Apparition et réapparition des büches aléatoirement
-            for (int i = 0; i < 9; ++i) {
-                if ((i == 1 || i == 4 || i == 5 || i == 7 || i == 8) && log[0][i] > SCREEN_W) {
-                    randtime[i] =randmax;
-                    log[0][i] = logx0left;
-                }
-                if ((i == 2 ||i==3|| i == 6) && log[0][i] < -577) {
-                    log[0][i] = logx0right;
-                    randtime[i] =randmax;
-                }
-            }
 
             }
             draw_sprite(buffer, frog, frogx, frogy);
@@ -387,7 +396,7 @@ void river()
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
             // Affichage du buffer principal
             vsync();
-        };
+        }
         gameover=0;
     }
     stop_sample(music);
