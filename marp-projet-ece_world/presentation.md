@@ -26,7 +26,7 @@ _footer: Algorithmique Avancée et Bibliothèque Graphique - 2022-2023
 
 # ECE World
 
-Nous avons aujourd'hui le plaisir de vous présenter notre tout nouveau party-game réalisé au couleur de l'ECE sur le thème du Moyen-âge ! 
+Nous avons aujourd'hui le plaisir de vous présenter notre tout nouveau party-game réalisé aux couleurs de l'ECE sur le thème du Moyen-âge ! 
 
 En vous souhaitant un bon jeu ! :)
 
@@ -44,9 +44,11 @@ En vous souhaitant un bon jeu ! :)
             Lola LE GALL        |        Baptiste CHESNOT          |                 Robin QUERIAUX                 |            Laouïg ELEOUET
 ---
 
-# ECE World
+
 
 ![bg right:80% 100%](./images/affiche.png)
+
+---
 
 ## Thème : Le Royaume de l'ECE
 
@@ -98,11 +100,13 @@ Décrire ici les fonctionnalités implémentées : choix joueurs, saisie des nom
 - De plus la liste de meilleur score est mis à jour après l'affichage des scores par l'appel de la fonction loadhighscore().
 ---
 
-![bg right:40%](images/peche_canards.jpg)
 
-# Pêche aux canards
+
+# Ducky
 
 *Réalisé par : **Lola** (100%).*
+
+![bg right:40%](images/peche_canards.jpg)
 
 Décrire le fonctionnement du jeu dans les grandes lignes. Comment vous l'avez conçu.
 - Les canards vont de la droite à la gauche.
@@ -125,17 +129,34 @@ Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les st
 
 ---
 ---
-# Shoot au ballons
+# Shoot Baloon
 *Réalisé par : **Laouïg** (100%).*
 
 ![bg right:40%](images/ballon.jpg)
 
+    Le déroulement du jeu de tir au ballon est le suivant :
+
+        - Les règles sont énoncées, les joueurs se préparent au jeu (-1 ticket pour les deux joueurs).
+        - Ensuite, chacun leur tour, les joueurs doivent éclater les ballons, 
+          rebondissant sur les murs à haute vitesse le plus vite possible !
+        - Finalement, le score des deux joueurs s'affiche et le meilleur est gratifié de 2 tickets !
+        - Le meilleur score est enregistré s'il y a lieu, puis mis à jour.
 ---
 ---
 # Rivière de la Tortue
 *Réalisé par : **Laouïg** (100%).*
-
 ![bg right:40%](images/frog.jpg)
+---
+
+    Pour ce qui est du jeu de la rivière :
+
+        - Les règles sont énoncées, les joueurs se préparent au jeu (-1 ticket pour les deux joueurs).
+        - Ensuite, les bûches vont être générées aléatoirement avec différentes tailles et dériver de gauche à droite ou inversement.
+        - Les joueurs prennent le contrôle d'une grenouille, devant frayer son chemin à l'autre bout de la rivière le plus vite possible.
+        - Chaque fois qu'une bûche sort de l'écran sa réapparition est aléatoire dans le temps.
+        - Finalement, le score des deux joueurs s'affiche et le meilleur est gratifié de 2 tickets !
+        - Le meilleur score est enregistré s'il y a lieu, puis mis à jour.
+
 
 ---
 ---
@@ -156,14 +177,14 @@ Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les st
 # Héros de la guitare
 *Réalisé par : **Baptiste** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/dragon.png)
 
 ---
 ---
 # Course de chevaux
 *Réalisé par : **Baptiste** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/chevalo.png)
 
 ---
 ### Logigramme
@@ -180,59 +201,45 @@ Que vous jugez pertinent (image ou Mermaid.js)
 ---
 # Robin
 
-## Tâches réalisées (pour chaque membre de l'équipe)
 
 - `✅ 100%` Snake
 - `✅ 100%` Tape-Taupe
 - `✅ 100%` Système de gestion de point (structure)
 - `✅ 100%` Système de sauvegarde du jeu en cours
-    - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
-- `❌ 20%` Tâche 3
 
 
 ---
 
 # Laouïg
 
-## Tâches réalisées (pour chaque membre de l'équipe)
-
 - `✅ 100%` Traversée de la rivière
 - `✅ 100%` Tir aux ballons
-- `✅ 100%` Présentation MARP
-  - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
-- `❌ 20%` Tâche 3
+- `✅ 100%` MARP : Mise en page, graphes d'appel et présentation générale
 ---
 
 # Lola
 
-## Tâches réalisées (pour chaque membre de l'équipe)
-
 - `✅ 100%` Pêche aux canards
 - `✅ 100%` Jackpot
   - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
-- `❌ 20%` Tâche 3
----
----
+- `✅ 100%` Infographie et affiche du jeu
 
+---
 # Baptiste
 
-## Tâches réalisées (pour chaque membre de l'équipe)
 
-- `✅ 100%` Snake
-- `✅ 100%` Tape-Taupe
+- `✅ 100%` Course de chevaux
+- `✅ 100%` Héros de la guitare
 - `✅ 100%` Création et gestion du parc
-  - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
-- `❌ 20%` Tâche 3
 ---
 # Investissement
 
-Si vous deviez vous répartir des points, comment feriez-vous ?
 Dans notre second et dernier projet d'informatique de cette première année d'ingénieur, le travail a été assez bien répartie pour ce qui est des jeux (chacun d'entre nous en a réalisé 2).
-Cependant pour ce qui est de la partie parc et gestion global, Robin et Baptiste y on passé le plus de temps. Cela pris en compte nous attribuerons donc aux membres du groupe les notes sur 20 de :
-- `Lola`
-- `Baptiste`
-- `Robin`
-- `Laouïg`
+Cependant pour ce qui est de la partie parc et gestion global,Robin et Baptiste y on passé le plus de temps. Cela pris en compte nous attribuerons donc aux membres du groupe les notes sur 20 de :
+- `Lola` : 18/20
+- `Baptiste` : 20/20
+- `Robin` : 19/20
+- `Laouïg` : 18/20
 ---
 
 # Récapitulatif des jeux
@@ -241,7 +248,7 @@ Cependant pour ce qui est de la partie parc et gestion global, Robin et Baptiste
 |---------------------|------------|-------------------|
 | Jackpot             | 100%       | -                 |
 | Pêche aux canards   | 100%       | -                 |
-| Traversée rivière   | 95%        | -                 |
+| Traversée rivière   | 100%       | -                 |
 | Tir aux ballons     | 100%       | -                 |
 | Héros de la guitare | 100%       | -                 |
 | Course de chevaux   | 100%       | -                 |
