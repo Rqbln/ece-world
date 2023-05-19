@@ -12,9 +12,10 @@
 
 #define MAX_SERIALIZE_LENGTH 1000 // Taille maximale de la chaîne de caractères de sérialisation
 #define MAX_HIGH_SCORES 10 // Proportionnel au nombre de mini jeux
+#define MAX_NOM_LENGTH 50
 
 typedef struct highscore {
-    char nom[50];
+    char nom[MAX_NOM_LENGTH];
     int score;
 } t_highscore;
 
