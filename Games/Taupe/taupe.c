@@ -93,6 +93,9 @@ void jeu_taupe() {
 
     for (int i = 0; i < 2; ++i) {
 
+        pyramid_index = 0;
+        maxTargets = 1;
+
         srand(time(NULL));
         for (int i = 0; i < maxTargets; ++i) {
             targets[i].x = pyramid_x[pyramid_index];
