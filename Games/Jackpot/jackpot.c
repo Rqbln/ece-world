@@ -228,8 +228,7 @@ void jackpot(){
         joueurs[0].nbTickets-=1;
     } else {
         textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", SCREEN_W / 2, SCREEN_H/2, makecol(255, 255, 255), -1);
-        joueurs[1].nbTickets+=1;
-        joueurs[0].nbTickets+=1;
+
     }
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);

@@ -75,7 +75,7 @@ void dessinerCanard(BITMAP* buffer, t_canard* canard){
     int posY = canard->posY;
 
     BITMAP *canardimage = NULL;
-    canardimage = load_bitmap("../Games/Ducky/IMAGES/canard.bmp", NULL);
+    canardimage = load_bitmap("../Games/Ducky/IMAGES/canard5.bmp", NULL);
     if (!canardimage) { //blindage
         allegro_message("Erreur image canard");
         exit(EXIT_FAILURE);
@@ -368,8 +368,7 @@ void ducky(){ // remplace le main
         joueurs[0].nbTickets-=1;
     } else {
         textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", SCREEN_W / 2, SCREEN_H/2, makecol(255, 255, 255), -1);
-        joueurs[1].nbTickets+=1;
-        joueurs[0].nbTickets+=1;
+
     }
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
