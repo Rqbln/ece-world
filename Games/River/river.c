@@ -6,7 +6,7 @@
 void river()
 {
     srand(time(NULL));
-    int randlimit=3;
+    int randlimit=10;
     int randmax=100;
     double start,end;
     int gameover;
@@ -42,7 +42,23 @@ void river()
     int pixelG=0;
     int pixelB=0;
 
+    //Chargement des sons
+    SAMPLE *transition = load_wav("../Games/Shoot/musique/transition.wav");
+    SAMPLE *talk = load_wav("../Games/River/musique/talk.wav");
+    SAMPLE *clear = load_wav("../Games/Shoot/musique/marioclear.wav");
+    SAMPLE *music = load_wav("../Games/River/musique/musicriver.wav");
+    SAMPLE *death = load_wav("../Games/River/musique/death.wav");
     // Chargement des images
+    BITMAP* player1= load_bitmap("../Games/Ducky/IMAGES/player1.bmp",NULL);
+    if(!player1){
+        allegro_message("../Games/River/image/player1.bmp");
+        exit(EXIT_FAILURE);
+    }
+    BITMAP* player2= load_bitmap("../Games/Ducky/IMAGES/player2.bmp",NULL);
+    if(!player2){
+        allegro_message("../Games/River/image/player2.bmp");
+        exit(EXIT_FAILURE);
+    }
     BITMAP* background = load_bitmap("../Games/River/image/background.bmp", NULL);
     if(!background){
         allegro_message("../Games/River/image/background.bmp");
@@ -87,7 +103,7 @@ void river()
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
     clear_to_color(buffer, makecol(0, 0, 0));
     draw_sprite(buffer, frog, frogx, frogy);
-
+    play_sample(music, 255, 128, 1000, 1);
     for (int turn = 0; turn < 2; ++turn) {
         start=(double) clock();
         //Retirer un ticket pour la participation au mini-jeu
@@ -104,6 +120,7 @@ void river()
 
         }
         if (turn==0) {
+            play_sample(transition, 255, 128, 1000, 0);
             for (int i = 0; i < 300; ++i) {
                 draw_sprite(buffer,background,0,0);
                 draw_sprite(buffer, regles, WIDTH / 2 - 200, HEIGHT / 2 - 200-2*i);
@@ -118,6 +135,22 @@ void river()
             draw_sprite(buffer,background,0,0);
             sprintf(mess, "%d", i);
             textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            draw_sprite(buffer, frog, frogx, frogy);
+            blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            rest(1000);
+        }
+        if (turn==0){
+            clear_bitmap(buffer);
+            draw_sprite(buffer,background,0,0);
+            draw_sprite(buffer,player1,(WIDTH/2)-400,(HEIGHT/2)-200);
+            draw_sprite(buffer, frog, frogx, frogy);
+            blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            rest(1000);
+        }
+        else if (turn==1){
+            clear_bitmap(buffer);
+            draw_sprite(buffer,background,0,0);
+            draw_sprite(buffer,player2,(WIDTH/2)-400,(HEIGHT/2)-200);
             draw_sprite(buffer, frog, frogx, frogy);
             blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
             rest(1000);
@@ -179,9 +212,9 @@ void river()
             pixelG = getg(couleurPixel);
             pixelB = getb(couleurPixel);
             // Vérifiez si les composantes de couleur correspondent et que frog se trouve bine sur une buche
-            if (frogy+frogw<700 && frogy>100 && (pixelR == couleurRm && pixelG == couleurGm && pixelB == couleurBm)&& !((frogx + frogw / 2) > log[0][logfrog] && (frogx + frogw / 2) < log[0][logfrog] + logw[logfrog] &&
+            if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm && pixelB == couleurBm)&& !((frogx + frogw / 2) > log[0][logfrog] && (frogx + frogw / 2) < log[0][logfrog] + logw[logfrog] &&
                                                                                                                          (frogy + frogw) > log[1][logfrog] && (frogy + frogw) < log[1][logfrog] + 124) ){
-
+                play_sample(death, 255, 128, 1000, 0);
                 while (!key[KEY_ENTER]){
                     draw_sprite(buffer,background,0,0);
                     textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "Perdu ! à %s de jouer",joueurs[1].nom);
@@ -357,6 +390,8 @@ void river()
         };
         gameover=0;
     }
+    stop_sample(music);
+    play_sample(clear, 255, 128, 1000, 0);
     while (!(key[KEY_ESC])) {
         draw_sprite(buffer,background,0,0);
         draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200);
@@ -369,7 +404,7 @@ void river()
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         else if (joueurscore[0]==joueurscore[1]) {
-            textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "Personne n'a gagné le combat, les chevaliers reprennent leurs tickets",joueurs[0].nom,joueurscore[0]);
+            textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "Personne n'a gagné le combat :( <+1 ticket>",joueurs[0].nom,joueurscore[0]);
             joueurs[0].nbTickets++;
             joueurs[1].nbTickets++;
         }
@@ -392,6 +427,7 @@ void river()
             textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
         }
     }
+    play_sample(transition, 255, 128, 1000, 0);
     for (int i = 0; i < 300; ++i) {
         draw_sprite(buffer,background,0,0);
         draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200-2*i);
