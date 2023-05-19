@@ -1,6 +1,7 @@
 #include "taupe.h"
 #include "../../Init_Allegro/allegro.h"
 #include "../../joueur/joueur.h"
+#include "../../Sauvegarde/sauvegarde.h"
 
 int score[2];
 
@@ -236,22 +237,36 @@ void jeu_taupe() {
         sprintf(messageFin, "Points de %s : %d", joueurs[0].nom, score[0]);
         textout_centre_ex(buffer, font, messageFin, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
         sprintf(messageFin, "Points de %s : %d", joueurs[1].nom, score[1]);
-        textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 100, makecol(255, 255, 255), -1);
+        textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 20, makecol(255, 255, 255), -1);
 
         if (score[0] > score[1]) {
             sprintf(messageFin, "%s a gagné ! +1 ticket", joueurs[0].nom);
-            textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
+            textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 40, makecol(255, 255, 255), -1);
             joueurs[0].nbTickets = memotickets[0] + 1;
+            gagnant=0;
+
         } else if (score[1] > score[0]) {
             sprintf(messageFin, "%s a gagné ! +1 ticket", joueurs[1].nom);
-            textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
+            textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 40, makecol(255, 255, 255), -1);
             joueurs[1].nbTickets = memotickets[1] + 1;
+            gagnant=1;
+
         } else {
             sprintf(messageFin, "Égalité ! +1 ticket pour %s et %s ", joueurs[0].nom, joueurs[1].nom);
-            textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 200, makecol(255, 255, 255), -1);
+            textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 40, makecol(255, 255, 255), -1);
             joueurs[0].nbTickets = memotickets[0] + 1;
             joueurs[1].nbTickets = memotickets[1] + 1;
+            gagnant=0;
         }
+
+        if (highscore[gagnant].score <= score[0]){
+            saveMiniGame(joueurs,"Taupe",score[0],0);
+            sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+            textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 60, makecol(255, 255, 255), -1);
+
+        }
+
+        loadHighScore(highscore);
 
         // Mettre à jour l'écran
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);

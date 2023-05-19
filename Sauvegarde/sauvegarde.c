@@ -190,11 +190,4 @@ void loadHighScore(t_highscore* highscores) {
         free(serializedData); // Libérer la mémoire allouée
         fclose(file); // Fermer le fichier
     }
-
-
-// Afficher les meilleurs scores
-    printf("Scores des mini-jeux :\n");
-    for (int i = 0; i < fileCount; i++) {
-        printf("%d. %s - %d\n", i + 1, highscores[i].nom, scores[i]);
-    }
 }
