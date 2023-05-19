@@ -3,6 +3,7 @@
 #include "../../joueur/joueur.h"
 
 int score[2];
+
 int gagnant = 0;
 int gameOver = 0;
 char messageDebut[90];
@@ -41,6 +42,7 @@ void jeu_taupe() {
 
     BITMAP *Tireur[17];
     char filename[80];
+    score[1]=-1;
 
     //Tireur
     for (int i = 0; i < 17; i++) {
@@ -61,21 +63,25 @@ void jeu_taupe() {
 
     BITMAP *fond = load_bitmap("../Games/Taupe/images/fond.bmp", NULL);
     BITMAP *fond2 = load_bitmap("../Games/Taupe/images/fond2.bmp", NULL);
+    BITMAP *cible = load_bitmap("../Games/Taupe/images/cible.bmp", NULL);
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
 
-    srand(time(NULL));
-    for (int i = 0; i < maxTargets; ++i) {
-        targets[i].x = pyramid_x[pyramid_index];
-        targets[i].y = pyramid_y[pyramid_index];
-        targets[i].size = TAILLE_INITIALE;
-        targets[i].pyramid_index = pyramid_index;
-        targets[i].isBusy = 0;
-        pyramid_index++;
+    SAMPLE *ambiance = load_sample("../Games/Taupe/sons/ambiance.wav");
+    SAMPLE *tir = load_sample("../Games/Taupe/sons/tir.wav");
+    SAMPLE *victoire = load_sample("../Games/Taupe/sons/victoire.wav");
+
+
+    if (!ambiance && !tir && !victoire) {
+        allegro_message("Erreur : impossible de charger la musique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    if(!fond && !cible){
+        allegro_message("Erreur : impossible de charger les images");
+        exit(EXIT_FAILURE);
     }
 
-    show_mouse(screen);
-
-
+    play_sample(ambiance, 255, 128, 1000, 1);
     while (!key[KEY_SPACE]) {
         draw_sprite(buffer, fond, 0, 0);
         sprintf(messageDebut, "Appuyez sur espace pour commencer la partie !");
@@ -87,17 +93,35 @@ void jeu_taupe() {
 
     for (int i = 0; i < 2; ++i) {
 
+        srand(time(NULL));
+        for (int i = 0; i < maxTargets; ++i) {
+            targets[i].x = pyramid_x[pyramid_index];
+            targets[i].y = pyramid_y[pyramid_index];
+            targets[i].size = TAILLE_INITIALE;
+            targets[i].pyramid_index = pyramid_index;
+            targets[i].isBusy = 0;
+            pyramid_index++;
+        }
+
+        show_mouse(screen);
+
         gameOver = 0;
         targets[0].size = TAILLE_INITIALE;
         targets[1].size = TAILLE_INITIALE;
 
         while (!key[KEY_ENTER]) {
             draw_sprite(buffer, fond, 0, 0);
+            if (score[0]!=0){
+                sprintf(messageFin, "%s, Une cible vous a tiré dessus !", joueurs[1].nom);
+                textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) - 20,makecol(255, 255, 255), -1);
+                score[1] = 0;
+            }
             sprintf(messageDebut, "%s, A toi de jouer. Appuie sur entrée pour commencer.", joueurs[i].nom);
             textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
             blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
             rest(10);
         }
+
 
         for (int i = 3; i > 0; --i) {
             clear_bitmap(buffer);
@@ -119,7 +143,7 @@ void jeu_taupe() {
 
                 for (int i = 0; i < 17; i++) {
                     if (targets[j].size < (i + 1) * TAILLE_INITIALE / 17) {
-                        circle(buffer, targets[j].x, targets[j].y, TAILLE_INITIALE, makecol(0, 0, 0));
+                        draw_sprite(buffer,cible,targets[j].x - 150,targets[j].y - 146);
                         draw_sprite(buffer, Tireur[i], targets[j].x - 60, targets[j].y - 70);
                         break;
                     }
@@ -130,7 +154,7 @@ void jeu_taupe() {
             if (mouse_b & 1 && !isClicked) {
                 int mx = mouse_x;
                 int my = mouse_y;
-
+                play_sample(tir, 255, 128, 1000, 0);
                 for (int j = 0; j < maxTargets; ++j) {
                     if (mx >= targets[j].x - TAILLE_INITIALE && mx <= targets[j].x + TAILLE_INITIALE &&
                         my >= targets[j].y - TAILLE_INITIALE && my <= targets[j].y + TAILLE_INITIALE) {
@@ -193,11 +217,6 @@ void jeu_taupe() {
                     draw_sprite(buffer, fond, 0, 0);
                     sprintf(messageFin, "Points maximum ! %d points récoltés.", score[i]);
                     textout_centre_ex(buffer, font, messageFin, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
-                    sprintf(messageFin, "%s, A toi de jouer. Appuie sur entrée pour commencer.", joueurs[1].nom,
-                            score[1]);
-                    textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 50,
-                                      makecol(255, 255, 255), -1);
-
                     blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
 
                 }
@@ -206,7 +225,9 @@ void jeu_taupe() {
         }
     }
 
+    play_sample(victoire, 255, 128, 1000, 0);
     while (!key[KEY_ESC]) {
+
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
         sprintf(messageFin, "Points de %s : %d", joueurs[0].nom, score[0]);
@@ -234,5 +255,6 @@ void jeu_taupe() {
         rest(10); // Pause de 10 ms pour rafraîchir l'écran
         vsync();
     }
-
+    stop_sample(victoire);
+    stop_sample(ambiance);
 }
