@@ -227,7 +227,7 @@ void jeu_taupe() {
             }
         }
     }
-
+    stop_sample(ambiance);
     play_sample(victoire, 255, 128, 1000, 0);
     while (!key[KEY_ESC]) {
 
