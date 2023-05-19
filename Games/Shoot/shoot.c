@@ -29,8 +29,10 @@ void shoot() {
     //Coordonnées souris pour viseur
     int x;
     int y;
-
-
+    SAMPLE *transition = load_wav("../Games/Shoot/musique/transition.wav");
+    SAMPLE *pop = load_wav("../Games/Shoot/musique/baloonpop.wav");
+    SAMPLE *clear = load_wav("../Games/Shoot/musique/marioclear.wav");
+    SAMPLE *music = load_wav("../Games/Shoot/musique/mariomusic.wav");
     FONT *police = load_font("arial.pcx", NULL, NULL);
     // Chargement des images
     BITMAP* background = load_bitmap("../Games/Shoot/image/background.bmp", NULL);
@@ -70,6 +72,7 @@ void shoot() {
     //écran d'explication
 
     // Boucle principale du jeu
+    play_sample(music, 255, 128, 1000, 0);
     for (int turn = 0; turn < 2; ++turn) {
 //Coût de la participation=1 bitcoin
         joueurs[turn].nbTickets--;
@@ -85,6 +88,7 @@ void shoot() {
 
         }
         if (turn==0) {
+            play_sample(transition, 255, 128, 1000, 0);
             for (int i = 0; i < 300; ++i) {
                 draw_sprite(buffer,background,0,0);
                 draw_sprite(buffer, regles, WIDTH / 2 - 200, HEIGHT / 2 - 200-2*i);
@@ -139,6 +143,7 @@ void shoot() {
                     baloonxy[0][i] = -1000;
                     baloonxy[1][i] = -1000;
                     end++;
+                    play_sample(pop, 255, 128, 1000, 0);
                 }
                 baloonxy[0][i] += vx[i];
                 baloonxy[1][i] += vy[i];
@@ -177,6 +182,8 @@ void shoot() {
         }
         start_time = time(NULL);
     }
+    stop_sample(music);
+    play_sample(clear, 255, 128, 1000, 0);
     while (!(key[KEY_ESC])) {
         draw_sprite(buffer,background,0,0);
         draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200);
@@ -203,6 +210,7 @@ void shoot() {
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
     }
+    play_sample(transition, 255, 128, 1000, 0);
     for (int i = 0; i < 300; ++i) {
         draw_sprite(buffer,background,0,0);
         draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200-2*i);
