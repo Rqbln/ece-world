@@ -349,9 +349,9 @@ void player2(int *score2){
 void ducky(){ // remplace le main
     srand(time(NULL));
     int s1, s2;
-    //SAMPLE * son2;
-    //son2= load_wav("../Games/Ducky/IMAGES/pond.wav");
-    //play_sample(son2,255,128,1000,1);
+    SAMPLE * son2;
+    son2= load_wav("../Games/Ducky/IMAGES/pond3.wav");
+    play_sample(son2,255,128,1000,1);
     BITMAP *fond;
     fond= load_bitmap("../Games/Ducky/IMAGES/fond.bmp",NULL);
     if (!fond) { //blindage
@@ -422,6 +422,6 @@ void ducky(){ // remplace le main
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
     destroy_bitmap(r);
-    //stop_sample(son2);
-    //destroy_sample(son2);
+    stop_sample(son2);
+    destroy_sample(son2);
 }
