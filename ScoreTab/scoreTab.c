@@ -50,13 +50,13 @@ void tableau_score(){
     }
     for(int i=0;i<27;i++){ //+10
         if (i<27){
-            sprintf(nomDeFichier,"../ScoreTab/lettre/%c.bmp",i+97);
+            sprintf(nomDeFichier,"../police/lettre1/%c.bmp",i+97);
         } else{
-            sprintf(nomDeFichier,"../ScoreTab/lettre/%d.bmp",i-27);
+            sprintf(nomDeFichier,"../police/lettre1/%d.bmp",i-27);
         }
         lettre[i]= load_bitmap(nomDeFichier,NULL);
         if(!lettre[i]){
-            allegro_message("../Games/lettre/%c.bmp",i+97);
+            allegro_message("../police/lettre1/%c.bmp",i+97);
             exit(EXIT_FAILURE);
         }
     }
