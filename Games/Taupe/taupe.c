@@ -14,8 +14,8 @@ int isClicked = 0;
 
 
 // Les coordonnées des 6 trous de la pyramide
-int pyramid_x[6] = {686, 1700, 1300, 1406, 400, 266 };
-int pyramid_y[6] = {516, 660, 700, 334, 676, 390};
+int pyramid_x[6] = {1350, 400, 1016, 95, 1716, 1446 };
+int pyramid_y[6] = {950, 950, 758, 374, 660, 208};
 int pyramid_index = 0;
 int maxTargets = 1;
 int memotickets[NB_JOUEURS];
@@ -41,12 +41,12 @@ int is_target_occupied(int index, Target targets[], int num_targets) {
 
 void jeu_taupe() {
 
-    BITMAP *Tireur[17];
+    BITMAP *Tireur[5];
     char filename[80];
     score[1]=-1;
 
     //Tireur
-    for (int i = 0; i < 17; i++) {
+    for (int i = 0; i < 5; i++) {
         sprintf(filename, "../Games/Taupe/images/sprites/Tireur_%d.bmp", i);
 
         Tireur[i] = load_bitmap(filename, NULL);
@@ -145,9 +145,9 @@ void jeu_taupe() {
             for (int j = 0; j < maxTargets; ++j) {
                 targets[j].size -= 2;
 
-                for (int i = 0; i < 17; i++) {
-                    if (targets[j].size < (i + 1) * TAILLE_INITIALE / 17) {
-                        draw_sprite(buffer,cible,targets[j].x - 150,targets[j].y - 146);
+                for (int i = 0; i < 5; i++) {
+                    if (targets[j].size < (i + 1) * TAILLE_INITIALE / 5) {
+                        draw_sprite(buffer,cible,targets[j].x - 35 ,targets[j].y - 105);
                         draw_sprite(buffer, Tireur[i], targets[j].x - 60, targets[j].y - 70);
                         break;
                     }
