@@ -4,12 +4,18 @@
 
 
 
+//try 2
+
+
+
 
 
 #include "ducky.h"
 #include "../../joueur/joueur.h"
+#include "../../Sauvegarde/sauvegarde.h"
 
-#define NCANARD 40
+
+#define NCANARD 45
 // Nombre de canards
 #define TX 60
 // Largeur canards
@@ -42,7 +48,7 @@ t_canard* creerCanard(){
         exit(EXIT_FAILURE);
     }
     canard->posX = rand()%(SCREEN_W-TX);
-    canard->posY = rand()%(SCREEN_H-200-TY);
+    canard->posY = rand()%(SCREEN_H-210-TY);
 
     aleaDepCanard(canard);
     return canard;
@@ -59,7 +65,7 @@ void actualiserCanard(t_canard* canard){
         canard->depX *= -1;
     }
 
-    if(posY+depY+TY > SCREEN_H-200 || posY+depY<0){
+    if(posY+depY+TY > SCREEN_H-220 || posY+depY<0){
         canard->depY *= -1;
     }
 
@@ -88,8 +94,8 @@ void dessinerCanard(BITMAP* buffer, t_canard* canard){
 
 void remplirTab(t_canard* colonies[NCANARD]){
     // on remplit un tableau de N canards
-    for (int fourmis=0; fourmis<NCANARD; fourmis++){
-        colonies[fourmis] = creerCanard();
+    for (int c=0; c<NCANARD; c++){
+        colonies[c] = creerCanard();
     }
 }
 
@@ -147,6 +153,13 @@ void player1(int *score1){
         allegro_message("Erreur image fond");
         exit(EXIT_FAILURE);
     }
+    BITMAP *mouse = load_bitmap("../Games/Ducky/IMAGES/mouse.bmp", NULL);
+    if (!mouse) { //blindage
+        allegro_message("Erreur image mouse");
+        exit(EXIT_FAILURE);
+    }
+    set_mouse_sprite(mouse);
+    set_mouse_sprite_focus(0, 0);
     BITMAP *player1;
     player1= load_bitmap("../Games/Ducky/IMAGES/player1.bmp",NULL);
     if (!player1) { //blindage
@@ -157,7 +170,7 @@ void player1(int *score1){
     duck= load_wav("../Games/Ducky/IMAGES/Vidéo-sans-titre.wav");
     ///////////////////////////////////////////////////////////////////////////////
     int mouseX, mouseY;
-    show_mouse(screen);
+    show_mouse(NULL);
     draw_sprite(buffer, fond, 0, 0);
     set_trans_blender(255, 0, 255, 255);
     drawing_mode(DRAW_MODE_TRANS, NULL, 0, 0);
@@ -171,13 +184,14 @@ void player1(int *score1){
     // Pour le compteur de 20 secondes
     clock_t depart_temps = clock();
     double temps_actuel = 0.0;
-    double compteur = 20.0;
+    double compteur = 15.0;
     int nb2=1;
     int nb3=1;
     // boucle de jeux
     while (!key[KEY_ESC] && temps_actuel < compteur){
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
+        poll_mouse();
         mouseX = mouse_x;
         mouseY = mouse_y;
         if (mouse_b & 1) {
@@ -195,9 +209,9 @@ void player1(int *score1){
                         colonies[i]->posY = SCREEN_H - TY - 105+2*TX;
                         nb3+=1;
                     }else {
-                            colonies[i]->posX = TX + 110+nb*TX;
-                            colonies[i]->posY = SCREEN_H - TY - 105;
-                        }
+                        colonies[i]->posX = TX + 110+nb*TX;
+                        colonies[i]->posY = SCREEN_H - TY - 105;
+                    }
                     colonies[i]->depX = 0;
                     colonies[i]->depY = 0;
                 }
@@ -206,11 +220,12 @@ void player1(int *score1){
 
         actualiserTab(colonies);
         dessinerTab(buffer,colonies);
+        draw_sprite(buffer, mouse, mouseX, mouseY);
         char score_text[50];
         sprintf(score_text, "Score: %d", *score1);
         textout_ex(buffer, font, score_text, 10, 10, makecol(255, 255, 255), -1);
         char timer[50];
-        float car=20-temps_actuel;
+        float car=15-temps_actuel;
         sprintf(timer, "Temps: %.0f", car);
         textout_ex(buffer, font, timer, SCREEN_W-75, 10, makecol(255, 255, 255), -1);
         temps_actuel = (double)(clock() - depart_temps) / CLOCKS_PER_SEC;
@@ -222,6 +237,7 @@ void player1(int *score1){
     for(int canard = 0; canard<NCANARD; canard++){
         free(colonies[canard]);
     }
+    destroy_bitmap(mouse);
     destroy_bitmap(fond);
     destroy_bitmap(player1);
 
@@ -246,13 +262,21 @@ void player2(int *score2){
         allegro_message("Erreur image player");
         exit(EXIT_FAILURE);
     }
+    BITMAP *mouse = load_bitmap("../Games/Ducky/IMAGES/mouse.bmp", NULL);
+    if (!mouse) { //blindage
+        allegro_message("Erreur image mouse");
+        exit(EXIT_FAILURE);
+    }
+    set_mouse_sprite(mouse);
+    set_mouse_sprite_focus(0, 0);
     SAMPLE * duck;
     duck= load_wav("../Games/Ducky/IMAGES/Vidéo-sans-titre.wav");
     ///////////////////////////////////////////////////////////////////////////////
     int mouseX, mouseY;
-    show_mouse(screen);
+    show_mouse(NULL);
     draw_sprite(buffer, fond, 0, 0);
     set_trans_blender(255, 0, 255, 255);
+
     drawing_mode(DRAW_MODE_TRANS, NULL, 0, 0);
     draw_trans_sprite(buffer, player2, (SCREEN_W - player2->w) / 2, (SCREEN_H - player2->h) / 2);
     char message[80];
@@ -264,13 +288,14 @@ void player2(int *score2){
     // Pour le compteur de 20 secondes
     clock_t depart_temps = clock();
     double temps_actuel = 0.0;
-    double compteur = 20.0;
+    double compteur = 15.0;
     int nb2=1;
     int nb3=1;
     // boucle de jeux
     while (!key[KEY_ESC] && temps_actuel < compteur){
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
+        poll_mouse();
         mouseX = mouse_x;
         mouseY = mouse_y;
         if (mouse_b & 1) {
@@ -299,11 +324,12 @@ void player2(int *score2){
 
         actualiserTab(colonies);
         dessinerTab(buffer,colonies);
+        draw_sprite(buffer, mouse, mouseX, mouseY);
         char score_text[50];
         sprintf(score_text, "Score: %d", *score2);
         textout_ex(buffer, font, score_text, 10, 10, makecol(255, 255, 255), -1);
         char timer[50];
-        float car=20-temps_actuel;
+        float car=15-temps_actuel;
         sprintf(timer, "Temps: %.0f", car);
         textout_ex(buffer, font, timer, SCREEN_W-75, 10, makecol(255, 255, 255), -1);
         temps_actuel = (double)(clock() - depart_temps) / CLOCKS_PER_SEC;
@@ -315,6 +341,7 @@ void player2(int *score2){
     for(int canard = 0; canard<NCANARD; canard++){
         free(colonies[canard]);
     }
+    destroy_bitmap(mouse);
     destroy_bitmap(fond);
     destroy_bitmap(player2);
 
@@ -322,6 +349,9 @@ void player2(int *score2){
 void ducky(){ // remplace le main
     srand(time(NULL));
     int s1, s2;
+    //SAMPLE * son2;
+    //son2= load_wav("../Games/Ducky/IMAGES/pond.wav");
+    //play_sample(son2,255,128,1000,1);
     BITMAP *fond;
     fond= load_bitmap("../Games/Ducky/IMAGES/fond.bmp",NULL);
     if (!fond) { //blindage
@@ -355,22 +385,36 @@ void ducky(){ // remplace le main
     player2(&s2);
     draw_sprite(buffer, fond, 0, 0);
     char message[50];
+    char messagefin[100];
     // on detecte la victoire d'un des deux joueurs et on affiche le résultat
     if (s1>s2){
-        sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
+        sprintf(message,"%s a remporte un Bitcoin",joueurs[0].nom);
         textout_centre_ex(buffer, font, message, SCREEN_W / 2, SCREEN_H /2, makecol(255, 255, 255), -1);
         joueurs[0].nbTickets+=1;
         joueurs[1].nbTickets-=1;
+        if (highscore[4].score <= s1) {
+            saveMiniGame(joueurs,"Ducky",s1,0);
+            sprintf(messagefin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+            textout_centre_ex(buffer,font, messagefin, SCREEN_W/2, SCREEN_H / 2 + 20, makecol(255, 255, 255), -1);
+
+        }
     } else if (s1<s2){
-        sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
+        sprintf(message,"%s a remporte un Bitcoin",joueurs[1].nom);
         textout_centre_ex(buffer, font, message, SCREEN_W / 2, SCREEN_H /2, makecol(255, 255, 255), -1);
         joueurs[1].nbTickets+=1;
         joueurs[0].nbTickets-=1;
+        if (highscore[4].score <= s2) {
+            saveMiniGame(joueurs,"Ducky",s2,1);
+            sprintf(messagefin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+            textout_centre_ex(buffer,font, messagefin, SCREEN_W/2, SCREEN_H / 2 + 20, makecol(255, 255, 255), -1);
+
+        }
     } else {
-        textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", SCREEN_W / 2, SCREEN_H/2, makecol(255, 255, 255), -1);
+        textout_centre_ex(buffer, font, "Personne n'a remporte de Bitcoin", SCREEN_W / 2, SCREEN_H/2, makecol(255, 255, 255), -1);
 
     }
 
+    loadHighScore(highscore);
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     rest(2000);
     //Attendre 2 secondes avant de quitter
@@ -378,4 +422,6 @@ void ducky(){ // remplace le main
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
     destroy_bitmap(r);
+    //stop_sample(son2);
+    //destroy_sample(son2);
 }

@@ -1,7 +1,14 @@
 // MACHINE A SOUS LOLA LE GALL
 
+
+//try 2
+
+
+
+
 #include "jackpot.h"
 #include "../../joueur/joueur.h"
+#include "../../Sauvegarde/sauvegarde.h"
 
 
 BITMAP *icons[NUM_ICONS];
@@ -34,11 +41,11 @@ void load_slotmachine(char *path) {
 void anime(){
     int rand_icon;
     for (int j =0; j<10;j++){
-    for ( int i = 0;i<3; i++){
-        rand_icon= rand() % NUM_ICONS;
-        draw_sprite(screen, icons[rand_icon],  807+ i * (77 + 41+i*i), 525);
-    }rest( 80);
-}}
+        for ( int i = 0;i<3; i++){
+            rand_icon= rand() % NUM_ICONS;
+            draw_sprite(screen, icons[rand_icon],  807+ i * (77 + 41+i*i), 525);
+        }rest( 80);
+    }}
 int tourner_roues() {
     // tourner les roues de manière aleatoire
     srand(time(NULL));
@@ -70,7 +77,7 @@ void Jplayer1(int *s1){
     int fin = 0;
     // ici on charge toutes les images
     BITMAP *fond;
-    fond= load_bitmap("../Games/Jackpot/IMAGES/fond3.bmp",NULL);
+    fond= load_bitmap("../Games/Jackpot/IMAGES/fond4.bmp",NULL);
     if (!fond) { //blindage
         allegro_message("Erreur image fond");
         exit(EXIT_FAILURE);
@@ -98,7 +105,7 @@ void Jplayer1(int *s1){
 
 
 
-  // boucle principale
+    // boucle principale
     while (!key[KEY_ESC] && fin<5 ) {
         if (key[KEY_ENTER]) {
             fin++;
@@ -127,7 +134,7 @@ void Jplayer2(int *s2){
     int fin = 0;
     // ici on charge toutes les images
     BITMAP *fond;
-    fond= load_bitmap("../Games/Jackpot/IMAGES/fond3.bmp",NULL);
+    fond= load_bitmap("../Games/Jackpot/IMAGES/fond4.bmp",NULL);
     if (!fond) {
         //blindage
         allegro_message("Erreur image fond");
@@ -180,6 +187,9 @@ void Jplayer2(int *s2){
 void jackpot(){
     int s1, s2;
 
+   // SAMPLE * son;
+    //son= load_wav("../Games/Jackpot/IMAGES/taverne4.wav");
+    //play_sample(son,255,128,1000,1);
 
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
 
@@ -191,7 +201,7 @@ void jackpot(){
         exit(EXIT_FAILURE);
     }
     BITMAP *fond;
-    fond= load_bitmap("../Games/Jackpot/IMAGES/fond3.bmp",NULL);
+    fond= load_bitmap("../Games/Jackpot/IMAGES/fond4.bmp",NULL);
     if (!fond) {
         //blindage
         allegro_message("Erreur image fond");
@@ -214,28 +224,42 @@ void jackpot(){
 
     draw_sprite(buffer, fond, 0, 0);
     char message[50];
-
+    char messagefin1[100];
     // on detecte la victoire d'un des deux joueurs et on affiche le résultat
     if (s1>s2){
-        sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
+        sprintf(message,"%s a remporte un Bitcoin",joueurs[0].nom);
         textout_centre_ex(buffer, font, message, SCREEN_W / 2, SCREEN_H /2, makecol(255, 255, 255), -1);
         joueurs[0].nbTickets+=1;
         joueurs[1].nbTickets-=1;
+        if (highscore[5].score <= s1) {
+            saveMiniGame(joueurs,"Jackpot",s1,0);
+            sprintf(messagefin1, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+            textout_centre_ex(buffer,font, messagefin1, SCREEN_W/2, SCREEN_H / 2 + 20, makecol(255, 255, 255), -1);
+
+        }
     } else if (s1<s2){
-        sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
+        sprintf(message,"%s a remporte un Bitcoin",joueurs[1].nom);
         textout_centre_ex(buffer, font, message, SCREEN_W / 2, SCREEN_H /2, makecol(255, 255, 255), -1);
         joueurs[1].nbTickets+=1;
         joueurs[0].nbTickets-=1;
+        if (highscore[4].score <= s2) {
+            saveMiniGame(joueurs,"Jackpot",s2,1);
+            sprintf(messagefin1, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+            textout_centre_ex(buffer,font, messagefin1, SCREEN_W/2, SCREEN_H / 2 + 20, makecol(255, 255, 255), -1);
+
+        }
     } else {
-        textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", SCREEN_W / 2, SCREEN_H/2, makecol(255, 255, 255), -1);
+        textout_centre_ex(buffer, font, "Personne n'a remporte de Bitcoin", SCREEN_W / 2, SCREEN_H/2, makecol(255, 255, 255), -1);
 
     }
 
+    loadHighScore(highscore);
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     rest(2000);
     //Attendre 2 secondes avant de quitter
-
+    //stop_sample(son);
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
     destroy_bitmap(r);
+    //destroy_sample(son);
 }
