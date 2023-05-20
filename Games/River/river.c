@@ -401,6 +401,18 @@ void river()
     }
     stop_sample(music);
     play_sample(clear, 255, 128, 1000, 0);
+    if (joueurscore[0]<joueurscore[1]) {
+        joueurs[0].nbTickets=joueurs[0].nbTickets+2;
+    }
+    else if (joueurscore[0]==joueurscore[1]) {
+        joueurs[0].nbTickets++;
+        joueurs[1].nbTickets++;
+    }
+    else {
+        textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[1]);
+        joueurs[1].nbTickets=joueurs[1].nbTickets+2;
+        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
+    }
     while (!(key[KEY_ESC])) {
         draw_sprite(buffer,background,0,0);
         draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200);
@@ -409,17 +421,13 @@ void river()
         draw_sprite(buffer, frog, 500, 730);
         if (joueurscore[0]<joueurscore[1]){
             textprintf_ex(buffer, font, (WIDTH/2)-20, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[0]);
-            joueurs[0].nbTickets=joueurs[0].nbTickets+2;
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         else if (joueurscore[0]==joueurscore[1]) {
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "Personne n'a gagné le combat :( <+1 ticket>",joueurs[0].nom,joueurscore[0]);
-            joueurs[0].nbTickets++;
-            joueurs[1].nbTickets++;
         }
             else {
             textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[1]);
-            joueurs[1].nbTickets=joueurs[1].nbTickets+2;
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-8, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <échap> pour retourner au parc !");
