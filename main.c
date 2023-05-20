@@ -27,7 +27,7 @@ int main() {
     loadHighScore(highscore);
     //tableau_score();
     //ducky();
-    jeu_taupe();
+    //jeu_taupe();
     //shoot();
     //snake();
     //river();
@@ -36,7 +36,7 @@ int main() {
     //jackpot();
     //playguitar();
     //menuguitar();
-    //menu();
+    menu();
     /*while (!key[KEY_ESC] && !gameOver) { // Boucle principale du jeu
         clear_bitmap(buffer); // Efface le contenu du bitmap
 

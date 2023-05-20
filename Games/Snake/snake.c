@@ -20,6 +20,7 @@ void snake() {
 
 
     for (int i = 0; i < NB_JOUEURS; ++i) {
+        joueurs[i].nbTickets-=1;
         memotickets[i]=joueurs[i].nbTickets;
     }
 
@@ -287,7 +288,7 @@ void snake() {
         if (gagnant == 1){
             sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[0].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-            joueurs[0].nbTickets=memotickets[0]+1;
+            joueurs[0].nbTickets=memotickets[0]+2;
             if (highscore[0].score <= score1) {
                 saveMiniGame(joueurs,"Snake",score1,0);
                 sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
@@ -298,7 +299,7 @@ void snake() {
         else if (gagnant == 2) {
             sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[1].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-            joueurs[1].nbTickets=memotickets[1]+1;
+            joueurs[1].nbTickets=memotickets[1]+2;
             if (highscore[0].score <= score2) {
                 saveMiniGame(joueurs,"Snake",score2,1);
                 sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
@@ -309,9 +310,9 @@ void snake() {
 
         else {
             if (score1 == 5) {
-                sprintf(messageFin, "%s a atteint 5 points, fin de la partie !",joueurs[0].nom);
+                sprintf(messageFin, "%s a gagné en atteignant 5 points ! +1 ticket",joueurs[0].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-                joueurs[0].nbTickets=memotickets[0]+1;
+                joueurs[0].nbTickets=memotickets[0]+2;
 
                 if (highscore[0].score <= score1) {
                     saveMiniGame(joueurs,"Snake",score1,0);
@@ -320,9 +321,9 @@ void snake() {
                 }
             }
             else if (score2 == 5){
-                sprintf(messageFin, "%s a atteint 5 points, fin de la partie !",joueurs[1].nom);
+                sprintf(messageFin, "%s a gagné en atteignant 5 points ! +1 ticket",joueurs[1].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-                joueurs[1].nbTickets=memotickets[1]+1;
+                joueurs[1].nbTickets=memotickets[1]+2;
 
                 if (highscore[0].score <= score2) {
                     saveMiniGame(joueurs,"Snake",score2,1);

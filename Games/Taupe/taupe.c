@@ -59,6 +59,7 @@ void jeu_taupe() {
     }
 
     for (int i = 0; i < NB_JOUEURS; ++i) {
+        joueurs[i].nbTickets-=1;
         memotickets[i] = joueurs[i].nbTickets;
     }
 
@@ -242,17 +243,17 @@ void jeu_taupe() {
         if (score[0] > score[1]) {
             sprintf(messageFin, "%s a gagné ! +1 ticket", joueurs[0].nom);
             textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 40, makecol(255, 255, 255), -1);
-            joueurs[0].nbTickets = memotickets[0] + 1;
+            joueurs[0].nbTickets = memotickets[0] + 2;
             gagnant=0;
 
         } else if (score[1] > score[0]) {
             sprintf(messageFin, "%s a gagné ! +1 ticket", joueurs[1].nom);
             textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 40, makecol(255, 255, 255), -1);
-            joueurs[1].nbTickets = memotickets[1] + 1;
+            joueurs[1].nbTickets = memotickets[1] + 2;
             gagnant=1;
 
         } else {
-            sprintf(messageFin, "Égalité ! +1 ticket pour %s et %s ", joueurs[0].nom, joueurs[1].nom);
+            sprintf(messageFin, "Égalité ! Pas de ticket pour %s et %s ", joueurs[0].nom, joueurs[1].nom);
             textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) + 40, makecol(255, 255, 255), -1);
             joueurs[0].nbTickets = memotickets[0] + 1;
             joueurs[1].nbTickets = memotickets[1] + 1;
