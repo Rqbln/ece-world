@@ -6,11 +6,23 @@ void affichagergls(BITMAP*buffer){
     BITMAP * fond2= load_bitmap("../Menu/image/fondhtp.bmp",NULL);
     BITMAP * regle0=load_bitmap("../Menu/image/regles0.bmp",NULL);
     BITMAP * regle1=load_bitmap("../Menu/image/regles1.bmp",NULL);
+    BITMAP * page = regle0;
 
-    while (!key[KEY_ESC]) {
-        clear(buffer);
+    draw_sprite(buffer,fond2,0,0);
+    draw_sprite(buffer, page, (SCREEN_W - page->w) / 2, (SCREEN_H - page->h) / 2);
+    blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+
+    while (!key[KEY_ESC]){
+        poll_keyboard();
+        if (key[KEY_RIGHT]){
+            page = regle1;
+        }
+        if (key[KEY_LEFT]){
+            page = regle0;
+        }
         draw_sprite(buffer,fond2,0,0);
-        draw_sprite(buffer, regle0, (SCREEN_W - regle0->w) / 2, (SCREEN_H - regle0->h) / 2);
+        draw_sprite(buffer, page, (SCREEN_W - page->w) / 2, (SCREEN_H - page->h) / 2);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
     }
 
     destroy_bitmap(fond2);
@@ -18,6 +30,7 @@ void affichagergls(BITMAP*buffer){
     destroy_bitmap(regle1);
 
 }
+
 
 void menu() {
 
@@ -135,7 +148,9 @@ void menu() {
                 play_sample(sound, 255, 128, 1000, 1);
             } else if (option == 1) { // Option Lire les règles
                 // TODO: Ajouter le code pour afficher les règles
+                clear(screen);
                 affichagergls(buffer);
+                menu();
             } else if (option == 2) { // Option Quitter
                 stop_sample(sound);
                 rest(250); // Pause pour éviter les mouvements trop rapides
