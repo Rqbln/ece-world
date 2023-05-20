@@ -193,6 +193,10 @@ void loadHighScore(t_highscore* highscore) {
 
                 printf("Donnees sérialisées: %s\n", serializedData);
 
+                // Attribuer "user" comme nom par défaut
+                strcpy(highscore[fileCount].nom, "user");
+
+
                 // Extraire le nom du joueur et le score à partir de la chaîne de caractères sérialisée
                 sscanf(serializedData, "%[^,],%d", highscore[fileCount].nom, &highscore[fileCount].score);
 
