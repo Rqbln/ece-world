@@ -106,7 +106,7 @@ Décrire ici les fonctionnalités implémentées : choix joueurs, saisie des nom
 
 *Réalisé par : **Lola** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/coincoin.png)
 
 Décrire le fonctionnement du jeu dans les grandes lignes. Comment vous l'avez conçu.
 - Les canards vont de la droite à la gauche.
@@ -125,7 +125,7 @@ Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les st
 # Jackpot
 *Réalisé par : **Lola** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/potdejacques.png)
 
 ---
 ---
@@ -163,14 +163,14 @@ Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les st
 # Snake
 *Réalisé par : **Robin** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/serpent.png)
 
 ---
 ---
-# Tappe Taupe
+# Tape Taupe
 *Réalisé par : **Robin** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/taupe.png)
 
 ---
 ---
