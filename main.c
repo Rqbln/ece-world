@@ -23,16 +23,13 @@ int main() {
         joueurs[i].persoChoisi=0;
         //Nom choisi dans le Parc.c
     }
-    for (int i = 0; i < 9; ++i) {
-        highscore[i].score=0;
-    }
 
     loadHighScore(highscore);
     //tableau_score();
     //ducky();
-    //jeu_taupe();
+    jeu_taupe();
     //shoot();
-    snake();
+    //snake();
     //river();
     //pari();
     //anim_horse();
