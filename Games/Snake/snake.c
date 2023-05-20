@@ -10,6 +10,7 @@ void snake() {
     BITMAP *pomme= load_bitmap("../Games/Snake/images/pomme.bmp",NULL);
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
     BITMAP *fond = load_bitmap("../Games/Snake/images/fond.bmp",NULL);
+    BITMAP* regles = load_bitmap("../Games/Shoot/image/regles.bmp", NULL);
 
     SAMPLE *ambiance = load_sample("../Games/Snake/sons/ambiance.wav");
     SAMPLE *mange_pomme = load_sample("../Games/Snake/sons/mange_pomme.wav");
@@ -74,13 +75,24 @@ void snake() {
     srand(time(NULL));
 
     play_sample(ambiance, 255, 128, 1000, 1);
+
     while (!key[KEY_ENTER]){
         draw_sprite(buffer,fond,0,0);
+        //Affichage règles
+        draw_sprite(buffer,regles,WIDTH/2-230,HEIGHT/2-200);
+
         sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
-        textout_centre_ex(buffer,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+        textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-        rest(10);
+
     }
+        for (int i = 0; i < 300; ++i) {
+            draw_sprite(buffer,fond,0,0);
+            draw_sprite(buffer, regles, WIDTH / 2 - 230, HEIGHT / 2 - 200-2*i);
+            sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
+            textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
+            blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        }
     for (int i = 3; i > 0; --i) {
         clear_bitmap(buffer);
         draw_sprite(buffer,fond,0,0);

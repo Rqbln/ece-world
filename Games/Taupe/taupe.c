@@ -69,6 +69,7 @@ void jeu_taupe() {
     BITMAP *fond = load_bitmap("../Games/Taupe/images/fond.bmp", NULL);
     BITMAP *fond2 = load_bitmap("../Games/Taupe/images/fond2.bmp", NULL);
     BITMAP *cible = load_bitmap("../Games/Taupe/images/cible.bmp", NULL);
+    BITMAP* regles = load_bitmap("../Games/Shoot/image/regles.bmp", NULL);
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
 
     SAMPLE *ambiance = load_sample("../Games/Taupe/sons/ambiance.wav");
@@ -87,13 +88,6 @@ void jeu_taupe() {
     }
 
     play_sample(ambiance, 255, 128, 1000, 1);
-    while (!key[KEY_SPACE]) {
-        draw_sprite(buffer, fond, 0, 0);
-        sprintf(messageDebut, "Appuyez sur espace pour commencer la partie !");
-        textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
-        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-        rest(10);
-    }
 
 
     for (int i = 0; i < 2; ++i) {
@@ -123,11 +117,22 @@ void jeu_taupe() {
                 sprintf(messageFin, "%s, Une cible vous a tiré dessus !", joueurs[1].nom);
                 textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) - 20,makecol(255, 255, 255), -1);
                 score[1] = 0;
+            } else{
+                draw_sprite(buffer,regles,WIDTH/2-230,HEIGHT/2-200);
             }
             sprintf(messageDebut, "%s, A toi de jouer. Appuie sur entrée pour commencer.", joueurs[i].nom);
-            textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1);
+            textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
             blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
             rest(10);
+        }
+        if (score[0]==0){
+            for (int i = 0; i < 300; ++i) {
+                draw_sprite(buffer,fond,0,0);
+                draw_sprite(buffer, regles, WIDTH / 2 - 230, HEIGHT / 2 - 200-2*i);
+                sprintf(messageDebut, "%s, A toi de jouer. Appuie sur entrée pour commencer.", joueurs[0].nom);
+                textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
+                blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+            }
         }
 
 
