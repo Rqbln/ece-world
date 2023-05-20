@@ -1,13 +1,13 @@
 //
 // Created by bapti on 17/05/2023.
 //
-
+#include "../joueur/joueur.h"
 #include "scoreTab.h"
 void tableau_score(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
     BITMAP *compteur[10];
-    BITMAP *lettre[27];//+10 pour les chiffre
+    BITMAP *lettre[37];//+10 pour les chiffre
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/tetedragon1.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/kingGT.wav");
@@ -48,15 +48,15 @@ void tableau_score(){
             exit(EXIT_FAILURE);
         }
     }
-    for(int i=0;i<27;i++){ //+10
+    for(int i=0;i<37;i++){ //+10
         if (i<27){
-            sprintf(nomDeFichier,"../ScoreTab/lettre/%c.bmp",i+97);
+            sprintf(nomDeFichier,"../police/lettre1/%c.bmp",i+97);
         } else{
-            sprintf(nomDeFichier,"../ScoreTab/lettre/%d.bmp",i-27);
+            sprintf(nomDeFichier,"../police/lettre1/%d.bmp",i-27);
         }
         lettre[i]= load_bitmap(nomDeFichier,NULL);
         if(!lettre[i]){
-            allegro_message("../Games/lettre/%c.bmp",i+97);
+            allegro_message("../police/lettre1/%c.bmp",i+97);
             exit(EXIT_FAILURE);
         }
     }
@@ -72,14 +72,11 @@ void tableau_score(){
         draw_sprite(buffer,compteur[score2],xcompteur+(compteur[0]->w),ycompteur);
         draw_sprite(buffer,compteur[score1],xcompteur+2*(compteur[0]->w),ycompteur);
         textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
-        sprintf(message[0], "ERIKA");
-        sprintf(message[1], "JeanMarie");
-        sprintf(message[2], "Lenazy");
-        sprintf(message[3], "Z");
-        sprintf(message[4], "la mere de lulu");
-        sprintf(message[5], "vit dans");
-        sprintf(message[6], "un ananas dans la mer");
-        sprintf(message[7], "Zaptiste ce bg01234");
+
+        for (int i = 0; i < 8; ++i) {
+            sprintf(message[i],"nom %s score %d", highscore[i].nom,highscore[i].score);
+
+        }
 
         for (int j = 0; j < 8; ++j) {
             nblettre = strlen(message[j]);
@@ -91,7 +88,7 @@ void tableau_score(){
                         numlettre+=32;
                     }
                     else if(numlettre>-50 && numlettre<-39) {
-                        numlettre+=49;//26+49 pour les chiffre on remplace 49 par ca
+                        numlettre+=49+27;//26+49 pour les chiffre on remplace 49 par ca
                     }
                     else{
                         numlettre=26;

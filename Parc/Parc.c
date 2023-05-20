@@ -46,7 +46,7 @@ void parc2(){
     xbarbare[1] = 0;
     ybarbare[0] = HEIGHT - (barbare[0]->h);
     ybarbare[1] = HEIGHT - (barbare[1]->h);
-
+    srand(time(NULL));
     int ximgfond = -4150+WIDTH;  //coordonnée de l image de fond-4200+WIDTH
     int yimgfond= -2720 +HEIGHT;//-2700 +HEIGHT
 
@@ -1022,7 +1022,7 @@ void parc2(){
             play_sample(ambiance, 255, 128, 1000, 1);
             for (int i = 0; i < NB_JOUEURS; ++i) {
                 play_sample(effet[i], 255, 128, 1000, 0);
-                while (!key[KEY_ENTER] && stop == 0) {
+                while (!key[KEY_ENTER] && stop == 0 || strlen(text_input)>10) {
                     clear_bitmap(buffer2);
                     clear_to_color(buffer2, makecol(253, 208, 146)); // Effacer l'écran en blanc
                     // Afficher la zone de saisie clavier
@@ -1061,7 +1061,13 @@ void parc2(){
                     blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
                     rest(120);
                 }
+                if(strlen(text_input)==0){
+                    sprintf(text_input,"%s%d%d%d%d","Player",rand()%10,rand()%10,rand()%10,rand()%10);
+                }
                 //sprintf(nomjoueur[i], "%s", text_input);
+                while(strlen(text_input)!=10){
+                    sprintf(text_input,"%s%s",text_input," ");
+                }
                 sprintf(joueurs[i].nom,"%s",text_input);
                 memset(text_input, '\0', sizeof(text_input)); //effacer tout le tableau
                 rest(300);

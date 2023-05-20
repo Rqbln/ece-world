@@ -1,6 +1,5 @@
 //by Baptiste Chesnot
 #include "chevaux.h"
-#include "../../joueur/joueur.h"
 
 void anim_horse(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
@@ -12,7 +11,7 @@ void anim_horse(){
     BITMAP *spacekey= load_bitmap("../Games/Course_Chevaux/image/spacekey1.bmp",NULL);
     BITMAP *fond= load_bitmap("../Games/Course_Chevaux/image/map0.bmp",NULL);
     BITMAP *menu[2];
-    BITMAP *lettre[27];//+10 pour les chiffre
+    BITMAP *lettre[37];//+10 pour les chiffre
     menu[0] = load_bitmap("../Games/Course_Chevaux/image/parchem1.bmp",NULL);
     menu[1] = load_bitmap("../Games/Course_Chevaux/image/parchem2.bmp",NULL);
     BITMAP *select[10][2];
@@ -78,15 +77,15 @@ void anim_horse(){
             exit(EXIT_FAILURE);
         }
     }
-    for(int i=0;i<27;i++){ //+10
+    for(int i=0;i<37;i++){ //+10
         if (i<27){
-            sprintf(nomDeFichier,"../Games/Course_Chevaux/lettre/%c.bmp",i+97);
+            sprintf(nomDeFichier,"../police/lettre/%c.bmp",i+97);
         } else{
-            sprintf(nomDeFichier,"../Games/Course_Chevaux/lettre/%d.bmp",i-27);
+            sprintf(nomDeFichier,"../police/lettre/%d.bmp",i-27);
         }
         lettre[i]= load_bitmap(nomDeFichier,NULL);
         if(!lettre[i]){
-            allegro_message("../Games/lettre/%c.bmp",i+97);
+            allegro_message("../police/lettre/%c.bmp",i+97);
             exit(EXIT_FAILURE);
         }
     }
@@ -195,7 +194,7 @@ void anim_horse(){
                         numlettre+=32;
                     }
                     else if(numlettre>-50 && numlettre<-39) {
-                        numlettre+=49;//26+49 pour les chiffre on remplace 49 par ca
+                        numlettre+=49+26;//26+49 pour les chiffre on remplace 49 par ca
                     }
                     else{
                         numlettre=26;

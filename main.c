@@ -27,7 +27,7 @@ int main() {
     loadHighScore(highscore);
     //tableau_score();
     //ducky();
-    jeu_taupe();
+    //jeu_taupe();
     //shoot();
     //snake();
     //river();

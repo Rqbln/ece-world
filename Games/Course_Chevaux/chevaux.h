@@ -5,6 +5,7 @@
 
 #include <allegro.h>
 #include "stdio.h"
+#include "../../joueur/joueur.h"
 //#include "../Parc/Parc.h"
 #define nbCheval 10
 #define HEIGHT 1080
