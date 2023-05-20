@@ -187,9 +187,9 @@ void Jplayer2(int *s2){
 void jackpot(){
     int s1, s2;
 
-   // SAMPLE * son;
-    //son= load_wav("../Games/Jackpot/IMAGES/taverne4.wav");
-    //play_sample(son,255,128,1000,1);
+    SAMPLE * son;
+    son= load_wav("../Games/Jackpot/IMAGES/taverne3.wav");
+    play_sample(son,255,128,1000,1);
 
     BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
 
@@ -257,9 +257,9 @@ void jackpot(){
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     rest(2000);
     //Attendre 2 secondes avant de quitter
-    //stop_sample(son);
+    stop_sample(son);
     destroy_bitmap(fond);
     destroy_bitmap(buffer);
     destroy_bitmap(r);
-    //destroy_sample(son);
+    destroy_sample(son);
 }
