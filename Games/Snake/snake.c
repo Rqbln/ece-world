@@ -10,7 +10,7 @@ void snake() {
     BITMAP *pomme= load_bitmap("../Games/Snake/images/pomme.bmp",NULL);
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
     BITMAP *fond = load_bitmap("../Games/Snake/images/fond.bmp",NULL);
-    BITMAP* regles = load_bitmap("../Games/Shoot/image/regles.bmp", NULL);
+    BITMAP* regles = load_bitmap("../Games/Snake/images/regles.bmp", NULL);
 
     SAMPLE *ambiance = load_sample("../Games/Snake/sons/ambiance.wav");
     SAMPLE *mange_pomme = load_sample("../Games/Snake/sons/mange_pomme.wav");

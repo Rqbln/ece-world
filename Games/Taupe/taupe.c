@@ -69,7 +69,7 @@ void jeu_taupe() {
     BITMAP *fond = load_bitmap("../Games/Taupe/images/fond.bmp", NULL);
     BITMAP *fond2 = load_bitmap("../Games/Taupe/images/fond2.bmp", NULL);
     BITMAP *cible = load_bitmap("../Games/Taupe/images/cible.bmp", NULL);
-    BITMAP* regles = load_bitmap("../Games/Shoot/image/regles.bmp", NULL);
+    BITMAP* regles = load_bitmap("../Games/Taupe/images/regles.bmp", NULL);
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
 
     SAMPLE *ambiance = load_sample("../Games/Taupe/sons/ambiance.wav");
