@@ -26,29 +26,36 @@ _footer: Algorithmique Avancée et Bibliothèque Graphique - 2022-2023
 
 # ECE World
 
-Equipe de choc
+Nous avons aujourd'hui le plaisir de vous présenter notre tout nouveau party-game réalisé aux couleurs de l'ECE sur le thème du Moyen-âge ! 
+
+En vous souhaitant un bon jeu ! :)
+
+- L'équipe RLBL.
 
 ---
 
-# Equipe chômeurs
+# L'équipe :
 
-![bg right:50%](./images/lola.avif)
+![bg right:50%](./images/lola.jpg)
 ![bg right:50%](./images/baptou.jpg)
 ![bg right:50%](./images/robine.jpg)
 ![bg right:60%](./images/laou.jpg)
 
-                    Lola LE GALL | Baptiste CHESNOT | Robin QUERIAUX | Laouïg ELEOUET
+            Lola LE GALL        |        Baptiste CHESNOT          |                 Robin QUERIAUX                 |            Laouïg ELEOUET
 ---
 
-# ECE World
 
-![bg right:50% 198%](./images/theme.webp)
 
-## Thème
+![bg right:80% 100%](./images/affiche.png)
+
+---
+
+## Thème : Le Royaume de l'ECE
 
 Nous avons décidé de choisir pour thème le Moyen-Âge et plus particulièrement les chevaliers. Notre carte est dans un style fantasy avec un choix de plusieurs personnage en accord avec celle-ci.
 
 Ils y a de plus des petites références à des jeux que nous affectionons particulièrement en rapport avec ce thème.
+Tous nos jeux ont soit un scénario soit des éléments graphiques appartenant à ce thème pour offrir au joueur une expérience la plus immersive qu'il soit !
 
 ---
 
@@ -57,37 +64,49 @@ Ils y a de plus des petites références à des jeux que nous affectionons parti
 *Réalisée par : **Baptiste**, **Robin**.*
 
 Décrire ici les fonctionnalités implémentées : choix joueurs, saisie des noms, affichage des scores/classement... Comment avez-vous fait ? Quels étaient les problèmes rencontrés.
+- Choix des joueurs et du nom : Après avoir cliquer sur le bouton pour commencer la partie, chaque joueur se verra, chacun à son tour, choisir un personnage et le nom de son chevalier par une fenêtre pop-up.
+
+
+- Accès aux mini-jeux et fonctionnalités (sortie du parc, tableau des scores) : Dans le parc, chaque mini-jeu est représenté par un bâtiment personalisé permettant de bien distinguer chaque mini-jeu. Le joueur a la possibilité de marcher ou bien de courir pour accéder plus rapidement à ses jeux préférés !
+ De plus, le joueur peut, à tout moment sortir du parc par la porte ou bien consulter le tableau des meilleurs scores.
+
 
 ---
 
 # Carte `2/2`
 
-Suite si ça ne tient pas sur une slide. 
+- Sauvegarde et charge de la partie : //TODO
 
-:bulb: *Vous pouvez faire comme ça à chaque fois qu'une slide ne suffit pas, il vaut mieux 5 slides légères qu'une surchargée.*
-
+- Affichage des tickets et des pseudos : //TODO
 ---
 
 # Organisation des jeux
 
 - Les jeux sont classés de façon méthodique dans le Git avec un fichier pour chaque jeu, où fonctionnalité (Gestion des joueurs, musiques ou parc).
 
+
 - Chaque dossier de jeu a son propre répertoire d'image afin de ne pas les mélanger pour tous les jeux et avoir une meilleur visibilité.
 
-Quels paramètres prennent les jeux ?  La file d'événement par exemple ? Ou est-ce que chaque jeu crée sa propre file ?
 
-Comment on lance un jeu et comment on revient à la carte à la fin de la partie ?
-Comment le classement est-il mis à jour ?
+- L'appel d'un mini-jeu ne se fait qu'une fois, le système de tour étant directement implementé dans le code. Ainsi chaque jeu ne prend aucun paramètre (on écrira par exemple : river(),snake()...)
+
+
 - On va pouvoir accéder aux jeux en y aller physiquement sur la carte à l'aide du personnage mis à disposition.
-- A la fin de chaque partie de mini-jeu, on appuie sur le bouton indiqué à l'écran afin de revenir dans le parc et de choisir un nouveau mini-jeu.
 
+
+- A la fin de chaque partie de mini-jeu, on appuie sur le bouton indiqué à l'écran afin de revenir dans le parc après l'affichage des scores et de choisir un nouveau mini-jeu.
+
+
+- De plus la liste de meilleur score est mis à jour après l'affichage des scores par l'appel de la fonction loadhighscore().
 ---
 
-![bg right:40%](images/peche_canards.jpg)
 
-# Pêche aux canards
+
+# Ducky
 
 *Réalisé par : **Lola** (100%).*
+
+![bg right:40%](images/coincoin.png)
 
 Décrire le fonctionnement du jeu dans les grandes lignes. Comment vous l'avez conçu.
 - Les canards vont de la droite à la gauche.
@@ -95,21 +114,7 @@ Décrire le fonctionnement du jeu dans les grandes lignes. Comment vous l'avez c
 - Les canards vont à une vitesse différente (tirée aléatoirement).
 - La collision des canards est détectée.
 - etc.
-
 Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les structures de données (structures importantes, tableaux importants, listes chainées...) et les fonctions importantes (avec leur prototype).
-
-### Structures
-
-<div class="mermaid">
-%%{init: {'theme':'neutral'}}%%
-classDiagram
-    class Canard
-    Canard : int x, y
-    Canard : int vitesse
-    class Canne
-    Canne : int x, y
-    Canne : Canard* canard
-</div>
 
 ### Tableaux
 
@@ -120,49 +125,66 @@ classDiagram
 # Jackpot
 *Réalisé par : **Lola** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/potdejacques.png)
 
 ---
 ---
-# Shoot au ballons
+# Shoot Baloon
 *Réalisé par : **Laouïg** (100%).*
 
 ![bg right:40%](images/ballon.jpg)
 
+    Le déroulement du jeu de tir au ballon est le suivant :
+
+        - Les règles sont énoncées, les joueurs se préparent au jeu (-1 ticket pour les deux joueurs).
+        - Ensuite, chacun leur tour, les joueurs doivent éclater les ballons, 
+          rebondissant sur les murs à haute vitesse le plus vite possible !
+        - Finalement, le score des deux joueurs s'affiche et le meilleur est gratifié de 2 tickets !
+        - Le meilleur score est enregistré s'il y a lieu, puis mis à jour.
 ---
 ---
 # Rivière de la Tortue
 *Réalisé par : **Laouïg** (100%).*
-
 ![bg right:40%](images/frog.jpg)
+---
+
+    Pour ce qui est du jeu de la rivière :
+
+        - Les règles sont énoncées, les joueurs se préparent au jeu (-1 ticket pour les deux joueurs).
+        - Ensuite, les bûches vont être générées aléatoirement avec différentes tailles et dériver de gauche à droite ou inversement.
+        - Les joueurs prennent le contrôle d'une grenouille, devant frayer son chemin à l'autre bout de la rivière le plus vite possible.
+        - Chaque fois qu'une bûche sort de l'écran sa réapparition est aléatoire dans le temps.
+        - Finalement, le score des deux joueurs s'affiche et le meilleur est gratifié de 2 tickets !
+        - Le meilleur score est enregistré s'il y a lieu, puis mis à jour.
+
 
 ---
 ---
 # Snake
 *Réalisé par : **Robin** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/serpent.png)
 
 ---
 ---
-# Tappe Taupe
+# Tape Taupe
 *Réalisé par : **Robin** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/taupe.png)
 
 ---
 ---
 # Héros de la guitare
 *Réalisé par : **Baptiste** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/dragon.png)
 
 ---
 ---
 # Course de chevaux
 *Réalisé par : **Baptiste** (100%).*
 
-![bg right:40%](images/peche_canards.jpg)
+![bg right:40%](images/chevalo.png)
 
 ---
 ### Logigramme
@@ -179,59 +201,45 @@ Que vous jugez pertinent (image ou Mermaid.js)
 ---
 # Robin
 
-## Tâches réalisées (pour chaque membre de l'équipe)
 
 - `✅ 100%` Snake
 - `✅ 100%` Tape-Taupe
 - `✅ 100%` Système de gestion de point (structure)
 - `✅ 100%` Système de sauvegarde du jeu en cours
-    - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
-- `❌ 20%` Tâche 3
 
 
 ---
 
 # Laouïg
 
-## Tâches réalisées (pour chaque membre de l'équipe)
-
 - `✅ 100%` Traversée de la rivière
 - `✅ 100%` Tir aux ballons
-- `✅ 100%` Présentation MARP
-  - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
-- `❌ 20%` Tâche 3
+- `✅ 100%` MARP : Mise en page, graphes d'appel et présentation générale
 ---
 
 # Lola
 
-## Tâches réalisées (pour chaque membre de l'équipe)
-
 - `✅ 100%` Pêche aux canards
 - `✅ 100%` Jackpot
   - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
-- `❌ 20%` Tâche 3
----
----
+- `✅ 100%` Infographie et affiche du jeu
 
+---
 # Baptiste
 
-## Tâches réalisées (pour chaque membre de l'équipe)
 
-- `✅ 100%` Snake
-- `✅ 100%` Tape-Taupe
+- `✅ 100%` Course de chevaux
+- `✅ 100%` Héros de la guitare
 - `✅ 100%` Création et gestion du parc
-  - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
-- `❌ 20%` Tâche 3
 ---
 # Investissement
 
-Si vous deviez vous répartir des points, comment feriez-vous ?
 Dans notre second et dernier projet d'informatique de cette première année d'ingénieur, le travail a été assez bien répartie pour ce qui est des jeux (chacun d'entre nous en a réalisé 2).
-Cependant pour ce qui est de la partie parc et gestion global, Robin et Baptiste y on passé le plus de temps. Cela pris en compte nous attribuerons donc aux membres du groupe les notes sur 20 de :
-- `Lola`
-- `Baptiste`
-- `Robin`
-- `Laouïg`
+Cependant pour ce qui est de la partie parc et gestion global,Robin et Baptiste y on passé le plus de temps. Cela pris en compte nous attribuerons donc aux membres du groupe les notes sur 20 de :
+- `Lola` : 18/20
+- `Baptiste` : 20/20
+- `Robin` : 19/20
+- `Laouïg` : 18/20
 ---
 
 # Récapitulatif des jeux
@@ -240,7 +248,7 @@ Cependant pour ce qui est de la partie parc et gestion global, Robin et Baptiste
 |---------------------|------------|-------------------|
 | Jackpot             | 100%       | -                 |
 | Pêche aux canards   | 100%       | -                 |
-| Traversée rivière   | 95%        | -                 |
+| Traversée rivière   | 100%       | -                 |
 | Tir aux ballons     | 100%       | -                 |
 | Héros de la guitare | 100%       | -                 |
 | Course de chevaux   | 100%       | -                 |

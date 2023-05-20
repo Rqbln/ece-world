@@ -50,7 +50,6 @@ void saveGame(const t_joueurs* players, const char* saveFileName) {
         fwrite(serializedData, sizeof(char), dataSize, file);
         free(serializedData); // Libérez la mémoire allouée
 
-        printf("Le jeu a été sauvegardé avec succès dans '%s'.\n", saveFilePath);
     } else {
         fprintf(stderr, "Erreur lors de la sérialisation des données.\n");
     }
@@ -124,7 +123,6 @@ void saveMiniGame (const t_joueurs* players, const char* saveFileName, int score
         fwrite(serializedData, sizeof(char), dataSize, file);
         free(serializedData); // Libérez la mémoire allouée
 
-        printf("Le jeu a été sauvegardé avec succès dans '%s'.\n", saveFilePath);
     } else {
         fprintf(stderr, "Erreur lors de la sérialisation des données.\n");
     }
@@ -132,15 +130,8 @@ void saveMiniGame (const t_joueurs* players, const char* saveFileName, int score
     fclose(file); // Fermez le fichier
 }
 
-void loadHighScore(t_highscore* highscores) {
-    // Chemin du dossier contenant les fichiers de sauvegarde
+void loadHighScore(t_highscore* highscore) {
     const char* savesFolderPath = "../saves/games/";
-
-    // Tableau pour stocker les chemins de fichiers de sauvegarde
-    char saveFilePaths[MAX_HIGH_SCORES][100]; // Modifier la taille selon vos besoins
-
-    // Tableau pour stocker les scores chargés
-    int scores[MAX_HIGH_SCORES];
 
     // Ouvrir le dossier des sauvegardes
     DIR* savesDir = opendir(savesFolderPath);
@@ -154,47 +145,81 @@ void loadHighScore(t_highscore* highscores) {
     int fileCount = 0;
     while ((saveFile = readdir(savesDir)) != NULL && fileCount < MAX_HIGH_SCORES) {
         if (saveFile->d_type == DT_REG && strcmp(saveFile->d_name, ".") != 0 && strcmp(saveFile->d_name, "..") != 0) {
-            snprintf(saveFilePaths[fileCount], sizeof(saveFilePaths[fileCount]), "%s%s", savesFolderPath, saveFile->d_name);
-            fileCount++;
+            if (strstr(saveFile->d_name, ".sav") != NULL) {
+                // Construire le chemin complet du fichier
+                char saveFilePath[256];
+                snprintf(saveFilePath, sizeof(saveFilePath), "%s%s", savesFolderPath, saveFile->d_name);
+                // Ouvrir le fichier de sauvegarde
+                FILE* file = fopen(saveFilePath, "rb");
+                if (file == NULL) {
+                    fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde '%s'.\n", saveFilePath);
+                    continue;
+                }
+
+                if (feof(file)) {
+                    fprintf(stderr, "Le curseur du fichier est à la fin du fichier avant l'appel à fread.\n");
+                }
+
+                // Allouer suffisamment de mémoire pour contenir la chaîne de caractères de sérialisation
+                fseek(file, 0, SEEK_END);
+                long fileSize = ftell(file);
+                fseek(file, 0, SEEK_SET);
+
+
+
+                char* serializedData = (char*)malloc(fileSize + 1);
+                if (serializedData == NULL) {
+                    fprintf(stderr, "Erreur d'allocation mémoire pour la désérialisation.\n");
+                    fclose(file);
+                    continue;
+                }
+
+
+
+                // Lire la chaîne de caractères de sérialisation à partir du fichier
+                size_t elementsRead = fread(serializedData, sizeof(char), fileSize, file);
+
+                serializedData[fileSize] = '\0'; // Ajouter le caractère de fin de chaîne
+
+
+                if (elementsRead < fileSize) {
+
+                    fprintf(stderr, "Only %zu out of %ld bytes were read from the file '%s'.\n", elementsRead, fileSize, saveFilePath);
+                    fprintf(stderr, "Erreur lors de la lecture du fichier de sauvegarde '%s'.\n", saveFilePath);
+                    free(serializedData);
+                    fclose(file);
+                    continue;
+                }
+
+                // printf("Donnees sérialisées: %s\n", serializedData);
+
+                // Attribuer "user" comme nom par défaut
+                strcpy(highscore[fileCount].nom, "user");
+
+
+                // Extraire le nom du joueur et le score à partir de la chaîne de caractères sérialisée
+                if(serializedData[0] == ',') {
+                    sscanf(serializedData, ",%d", &highscore[fileCount].score);
+                } else {
+                    sscanf(serializedData, "%[^,],%d", highscore[fileCount].nom, &highscore[fileCount].score);
+                }
+                // Si aucun nom n'a été lu, attribuer une valeur par défaut
+                if (highscore[fileCount].nom[0] == '\0') {
+                    strcpy(highscore[fileCount].nom, "user");
+                }
+
+                free(serializedData); // Libérer la mémoire allouée
+                fclose(file); // Fermer le fichier
+
+                fileCount++;
+
+            }
         }
     }
     closedir(savesDir);
 
-    // Charger les scores à partir des fichiers de sauvegarde
+    // Afficher les noms et les scores lus
     for (int i = 0; i < fileCount; i++) {
-        FILE* file = fopen(saveFilePaths[i], "rb");
-        if (file == NULL) {
-            fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde '%s'.\n", saveFilePaths[i]);
-            continue;
-        }
-
-        // Allouer suffisamment de mémoire pour contenir la chaîne de caractères de sérialisation
-        fseek(file, 0, SEEK_END);
-        long fileSize = ftell(file);
-        fseek(file, 0, SEEK_SET);
-
-        char* serializedData = (char*)malloc(fileSize + 1);
-        if (serializedData == NULL) {
-            fprintf(stderr, "Erreur d'allocation mémoire pour la désérialisation.\n");
-            fclose(file);
-            continue;
-        }
-
-        // Lire la chaîne de caractères de sérialisation à partir du fichier
-        fread(serializedData, sizeof(char), fileSize, file);
-        serializedData[fileSize] = '\0'; // Ajouter le caractère de fin de chaîne
-
-        // Extraire le nom du joueur et le score à partir de la chaîne de caractères sérialisée
-        sscanf(serializedData, "%[^,],%d", highscores[i].nom, &highscores[i].score);
-
-        free(serializedData); // Libérer la mémoire allouée
-        fclose(file); // Fermer le fichier
-    }
-
-
-// Afficher les meilleurs scores
-    printf("Scores des mini-jeux :\n");
-    for (int i = 0; i < fileCount; i++) {
-        printf("%d. %s - %d\n", i + 1, highscores[i].nom, scores[i]);
+       // printf("Nom: %s, Score: %d\n", highscore[i].nom, highscore[i].score);
     }
 }

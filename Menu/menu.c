@@ -2,6 +2,23 @@
 #include "allegro.h"
 #include "stdio.h"
 
+void affichagergls(BITMAP*buffer){
+    BITMAP * fond2= load_bitmap("../Menu/image/fondhtp.bmp",NULL);
+    BITMAP * regle0=load_bitmap("../Menu/image/regles0.bmp",NULL);
+    BITMAP * regle1=load_bitmap("../Menu/image/regles1.bmp",NULL);
+
+    while (!key[KEY_ESC]) {
+        clear(buffer);
+        draw_sprite(buffer,fond2,0,0);
+        draw_sprite(buffer, regle0, (SCREEN_W - regle0->w) / 2, (SCREEN_H - regle0->h) / 2);
+    }
+
+    destroy_bitmap(fond2);
+    destroy_bitmap(regle0);
+    destroy_bitmap(regle1);
+
+}
+
 void menu() {
 
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
@@ -16,8 +33,6 @@ void menu() {
         exit(EXIT_FAILURE);
     }
     play_sample(sound, 255, 128, 1000, 1);
-
-
 
     //declaration variable
     int selection = 0; // Index de l'option sélectionnée
@@ -120,6 +135,7 @@ void menu() {
                 play_sample(sound, 255, 128, 1000, 1);
             } else if (option == 1) { // Option Lire les règles
                 // TODO: Ajouter le code pour afficher les règles
+                affichagergls(buffer);
             } else if (option == 2) { // Option Quitter
                 stop_sample(sound);
                 rest(250); // Pause pour éviter les mouvements trop rapides

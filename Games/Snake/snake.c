@@ -10,29 +10,45 @@ void snake() {
     BITMAP *pomme= load_bitmap("../Games/Snake/images/pomme.bmp",NULL);
     BITMAP *buffer = create_bitmap(SCREEN_W, SCREEN_H);
     BITMAP *fond = load_bitmap("../Games/Snake/images/fond.bmp",NULL);
+    BITMAP* regles = load_bitmap("../Games/Snake/images/regles.bmp", NULL);
+
+    SAMPLE *ambiance = load_sample("../Games/Snake/sons/ambiance.wav");
+    SAMPLE *mange_pomme = load_sample("../Games/Snake/sons/mange_pomme.wav");
+    SAMPLE *victoire = load_sample("../Games/Snake/sons/victoire.wav");
+
     char filename[80];
     int memotickets[NB_JOUEURS];
+    int OldHighScore=highscore[1].score;
 
 
     for (int i = 0; i < NB_JOUEURS; ++i) {
+        joueurs[i].nbTickets-=1;
         memotickets[i]=joueurs[i].nbTickets;
     }
 
     //Snake 1
-        for (int i = 0; i < 4; i++) {
-            sprintf(filename, "../Games/Snake/images/snake1_%d.bmp",i);
-            snake1[i] = load_bitmap(filename, NULL);
-            sprintf(filename, "../Games/Snake/images/snake2_%d.bmp",i);
-            snake2[i] = load_bitmap(filename, NULL);
-            if (!snake1[i] && !snake2[i]) { //blindage
-                allegro_message("Erreur icone");
-                exit(EXIT_FAILURE);
-            }
+    for (int i = 0; i < 4; i++) {
+        sprintf(filename, "../Games/Snake/images/snake1_%d.bmp",i);
+        snake1[i] = load_bitmap(filename, NULL);
+        sprintf(filename, "../Games/Snake/images/snake2_%d.bmp",i);
+        snake2[i] = load_bitmap(filename, NULL);
+        if (!snake1[i] && !snake2[i]) { //blindage
+            allegro_message("Erreur icone");
+            exit(EXIT_FAILURE);
         }
-    if (!fond) { //blindage
-        allegro_message("Erreur image fond");
+    }
+    if (!fond && !pomme) { //blindage
+        allegro_message("Erreur images fond, pomme");
         exit(EXIT_FAILURE);
     }
+
+    if (!ambiance && !mange_pomme && !victoire) {
+        allegro_message("Erreur : impossible de charger la musique");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+
     // Initialiser les serpents
     int snake1_length = 3;
     int snake1_x[100] = { WIDTH/2, WIDTH/2, WIDTH/2 };
@@ -58,13 +74,25 @@ void snake() {
 
     srand(time(NULL));
 
+    play_sample(ambiance, 255, 128, 1000, 1);
+
     while (!key[KEY_ENTER]){
         draw_sprite(buffer,fond,0,0);
+        //Affichage règles
+        draw_sprite(buffer,regles,WIDTH/2-230,HEIGHT/2-200);
+
         sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
-        textout_centre_ex(buffer,font, messageDebut, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
+        textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-        rest(10);
+
     }
+        for (int i = 0; i < 300; ++i) {
+            draw_sprite(buffer,fond,0,0);
+            draw_sprite(buffer, regles, WIDTH / 2 - 230, HEIGHT / 2 - 200-2*i);
+            sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
+            textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
+            blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+        }
     for (int i = 3; i > 0; --i) {
         clear_bitmap(buffer);
         draw_sprite(buffer,fond,0,0);
@@ -152,6 +180,7 @@ void snake() {
 
         // Vérifier les collisions avec la nourriture
         if (snake1_x[0] < food_x + TAILLE_JEU && snake1_x[0] + TAILLE_JEU > food_x && snake1_y[0] < food_y + TAILLE_JEU && snake1_y[0] + TAILLE_JEU > food_y) {
+            play_sample(mange_pomme, 255, 128, 1000, 0);
             food_x = rand() % WIDTH;
             food_y = rand() % HEIGHT;
             snake1_length++;
@@ -159,6 +188,7 @@ void snake() {
         }
 
         if (snake2_x[0] < food_x + TAILLE_JEU && snake2_x[0] + TAILLE_JEU > food_x && snake2_y[0] < food_y + TAILLE_JEU && snake2_y[0] + TAILLE_JEU > food_y) {
+            play_sample(mange_pomme, 255, 128, 1000, 0);
             food_x = rand() % WIDTH;
             food_y = rand() % HEIGHT;
             snake2_length++;
@@ -229,10 +259,10 @@ void snake() {
 
 
         // Afficher le score1
-        textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score1: %d", score1);
+        textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "%s : %d", joueurs[0].nom,score1);
 
         // Afficher le score2
-        textprintf_ex(buffer, font, 10, 30, makecol(255, 255, 255), -1, "score2: %d", score2);
+        textprintf_ex(buffer, font, 10, 30, makecol(255, 255, 255), -1, "%s : %d", joueurs[1].nom,score2);
 
 
         // Mettre à jour l'écran
@@ -265,16 +295,16 @@ void snake() {
             direction2 = 3;
         }
     }
-
-
+    stop_sample(ambiance);
+    play_sample(victoire, 255, 128, 1000, 0);
     while (!key[KEY_ESC]){
         if (gagnant == 1){
             sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[0].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-            joueurs[0].nbTickets=memotickets[0]+1;
+            joueurs[0].nbTickets=memotickets[0]+2;
             if (highscore[0].score <= score1) {
                 saveMiniGame(joueurs,"Snake",score1,0);
-                sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+                sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[0].nom,OldHighScore);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
             }
         }
@@ -282,10 +312,10 @@ void snake() {
         else if (gagnant == 2) {
             sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[1].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-            joueurs[1].nbTickets=memotickets[1]+1;
+            joueurs[1].nbTickets=memotickets[1]+2;
             if (highscore[0].score <= score2) {
                 saveMiniGame(joueurs,"Snake",score2,1);
-                sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+                sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[1].nom,OldHighScore);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
 
             }
@@ -293,25 +323,26 @@ void snake() {
 
         else {
             if (score1 == 5) {
-                sprintf(messageFin, "%s a atteint 5 points, fin de la partie !",joueurs[0].nom);
+                sprintf(messageFin, "%s a gagné en atteignant 5 points ! +1 ticket",joueurs[0].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-                joueurs[0].nbTickets=memotickets[0]+1;
+                joueurs[0].nbTickets=memotickets[0]+2;
 
                 if (highscore[0].score <= score1) {
                     saveMiniGame(joueurs,"Snake",score1,0);
-                    sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+                    sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[0].nom, OldHighScore);
                     textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
                 }
             }
             else if (score2 == 5){
-                sprintf(messageFin, "%s a atteint 5 points, fin de la partie !",joueurs[1].nom);
+                sprintf(messageFin, "%s a gagné en atteignant 5 points ! +1 ticket",joueurs[1].nom);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
-                joueurs[1].nbTickets=memotickets[1]+1;
+                joueurs[1].nbTickets=memotickets[1]+2;
 
                 if (highscore[0].score <= score2) {
-                    saveMiniGame(joueurs,"Snake",score2,1);
-                    sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+
+                    sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[1].nom, OldHighScore);
                     textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
+                    saveMiniGame(joueurs,"Snake",score2,1);
                 }
             }
             loadHighScore(highscore);

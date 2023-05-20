@@ -24,13 +24,13 @@ int main() {
         //Nom choisi dans le Parc.c
     }
 
-    for (int i = 0; i < MAX_HIGH_SCORES; i++) {
-        highscore[i].score = 0;
-    }
+    loadHighScore(highscore);
     //tableau_score();
     //ducky();
-    //jeu_taupe();
+    jeu_taupe();
+    //shoot();
     //snake();
+    //river();
     //pari();
     //anim_horse();
     //jackpot();
