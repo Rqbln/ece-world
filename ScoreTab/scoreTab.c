@@ -7,7 +7,7 @@ void tableau_score(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
     BITMAP *buffer;
     BITMAP *compteur[10];
-    BITMAP *lettre[27];//+10 pour les chiffre
+    BITMAP *lettre[37];//+10 pour les chiffre
     BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/tetedragon1.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/kingGT.wav");
@@ -48,15 +48,15 @@ void tableau_score(){
             exit(EXIT_FAILURE);
         }
     }
-    for(int i=0;i<27;i++){ //+10
+    for(int i=0;i<37;i++){ //+10
         if (i<27){
-            sprintf(nomDeFichier,"../police/lettre1/%c.bmp",i+97);
+            sprintf(nomDeFichier,"../police/lettre/%c.bmp",i+97);
         } else{
-            sprintf(nomDeFichier,"../police/lettre1/%d.bmp",i-27);
+            sprintf(nomDeFichier,"../police/lettre/%d.bmp",i-27);
         }
         lettre[i]= load_bitmap(nomDeFichier,NULL);
         if(!lettre[i]){
-            allegro_message("../police/lettre1/%c.bmp",i+97);
+            allegro_message("../police/lettre/%c.bmp",i+97);
             exit(EXIT_FAILURE);
         }
     }
@@ -91,7 +91,7 @@ void tableau_score(){
                         numlettre+=32;
                     }
                     else if(numlettre>-50 && numlettre<-39) {
-                        numlettre+=49;//26+49 pour les chiffre on remplace 49 par ca
+                        numlettre+=49+26;//26+49 pour les chiffre on remplace 49 par ca
                     }
                     else{
                         numlettre=26;
