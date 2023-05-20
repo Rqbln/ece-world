@@ -50,13 +50,13 @@ void tableau_score(){
     }
     for(int i=0;i<37;i++){ //+10
         if (i<27){
-            sprintf(nomDeFichier,"../police/lettre/%c.bmp",i+97);
+            sprintf(nomDeFichier,"../police/lettre1/%c.bmp",i+97);
         } else{
-            sprintf(nomDeFichier,"../police/lettre/%d.bmp",i-27);
+            sprintf(nomDeFichier,"../police/lettre1/%d.bmp",i-27);
         }
         lettre[i]= load_bitmap(nomDeFichier,NULL);
         if(!lettre[i]){
-            allegro_message("../police/lettre/%c.bmp",i+97);
+            allegro_message("../police/lettre1/%c.bmp",i+97);
             exit(EXIT_FAILURE);
         }
     }
@@ -72,16 +72,9 @@ void tableau_score(){
         draw_sprite(buffer,compteur[score2],xcompteur+(compteur[0]->w),ycompteur);
         draw_sprite(buffer,compteur[score1],xcompteur+2*(compteur[0]->w),ycompteur);
         textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
-        sprintf(message[0], highscore[2].nom);
-        sprintf(message[1], "JeanMarie");
-        sprintf(message[2], "Lenazy");
-        sprintf(message[3], "Z");
-        sprintf(message[4], "la mere de lulu");
-        sprintf(message[5], "vit dans");
-        sprintf(message[6], "un ananas dans la mer");
-        sprintf(message[7], "Zaptiste ce bg01234");
+
         for (int i = 0; i < 8; ++i) {
-            sprintf(message[i],"nom %s score %d", highscore[i].nom,highscore[i].score+1);
+            sprintf(message[i],"nom %s score %d", highscore[i].nom,highscore[i].score);
 
         }
 
@@ -95,7 +88,7 @@ void tableau_score(){
                         numlettre+=32;
                     }
                     else if(numlettre>-50 && numlettre<-39) {
-                        numlettre+=49+26;//26+49 pour les chiffre on remplace 49 par ca
+                        numlettre+=49+27;//26+49 pour les chiffre on remplace 49 par ca
                     }
                     else{
                         numlettre=26;
