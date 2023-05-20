@@ -191,15 +191,18 @@ void loadHighScore(t_highscore* highscore) {
                     continue;
                 }
 
-                printf("Donnees sérialisées: %s\n", serializedData);
+                // printf("Donnees sérialisées: %s\n", serializedData);
 
                 // Attribuer "user" comme nom par défaut
                 strcpy(highscore[fileCount].nom, "user");
 
 
                 // Extraire le nom du joueur et le score à partir de la chaîne de caractères sérialisée
-                sscanf(serializedData, "%[^,],%d", highscore[fileCount].nom, &highscore[fileCount].score);
-
+                if(serializedData[0] == ',') {
+                    sscanf(serializedData, ",%d", &highscore[fileCount].score);
+                } else {
+                    sscanf(serializedData, "%[^,],%d", highscore[fileCount].nom, &highscore[fileCount].score);
+                }
                 // Si aucun nom n'a été lu, attribuer une valeur par défaut
                 if (highscore[fileCount].nom[0] == '\0') {
                     strcpy(highscore[fileCount].nom, "user");
@@ -217,6 +220,6 @@ void loadHighScore(t_highscore* highscore) {
 
     // Afficher les noms et les scores lus
     for (int i = 0; i < fileCount; i++) {
-        printf("Nom: %s, Score: %d\n", highscore[i].nom, highscore[i].score);
+       // printf("Nom: %s, Score: %d\n", highscore[i].nom, highscore[i].score);
     }
 }
