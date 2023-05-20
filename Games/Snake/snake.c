@@ -17,6 +17,7 @@ void snake() {
 
     char filename[80];
     int memotickets[NB_JOUEURS];
+    int OldHighScore=highscore[1].score;
 
 
     for (int i = 0; i < NB_JOUEURS; ++i) {
@@ -291,7 +292,7 @@ void snake() {
             joueurs[0].nbTickets=memotickets[0]+2;
             if (highscore[0].score <= score1) {
                 saveMiniGame(joueurs,"Snake",score1,0);
-                sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+                sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[0].nom,OldHighScore);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
             }
         }
@@ -302,7 +303,7 @@ void snake() {
             joueurs[1].nbTickets=memotickets[1]+2;
             if (highscore[0].score <= score2) {
                 saveMiniGame(joueurs,"Snake",score2,1);
-                sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+                sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[1].nom,OldHighScore);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
 
             }
@@ -316,7 +317,7 @@ void snake() {
 
                 if (highscore[0].score <= score1) {
                     saveMiniGame(joueurs,"Snake",score1,0);
-                    sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+                    sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[0].nom, OldHighScore);
                     textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
                 }
             }
@@ -326,9 +327,10 @@ void snake() {
                 joueurs[1].nbTickets=memotickets[1]+2;
 
                 if (highscore[0].score <= score2) {
-                    saveMiniGame(joueurs,"Snake",score2,1);
-                    sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+
+                    sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[1].nom, OldHighScore);
                     textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
+                    saveMiniGame(joueurs,"Snake",score2,1);
                 }
             }
             loadHighScore(highscore);

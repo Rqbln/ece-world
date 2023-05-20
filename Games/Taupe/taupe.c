@@ -13,6 +13,7 @@ int isClicked = 0;
 
 
 
+
 // Les coordonnées des 6 trous de la pyramide
 int pyramid_x[6] = {1350, 400, 1016, 95, 1716, 1446 };
 int pyramid_y[6] = {950, 950, 758, 374, 660, 208};
@@ -44,6 +45,8 @@ void jeu_taupe() {
     BITMAP *Tireur[5];
     char filename[80];
     score[1]=-1;
+
+    int OldHighScore=highscore[1].score;
 
     //Tireur
     for (int i = 0; i < 5; i++) {
@@ -260,11 +263,11 @@ void jeu_taupe() {
             gagnant=0;
         }
 
-        if (highscore[gagnant].score <= score[0]){
-            saveMiniGame(joueurs,"Taupe",score[0],0);
-            sprintf(messageFin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
-            textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 60, makecol(255, 255, 255), -1);
+        if (highscore[1].score <= score[gagnant]){
 
+            sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[gagnant].nom,OldHighScore);
+            textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 60, makecol(255, 255, 255), -1);
+            saveMiniGame(joueurs,"Taupe",score[0],0);
         }
 
         loadHighScore(highscore);
