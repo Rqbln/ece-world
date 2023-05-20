@@ -1,7 +1,7 @@
 //
 // Created by bapti on 17/05/2023.
 //
-
+#include "../joueur/joueur.h"
 #include "scoreTab.h"
 void tableau_score(){
     rest(200); // Pause de 10 ms pour rafraîchir l'écran
