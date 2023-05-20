@@ -72,7 +72,7 @@ void tableau_score(){
         draw_sprite(buffer,compteur[score2],xcompteur+(compteur[0]->w),ycompteur);
         draw_sprite(buffer,compteur[score1],xcompteur+2*(compteur[0]->w),ycompteur);
         textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
-        sprintf(message[0], "ERIKA");
+        sprintf(message[0], highscore[2].nom);
         sprintf(message[1], "JeanMarie");
         sprintf(message[2], "Lenazy");
         sprintf(message[3], "Z");
@@ -80,6 +80,10 @@ void tableau_score(){
         sprintf(message[5], "vit dans");
         sprintf(message[6], "un ananas dans la mer");
         sprintf(message[7], "Zaptiste ce bg01234");
+        for (int i = 0; i < 8; ++i) {
+            sprintf(message[i],"nom %s score %d", highscore[i].nom,highscore[i].score+1);
+
+        }
 
         for (int j = 0; j < 8; ++j) {
             nblettre = strlen(message[j]);
