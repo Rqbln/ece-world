@@ -181,6 +181,8 @@ void shoot() {
             vsync();
         }
         start_time = time(NULL);
+        joueurs[turn].nb_essaie_ballon++;
+        joueurs[turn].score_ballon[joueurs[turn].nb_essaie_ballon]=joueurscore[turn];
     }
     stop_sample(music);
     play_sample(clear, 255, 128, 1000, 0);
