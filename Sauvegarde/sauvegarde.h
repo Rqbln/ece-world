@@ -21,6 +21,12 @@ typedef struct highscore {
 } t_highscore;
 
 
+typedef struct {
+    int numero;
+    char nomFichier[256];
+} t_fichier;
+
+
 
 char* serializePlayers(const t_joueurs* players);
 void deserializePlayers(const char* serializedData, t_joueurs* players);

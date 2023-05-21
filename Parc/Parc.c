@@ -27,6 +27,7 @@ void park(){
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
     BITMAP *panneau = load_bitmap("../Parc/image/batiment/telephone0.bmp", NULL);
     BITMAP *enterkey = load_bitmap("../Parc/image/enterkey.bmp", NULL);
+    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore.bmp", NULL);
     BITMAP *dragon[4][3];
 
 
@@ -392,7 +393,6 @@ void park(){
         draw_sprite(buffer, casino, xcasino, ycasino);
         draw_sprite(buffer, river1, xriver, yriver);
         draw_sprite(buffer, serpent, xserpent, yserpent);
-        draw_sprite(buffer, bitcoin[posbitcoin], xbitcoin, ybitcoin);
         draw_sprite(buffer,panneau,xpanneau,ypanneauM);
         //draw_sprite(buffer,dragon[0][0],xdragon,ydragon);
         //draw_sprite(buffer, portail[posbitcoin], xportail, yportail);
@@ -1083,11 +1083,20 @@ void park(){
         //textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[0]);
         //textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[1]);
         stop = 1;
-        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
-        textprintf_ex(buffer, font, 50, 200, makecol(255, 255, 255), -1, "%s, Tickets : %d", joueurs[0].nom, joueurs[0].nbTickets);
-        textprintf_ex(buffer, font, 1700, 200, makecol(255, 255, 255), -1, "%s, Tickets : %d", joueurs[1].nom, joueurs[1].nbTickets);
+        draw_sprite(buffer, affichageScore, 1200, 30);
+        for (int i = 0; i < joueurs[0].nbTickets; ++i) {
+            draw_sprite(buffer, bitcoin[posbitcoin], 1320 + i*50 , 170);
+        }
+        for (int i = 0; i < joueurs[1].nbTickets; ++i) {
+            draw_sprite(buffer, bitcoin[posbitcoin], 1320 + i*50 , 280);
+        }
+
+        textprintf_ex(buffer, font, 1340, 150, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[0].nom, joueurs[0].nbTickets);
+        textprintf_ex(buffer, font, 1340, 260, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[1].nom, joueurs[1].nbTickets);
         stop=1;
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+
+
 
         if (key[KEY_P]) {
             isPaused = 1; // Mettre le jeu en pause
@@ -1187,6 +1196,43 @@ void park(){
 
             rest(100); // Pause de 100 ms pour rafraîchir l'écran
         }
+
+
+        if (key[KEY_Q]){
+            isPaused = 1; // Mettre le jeu en pause
+            rest(200); // Attendre un peu pour éviter les pressions répétées de la touche P
+        }
+
+        // Si le jeu est en pause
+        while (isPaused) {
+            clear_keybuf(); // Effacer le tampon des touches pressées pendant la pause
+
+            // Afficher le menu de pause
+            clear(buffer);
+            draw_sprite(buffer, fondmap, ximgfond, yimgfond);
+            rectfill(buffer, (WIDTH / 2) - 400, (HEIGHT / 2) - 100, (WIDTH / 2) + 400, (HEIGHT / 2) + 100,
+                     makecol(0, 0, 0));
+            textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 - 40, makecol(255, 255, 255), -1, "MENU QUITTER");
+            textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1,
+                                 "Etes vous sûr de vouloir quitter ?");
+            textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1,
+                                 "Votre partie ne sera pas sauvegardée si vous n'avez pas sauvegardé au préalable");
+            textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 + 40, makecol(255, 255, 255), -1,
+                                 "Appuyez sur Entrée pour quitter ECE-WORLD, appuyez sur R pour revenir au jeu");
+
+            blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+
+            if (key[KEY_R]) {
+                isPaused = 0;
+            } else if (key[KEY_ENTER]) {
+                end = 1;
+                isPaused = 0;
+
+            }
+            rest(100); // Pause de 100 ms pour rafraîchir l'écran
+        }
+
+
         if (key[KEY_SPACE]) {
             rest(10);
         } else
