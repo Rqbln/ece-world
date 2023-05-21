@@ -58,7 +58,7 @@ void tableau_score(){
         if(!lettre[i]){
             allegro_message("../police/lettre12/%c.bmp",i+97);
             exit(EXIT_FAILURE);
-        }
+        }   
     }
     while (!key[KEY_ESC]) {
         clear_bitmap(buffer);
