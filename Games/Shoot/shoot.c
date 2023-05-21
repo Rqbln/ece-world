@@ -184,6 +184,7 @@ void shoot() {
     }
     stop_sample(music);
     play_sample(clear, 255, 128, 1000, 0);
+
     while (!(key[KEY_ESC])) {
         draw_sprite(buffer,background,0,0);
         draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200);
@@ -192,18 +193,14 @@ void shoot() {
         draw_sprite(buffer, viseur, viseur->w, viseur->h);
         if (joueurscore[0]<joueurscore[1]){
             textprintf_ex(buffer, font, (WIDTH/2)-20, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a été le plus rapide !",joueurs[0].nom,joueurscore[0]);
-            joueurs[0].nbTickets=joueurs[0].nbTickets+2;
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         else if (joueurscore[0]==joueurscore[1]) {
             textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "Personne n'a gagné le combat :(",joueurs[0].nom,joueurscore[0]);
             textprintf_ex(buffer, font, (WIDTH/2)-30, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Le roi babouin se suicide de tristesse",joueurs[0].nom,joueurscore[0]);
-            joueurs[0].nbTickets++;
-            joueurs[1].nbTickets++;
         }
         else {
             textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a été le plus vif !",joueurs[0].nom,joueurscore[1]);
-            joueurs[1].nbTickets=joueurs[1].nbTickets+2;
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-8, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <échap> pour retourner au parc !");
@@ -239,6 +236,16 @@ void shoot() {
     else if ((highscore[7].score)/100 >= joueurscore[0]*100) {
         saveMiniGame(joueurs,"Shoot",joueurscore[1]*100,1);
         textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(255, 255, 255), -1, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+    }
+    if (joueurscore[0]<joueurscore[1]){
+        joueurs[0].nbTickets=joueurs[0].nbTickets+2;
+    }
+    else if (joueurscore[0]==joueurscore[1]) {
+        joueurs[0].nbTickets++;
+        joueurs[1].nbTickets++;
+    }
+    else {
+        joueurs[1].nbTickets=joueurs[1].nbTickets+2;
     }
     // Libération des ressources
     destroy_bitmap(background);

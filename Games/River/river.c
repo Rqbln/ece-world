@@ -10,7 +10,7 @@ void river()
     int randmax=100;
     double start,end;
     int gameover;
-    char mess[50];
+    char mess[100];
     int temps;
     double joueurscore[2];
     int frogw=195; //Largeur du bmp de la grenouille
@@ -401,6 +401,7 @@ void river()
     }
     stop_sample(music);
     play_sample(clear, 255, 128, 1000, 0);
+
     while (!(key[KEY_ESC])) {
         draw_sprite(buffer,background,0,0);
         draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200);
@@ -409,32 +410,19 @@ void river()
         draw_sprite(buffer, frog, 500, 730);
         if (joueurscore[0]<joueurscore[1]){
             textprintf_ex(buffer, font, (WIDTH/2)-20, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[0]);
-            joueurs[0].nbTickets=joueurs[0].nbTickets+2;
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         else if (joueurscore[0]==joueurscore[1]) {
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "Personne n'a gagné le combat :( <+1 ticket>",joueurs[0].nom,joueurscore[0]);
-            joueurs[0].nbTickets++;
-            joueurs[1].nbTickets++;
         }
             else {
             textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[1]);
-            joueurs[1].nbTickets=joueurs[1].nbTickets+2;
             textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
         }
         textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-8, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <échap> pour retourner au parc !");
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-        //Enregistrement du meilleur score s'il y a lieu
-        if ((highscore[6].score)/100 >= joueurscore[0]*100) {
-            saveMiniGame(joueurs,"River",joueurscore[0]*100,0);
-            sprintf(mess, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
-            textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-        }
-        else if ((highscore[6].score)/100 >= joueurscore[1]*100) {
-            saveMiniGame(joueurs,"River",joueurscore[1]*100,1);
-            sprintf(mess, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
-            textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-        }
+
+
     }
     play_sample(transition, 255, 128, 1000, 0);
     for (int i = 0; i < 300; ++i) {
@@ -457,6 +445,30 @@ void river()
         textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-8-2*i, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <échap> pour retourner au parc !");
         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
+    }
+    if (joueurscore[0]<joueurscore[1]) {
+        joueurs[0].nbTickets=joueurs[0].nbTickets+2;
+        if (highscore[6].score >= (int)joueurscore[0]||highscore[6].score==0) {
+
+            sprintf(mess, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
+            textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
+            saveMiniGame(joueurs,"Frogger",(int)joueurscore[0],0);
+        }
+    }
+    else if (joueurscore[0]==joueurscore[1]) {
+        joueurs[0].nbTickets++;
+        joueurs[1].nbTickets++;
+    }
+    else {
+        textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a gagné le combat Tortuesque !",joueurs[0].nom,joueurscore[1]);
+        joueurs[1].nbTickets=joueurs[1].nbTickets+2;
+        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Il remporte 2 tickets !");
+       if (highscore[6].score >= (int)joueurscore[1]||highscore[6].score==0) {
+
+            sprintf(mess, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
+            textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
+            saveMiniGame(joueurs,"Frogger",(int)joueurscore[1],1);
+        }
     }
     // Libération des ressources
     destroy_bitmap(background);
