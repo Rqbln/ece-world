@@ -24,6 +24,7 @@ int main() {
         //Nom choisi dans le Parc.c
     }
 
+    nom_jeu();
     loadHighScore(highscore);
     //tableau_score();
     //ducky();

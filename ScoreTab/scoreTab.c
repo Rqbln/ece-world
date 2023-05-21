@@ -25,7 +25,7 @@ void tableau_score(){
     int xcompteur=0;
     int ycompteur=0;
     int numlettre=0;
-    int nblettre=30;
+    int nblettre=40;
     int xlettre=0;
     int ylettre=0;
     char message[8][nblettre];
@@ -73,8 +73,8 @@ void tableau_score(){
         draw_sprite(buffer,compteur[score1],xcompteur+2*(compteur[0]->w),ycompteur);
         textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
         sprintf(message[0],"Tableau des winners");
-        for (int i = 1; i <=8; ++i) {
-            sprintf(message[i],"nom %s score %d", highscore[i].nom,highscore[i].score);
+        for (int i = 0; i <=7; ++i) {
+            sprintf(message[i],"%s nom %s score %d", highscore[i].nomjeu,highscore[i].nom,highscore[i].score);
 
         }
 
