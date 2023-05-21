@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "allegro.h"
 #include "stdio.h"
+#include "../Parc/Parc.h"
 
 void affichagergls(BITMAP*buffer){
     BITMAP * fond2= load_bitmap("../Menu/image/fondhtp.bmp",NULL);
@@ -144,7 +145,7 @@ void menu() {
             if (option == 0) { // Option Jouer
                 // TODO: Ajouter le code pour lancer le jeu
                 stop_sample(sound);
-                parc2();
+                park();
                 play_sample(sound, 255, 128, 1000, 1);
             } else if (option == 1) { // Option Lire les règles
                 // TODO: Ajouter le code pour afficher les règles

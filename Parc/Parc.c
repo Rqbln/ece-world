@@ -1,6 +1,6 @@
 #include "Parc.h"
 
-void parc2(){
+void park(){
     int isPaused = 0; // Variable pour indiquer si le jeu est en pause
     int buffersizew = WIDTH / 6;
     int buffersizeh = HEIGHT / 8;
