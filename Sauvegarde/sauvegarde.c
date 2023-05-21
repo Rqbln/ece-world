@@ -227,13 +227,13 @@ void loadHighScore(t_highscore* highscore) {
     }
 }
 void nom_jeu(){
-    sprintf(highscore[0].nomjeu,"Snake ");
+    sprintf(highscore[0].nomjeu,"Snake  ");
     sprintf(highscore[1].nomjeu,"Taupe  ");
-    sprintf(highscore[2].nomjeu,"Horse ");
+    sprintf(highscore[2].nomjeu,"Horse  ");
     sprintf(highscore[3].nomjeu,"Guitar ");
-    sprintf(highscore[4].nomjeu,"Ducky ");
-    sprintf(highscore[5].nomjeu,"Jackpot ");
-    sprintf(highscore[6].nomjeu,"River ");
+    sprintf(highscore[4].nomjeu,"Ducky  ");
+    sprintf(highscore[5].nomjeu,"Jackpot");
+    sprintf(highscore[6].nomjeu,"River  ");
     sprintf(highscore[7].nomjeu,"Shoot  ");
 
 

@@ -75,7 +75,7 @@ void tableau_score(){
         }
         if (key[KEY_DOWN]) { // Flèche du bas
             option++;
-            if (option>8){
+            if (option>9){
                 option=0;
             }
             rest(250); // Pause pour éviter les mouvements trop rapides
@@ -257,10 +257,10 @@ void tableau_score(){
 
                     }
                     for (int tour = 0; tour < 2; ++tour) {
-                        for (int i = 0; i < (joueurs[tour].nb_essaie_guitare); ++i) {
-                            sprintf(message[i], "score %d", joueurs[tour].score_guitare[i]);
+                        for (int i = 0; i < (joueurs[tour].nb_essaie_river); ++i) {
+                            sprintf(message[i], "score %d", joueurs[tour].score_river[i]);
                         }
-                        for (int j = 0; j < (joueurs[tour].nb_essaie_guitare); ++j) {
+                        for (int j = 0; j < (joueurs[tour].nb_essaie_river); ++j) {
                             nblettre = strlen(message[j]);
                             for (int i = 0; i < nblettre; ++i) {
 
@@ -309,10 +309,10 @@ void tableau_score(){
 
                     }
                     for (int tour = 0; tour < 2; ++tour) {
-                        for (int i = 0; i < (joueurs[tour].nb_essaie_guitare); ++i) {
-                            sprintf(message[i], "score %d", joueurs[tour].score_guitare[i]);
+                        for (int i = 0; i < (joueurs[tour].nb_essaie_taupe); ++i) {
+                            sprintf(message[i], "score %d", joueurs[tour].score_taupe[i]);
                         }
-                        for (int j = 0; j < (joueurs[tour].nb_essaie_guitare); ++j) {
+                        for (int j = 0; j < (joueurs[tour].nb_essaie_taupe); ++j) {
                             nblettre = strlen(message[j]);
                             for (int i = 0; i < nblettre; ++i) {
 
@@ -361,10 +361,10 @@ void tableau_score(){
 
                     }
                     for (int tour = 0; tour < 2; ++tour) {
-                        for (int i = 0; i < (joueurs[tour].nb_essaie_guitare); ++i) {
-                            sprintf(message[i], "score %d", joueurs[tour].score_guitare[i]);
+                        for (int i = 0; i < (joueurs[tour].nb_essaie_snake); ++i) {
+                            sprintf(message[i], "score %d", joueurs[tour].score_snake[i]);
                         }
-                        for (int j = 0; j < (joueurs[tour].nb_essaie_guitare); ++j) {
+                        for (int j = 0; j < (joueurs[tour].nb_essaie_snake); ++j) {
                             nblettre = strlen(message[j]);
                             for (int i = 0; i < nblettre; ++i) {
 
@@ -413,10 +413,10 @@ void tableau_score(){
 
                     }
                     for (int tour = 0; tour < 2; ++tour) {
-                        for (int i = 0; i < (joueurs[tour].nb_essaie_guitare); ++i) {
-                            sprintf(message[i], "score %d", joueurs[tour].score_guitare[i]);
+                        for (int i = 0; i < (joueurs[tour].nb_essaie_canard); ++i) {
+                            sprintf(message[i], "score %d", joueurs[tour].score_canard[i]);
                         }
-                        for (int j = 0; j < (joueurs[tour].nb_essaie_guitare); ++j) {
+                        for (int j = 0; j < (joueurs[tour].nb_essaie_canard); ++j) {
                             nblettre = strlen(message[j]);
                             for (int i = 0; i < nblettre; ++i) {
 
@@ -465,10 +465,10 @@ void tableau_score(){
 
                     }
                     for (int tour = 0; tour < 2; ++tour) {
-                        for (int i = 0; i < (joueurs[tour].nb_essaie_guitare); ++i) {
-                            sprintf(message[i], "score %d", joueurs[tour].score_guitare[i]);
+                        for (int i = 0; i < (joueurs[tour].nb_essaie_casino); ++i) {
+                            sprintf(message[i], "score %d", joueurs[tour].score_casino[i]);
                         }
-                        for (int j = 0; j < (joueurs[tour].nb_essaie_guitare); ++j) {
+                        for (int j = 0; j < (joueurs[tour].nb_essaie_casino); ++j) {
                             nblettre = strlen(message[j]);
                             for (int i = 0; i < nblettre; ++i) {
 
@@ -517,10 +517,62 @@ void tableau_score(){
 
                     }
                     for (int tour = 0; tour < 2; ++tour) {
-                        for (int i = 0; i < (joueurs[tour].nb_essaie_guitare); ++i) {
-                            sprintf(message[i], "score %d", joueurs[tour].score_guitare[i]);
+                        for (int i = 0; i < (joueurs[tour].nb_essaie_chevaux); ++i) {
+                            sprintf(message[i], "score %d", joueurs[tour].score_chevaux[i]);
                         }
-                        for (int j = 0; j < (joueurs[tour].nb_essaie_guitare); ++j) {
+                        for (int j = 0; j < (joueurs[tour].nb_essaie_chevaux); ++j) {
+                            nblettre = strlen(message[j]);
+                            for (int i = 0; i < nblettre; ++i) {
+
+                                numlettre = (message[j][i] - '0') - 49;
+                                if (numlettre < 0 || numlettre > 25) {
+                                    if (numlettre > -33 && numlettre < -6) {
+                                        numlettre += 32;
+                                    } else if (numlettre > -50 && numlettre < -39) {
+                                        numlettre += 49 + 27;//26+49 pour les chiffre on remplace 49 par ca
+                                    } else {
+                                        numlettre = 26;
+                                    }
+                                }
+                                ylettre = (j+2) * (lettre[0]->h) + 140;
+                                xlettre = i * (lettre[0]->w) + 180;
+                                draw_sprite(buffer, lettre[numlettre], xlettre+tour*1050, ylettre);
+                            }
+
+                        }
+                        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+                    }
+                }
+                break;
+            case 9:
+                while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
+                    for (int j = 0; j < 2; ++j) {
+                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
+                        nblettre = strlen(message[j]);
+                        for (int i = 0; i < nblettre; ++i) {
+
+                            numlettre = (message[j][i] - '0') - 49;
+                            if (numlettre < 0 || numlettre > 25) {
+                                if (numlettre > -33 && numlettre < -6) {
+                                    numlettre += 32;
+                                } else if (numlettre > -50 && numlettre < -39) {
+                                    numlettre += 49 + 27;//26+49 pour les chiffre on remplace 49 par ca
+                                } else {
+                                    numlettre = 26;
+                                }
+                            }
+                            ylettre = j * (lettre[0]->h) + 140;
+                            xlettre = i * (lettre[0]->w) + 180;
+                            draw_sprite(buffer, lettre[numlettre], xlettre, ylettre);
+                        }
+
+                    }
+                    for (int tour = 0; tour < 2; ++tour) {
+                        for (int i = 0; i < (joueurs[tour].nb_essaie_ballon); ++i) {
+                            sprintf(message[i], "score %d", joueurs[tour].score_ballon[i]);
+                        }
+                        for (int j = 0; j < (joueurs[tour].nb_essaie_ballon); ++j) {
                             nblettre = strlen(message[j]);
                             for (int i = 0; i < nblettre; ++i) {
 

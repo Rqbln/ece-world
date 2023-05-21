@@ -388,7 +388,7 @@ void playguitar1(){
                 ticket=1;
             }
             if (highscore[2].score < (joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
-                saveMiniGame(joueurs,"Guitar1",(joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]),1);
+                saveMiniGame(joueurs,"3Guitar",(joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]),1);
                 loadHighScore(highscore);
             }
         }
@@ -399,7 +399,7 @@ void playguitar1(){
                 ticket=1;
             }
             if (highscore[2].score < (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
-                saveMiniGame(joueurs,"Guitar1",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
+                saveMiniGame(joueurs,"3Guitar",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
                 loadHighScore(highscore);
             }
         }
