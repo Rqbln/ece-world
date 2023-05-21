@@ -260,8 +260,27 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 
 ![bg right:40%](images/dragon.png)
 
-    Pour ce qui est du Guitar Hero :
-        - blablabla
+    Mon Guitar Hero offre deux modes de jeu uniques et captivants. 
+    Dans ce jeu, vous pourrez vous immerger dans une expérience musicale palpitante en utilisant 
+    votre souris et votre sens du rythme. Permettez-moi de vous expliquer en détail les deux modes de jeu disponibles.
+
+    Mode 1 : Défis de rapidité
+
+    Dans ce mode, votre objectif est de bouger votre souris rapidement et avec précision pour 
+    toucher les flammes qui apparaissent à l'écran avant qu'elles ne quittent celui-ci. 
+    Chaque fois que vous réussissez à toucher une flamme sans collision, votre score augmente de 1. 
+    Cependant, si vous ratez une flamme ou si une collision se produit, votre score n'augmente pas et la 
+    vitesse du jeu s'accélère. Cela ajoute une dose d'excitation supplémentaire et vous met au défi de
+    rester concentré et réactif tout au long du jeu.
+
+    Mode 2 : Défis de coordination
+
+    Le mode 2 met l'accent sur votre capacité à appuyer sur les bonnes touches au bon moment.
+    Lorsqu'une collision se produit entre les flammes bleues et les flammes rouges à l'écran, 
+    vous devez appuyer sur les touches correspondantes du clavier (GHJK) au moment précis où les flammes
+    se touchent. Il est essentiel de ne pas appuyer sur les touches sans raison, car cela entraine 
+    a une defaite. Ce mode demande une coordination précise entre vos yeux, vos mains et vos oreilles,
+    et vous offre une expérience de jeu unique.
 
 ---
 # Course de chevaux
