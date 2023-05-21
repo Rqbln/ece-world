@@ -50,13 +50,13 @@ void tableau_score(){
     }
     for(int i=0;i<37;i++){ //+10
         if (i<27){
-            sprintf(nomDeFichier,"../police/lettre1/%c.bmp",i+97);
+            sprintf(nomDeFichier,"../police/lettre12/%c.bmp",i+97);
         } else{
-            sprintf(nomDeFichier,"../police/lettre1/%d.bmp",i-27);
+            sprintf(nomDeFichier,"../police/lettre12/%d.bmp",i-27);
         }
         lettre[i]= load_bitmap(nomDeFichier,NULL);
         if(!lettre[i]){
-            allegro_message("../police/lettre1/%c.bmp",i+97);
+            allegro_message("../police/lettre12/%c.bmp",i+97);
             exit(EXIT_FAILURE);
         }
     }
@@ -72,8 +72,8 @@ void tableau_score(){
         draw_sprite(buffer,compteur[score2],xcompteur+(compteur[0]->w),ycompteur);
         draw_sprite(buffer,compteur[score1],xcompteur+2*(compteur[0]->w),ycompteur);
         textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
-
-        for (int i = 0; i < 8; ++i) {
+        sprintf(message[0],"Tableau des winners");
+        for (int i = 1; i <=8; ++i) {
             sprintf(message[i],"nom %s score %d", highscore[i].nom,highscore[i].score);
 
         }
