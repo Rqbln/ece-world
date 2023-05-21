@@ -370,12 +370,12 @@ void playguitar1(){
             draw_sprite(buffer,enterkey,xenter,yenter);
             stop_sample(musique);
             //sprintf(message,"Perdu ");
-            joueurs[tour].score_guitare[joueurs[tour].nb_essaie_guitare]=score;
+            joueurs[tour].score_guitare1[joueurs[tour].nb_essaie_guitare1]=score;
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             rest(100); // Pause de 10 ms pour rafraîchir l'écran
         }
-        joueurs[tour].nb_essaie_guitare+=1;
+        joueurs[tour].nb_essaie_guitare1+=1;
     }
     rest(150); // Pause de 10 ms pour rafraîchir l'écran
     clear_bitmap(buffer);

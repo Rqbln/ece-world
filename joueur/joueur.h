@@ -9,6 +9,8 @@ typedef struct joueurs{
     int persoChoisi;
     int score_guitare[10];
     int nb_essaie_guitare;
+    int score_guitare1[10];
+    int nb_essaie_guitare1;
     int score_river[10];
     int nb_essaie_river;
     int score_snake[10];

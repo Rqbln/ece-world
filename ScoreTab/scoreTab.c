@@ -210,10 +210,10 @@ void tableau_score(){
 
                     }
                     for (int tour = 0; tour < 2; ++tour) {
-                        for (int i = 0; i < (joueurs[tour].nb_essaie_guitare); ++i) {
-                            sprintf(message[i], "score %d", joueurs[tour].score_guitare[i]);
+                        for (int i = 0; i < (joueurs[tour].nb_essaie_guitare1); ++i) {
+                            sprintf(message[i], "score %d", joueurs[tour].score_guitare1[i]);
                         }
-                        for (int j = 0; j < (joueurs[tour].nb_essaie_guitare); ++j) {
+                        for (int j = 0; j < (joueurs[tour].nb_essaie_guitare1); ++j) {
                             nblettre = strlen(message[j]);
                             for (int i = 0; i < nblettre; ++i) {
 
