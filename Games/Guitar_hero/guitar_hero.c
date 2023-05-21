@@ -75,7 +75,7 @@ void animation_guitarEnd(){
         sprintf(message,"%s",joueurs[1].nom);
         joueurs[1].nbTickets+=2;
         if (highscore[3].score < (joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
-            saveMiniGame(joueurs,"Guitar",(joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]),1);
+            saveMiniGame(joueurs,"3Guitar",(joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1]),1);
             loadHighScore(highscore);
         }
     }
@@ -83,7 +83,7 @@ void animation_guitarEnd(){
         sprintf(message,"%s",joueurs[0].nom);
         joueurs[0].nbTickets+=2;
         if (highscore[3].score < (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
-            saveMiniGame(joueurs,"Guitar",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
+            saveMiniGame(joueurs,"3Guitar",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
             loadHighScore(highscore);
         }
     }
@@ -92,7 +92,7 @@ void animation_guitarEnd(){
         joueurs[0].nbTickets+=1;
         joueurs[1].nbTickets+=1;
         if (highscore[3].score < (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1])) {
-            saveMiniGame(joueurs,"Guitar",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
+            saveMiniGame(joueurs,"3Guitar",(joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1]),0);
             loadHighScore(highscore);
         }
     }
