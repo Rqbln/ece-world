@@ -253,7 +253,7 @@ void park(){
 /////////////////////////////////////////////////////////////////////////////////////
 
 
-    while (!key[KEY_ESC] && end == 0) {  //boucle principale
+    while (end == 0) {  //boucle principale
         //choix d une musique aleatoire
         if (musique == 1) {
             musiquealeatoire = rand() % nbMusique;

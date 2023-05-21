@@ -469,7 +469,7 @@ void river()
 
             sprintf(mess, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
             textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-            saveMiniGame(joueurs,"Frogger",(int)joueurscore[1]*100,1);
+            saveMiniGame(joueurs,"6Frogger",(int)joueurscore[1]*100,1);
         }
     }
     // Libération des ressources
