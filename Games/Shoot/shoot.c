@@ -73,15 +73,6 @@ void shoot() {
 
     // Boucle principale du jeu
     play_sample(music, 255, 128, 1000, 0);
-    while (!key[KEY_ENTER]) {
-        clear_bitmap(buffer);
-        play_sample(clear, 255, 128, 1000, 0);
-        draw_sprite(buffer, background, 0, 0);
-        draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200);
-        textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a terminée la quête du Bitcoin !",joueurs[0].nom);
-        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Gloire à ce preux chevalier :) !");
-        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    }
     for (int turn = 0; turn < 2; ++turn) {
 //Coût de la participation=1 bitcoin
         joueurs[turn].nbTickets--;
@@ -190,8 +181,9 @@ void shoot() {
             vsync();
         }
         start_time = time(NULL);
-        joueurs[turn].nb_essaie_ballon++;
         joueurs[turn].score_ballon[joueurs[turn].nb_essaie_ballon]=joueurscore[turn];
+        joueurs[turn].nb_essaie_ballon++;
+
     }
     stop_sample(music);
     play_sample(clear, 255, 128, 1000, 0);
