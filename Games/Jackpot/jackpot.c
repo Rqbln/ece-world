@@ -248,7 +248,7 @@ void jackpot(){
         joueurs[1].nbTickets+=1;
         joueurs[0].nbTickets-=1;
         if (highscore[4].score <= s2) {
-            saveMiniGame(joueurs,"Jackpot",s2,1);
+            saveMiniGame(joueurs,"5Jackpot",s2,1);
             sprintf(messagefin1, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
             textout_centre_ex(buffer,font, messagefin1, SCREEN_W/2, SCREEN_H / 2 + 20, makecol(255, 255, 255), -1);
 

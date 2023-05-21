@@ -27,10 +27,13 @@ void park(){
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
     BITMAP *panneau = load_bitmap("../Parc/image/batiment/telephone0.bmp", NULL);
     BITMAP *enterkey = load_bitmap("../Parc/image/enterkey.bmp", NULL);
-    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore4.bmp", NULL);
+    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore.bmp", NULL);
     BITMAP *dragon[4][3];
+    BITMAP* scroll = load_bitmap("../Games/Shoot/image/scroll.bmp", NULL);
+    BITMAP * fonfin= load_bitmap("../Parc/image/fondfin.bmp", NULL);
+    BITMAP * congrats= load_bitmap("../Parc/image/congrats.bmp", NULL);
 
-
+    SAMPLE *clear1 = load_wav("../Games/Shoot/musique/marioclear.wav");
     SAMPLE *sound[nbMusique];
     sound[0] = load_wav("../Parc/musique/GameTrone.wav");//GameTrone  HouseDragon
     SAMPLE *effet[2];
@@ -473,16 +476,6 @@ void park(){
         if (posbitcoin >= 8) {
             posbitcoin = 0;
         }
-        //gestion point
-        for (int i = 0; i < 2; ++i) {
-            draw_sprite(buffer, affichageScore, i*(WIDTH-affichageScore->w), 0);
-            for (int j = 0; j < joueurs[0].nbTickets; ++j) {//joueurs[0].nbTickets
-                draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +85+(i*(WIDTH-660))), 45);
-                //draw_sprite(buffer, bitcoin[posbitcoin],  ((-i)*(j*50 +85)+(i*(WIDTH-660))), 45);
-
-            }
-            textprintf_ex(buffer, font, 220+(i*(WIDTH-660)), 20, makecol(0, 0, 0), -1, "%s, bitcoin(s) : %d", joueurs[i].nom, joueurs[i].nbTickets);
-        }
         //collision porte end
         if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[0][0][1]->h)){
             order++;
@@ -490,7 +483,7 @@ void park(){
                 end = 1;
             }
             // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
         //collision activité hippodrome
         if (xPacman <= (xhippodrome + (hippodrome->w)/2) && (xhippodrome + (hippodrome->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yhippodrome+(hippodrome->h)/2) && (yhippodrome+(hippodrome->h)/2) <= (yPacman + pacman[0][0][1]->h)){
@@ -523,7 +516,7 @@ void park(){
             cmpt=0;
             cmp=0;
             // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
         if (xPacman <= (xtir + (tirballon->w)/2) && (xtir + (tirballon->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytir+tirballon->h) && (ytir+tirballon->h) <= (yPacman + pacman[0][0][1]->h)){
             shoot();
@@ -554,8 +547,9 @@ void park(){
             cmpt = 0;
             cmp = 0;
             // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
+
         if (xPacman <= (xlabyrinthe + (labyrinthe->w)/2) && (xlabyrinthe + (labyrinthe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ylabyrinthe) && (ylabyrinthe) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             //pari();
@@ -589,6 +583,7 @@ void park(){
             textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
         if (xPacman <= (xcanard + (canard->w)/2) && (xcanard + (canard->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ycanard) && (ycanard) <= (yPacman + pacman[0][0][1]->h)){
+
             stop_sample(sound[musiquealeatoire]);
             ducky();
             musique = 1;
@@ -1093,18 +1088,19 @@ void park(){
         //textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[0]);
         //textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[1]);
         stop = 1;
-        /*draw_sprite(buffer, affichageScore, 1200, 30);
+        draw_sprite(buffer, affichageScore, 1200, 30);
         for (int i = 0; i < joueurs[0].nbTickets; ++i) {
             draw_sprite(buffer, bitcoin[posbitcoin], 1320 + i*50 , 170);
         }
         for (int i = 0; i < joueurs[1].nbTickets; ++i) {
             draw_sprite(buffer, bitcoin[posbitcoin], 1320 + i*50 , 280);
-        }*/
+        }
 
-        //textprintf_ex(buffer, font, 1340, 150, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[0].nom, joueurs[0].nbTickets);
-        //textprintf_ex(buffer, font, 1340, 260, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[1].nom, joueurs[1].nbTickets);
-        //stop=1;
+        textprintf_ex(buffer, font, 1340, 150, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[0].nom, joueurs[0].nbTickets);
+        textprintf_ex(buffer, font, 1340, 260, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[1].nom, joueurs[1].nbTickets);
+        stop=1;
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
+
 
 
         if (key[KEY_P]) {
@@ -1246,26 +1242,41 @@ void park(){
             rest(10);
         } else
         rest(60); // Pause de 10 ms pour rafraîchir l'écran
+        for (int i = 0; i < 2; ++i) {
+            switch (joueurs[i].nbTickets) {
+                case 0:
+                    stop_sample(sound[musiquealeatoire]);
+                    while (!key[KEY_ENTER]) {
+                        clear_bitmap(buffer);
+                        play_sample(clear1, 255, 128, 1000, 0);
+                        draw_sprite(buffer, fonfin, 0, 0);
+                        draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200);
+                        draw_sprite(buffer, congrats, WIDTH / 2 - 50, HEIGHT / 2 - 500);
+                        textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a perdu, son coéquipier remporte la quête du Bitcoin !",joueurs[0].nom);
+                        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Gloire à ce preux chevalier :) !");
+                        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+                    }
+                    break;
+                case 10:
+                    stop_sample(sound[musiquealeatoire]);
+                    while (!key[KEY_ENTER]) {
+                        clear_bitmap(buffer);
+                        play_sample(clear1, 255, 128, 1000, 0);
+                        draw_sprite(buffer, fonfin, 0, 0);
+                        draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200);
+                        draw_sprite(buffer, congrats, WIDTH / 2 - 50, HEIGHT / 2 - 500);
+                        textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a terminée la quête du Bitcoin !",joueurs[0].nom);
+                        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Gloire à ce preux chevalier :) !");
+                        blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+                    }
+                    break;
+            }
 
-        if (joueurs[0].nbTickets==0 || joueurs[1].nbTickets==0){
-            clear_bitmap(buffer);
-            stop_sample(sound[musiquealeatoire]);
-            BITMAP * fonfin= load_bitmap("../Parc/image/fondfin.bmp", NULL);
-            if (!fonfin) { //blindage
-                allegro_message("Erreur image fond fin");
-                exit(EXIT_FAILURE);
+                stop_sample(sound[musiquealeatoire]);
             }
-            draw_sprite(buffer,fonfin,0,0);
-            BITMAP * affiche=load_bitmap("../Parc/image/affiche.bmp", NULL);
-            if (!affiche) { //blindage
-                allegro_message("Erreur image affiche");
-                exit(EXIT_FAILURE);
-            }
-            draw_sprite(buffer,affiche,SCREEN_W/2-affiche->w,0);
-            destroy_bitmap(fonfin);
-            destroy_bitmap(affiche);
         }
-    }
+
+
     stop_sample(sound[musiquealeatoire]);
 
 }
