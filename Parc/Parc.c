@@ -1187,6 +1187,26 @@ void parc2(){
             rest(10);
         } else
         rest(60); // Pause de 10 ms pour rafraîchir l'écran
+
+        if (joueurs[0].nbTickets==0 || joueurs[1].nbTickets==0){
+            clear_bitmap(buffer);
+            stop_sample(sound[musiquealeatoire]);
+            BITMAP * fonfin= load_bitmap("../Parc/image/fondfin.bmp", NULL);
+            if (!fonfin) { //blindage
+                allegro_message("Erreur image fond fin");
+                exit(EXIT_FAILURE);
+            }
+            draw_sprite(buffer,fonfin,0,0);
+            BITMAP * affiche=load_bitmap("../Parc/image/affiche.bmp", NULL);
+            if (!affiche) { //blindage
+                allegro_message("Erreur image affiche");
+                exit(EXIT_FAILURE);
+            }
+            draw_sprite(buffer,affiche,SCREEN_W/2-affiche->w,0);
+            destroy_bitmap(fonfin);
+            destroy_bitmap(affiche);
+        }
     }
     stop_sample(sound[musiquealeatoire]);
+
 }
