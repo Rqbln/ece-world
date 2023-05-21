@@ -385,10 +385,11 @@ void ducky(){ // remplace le main
     player2(&s2);
 
 
-    joueurs[0].nb_essaie_canard+=1;
-    joueurs[1].nb_essaie_canard+=1;
+
     joueurs[0].score_canard[joueurs[0].nb_essaie_canard]=s1;
     joueurs[1].score_canard[joueurs[1].nb_essaie_canard]=s2;
+    joueurs[0].nb_essaie_canard+=1;
+    joueurs[1].nb_essaie_canard+=1;
 
 
     draw_sprite(buffer, fond, 0, 0);

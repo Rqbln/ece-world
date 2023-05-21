@@ -345,6 +345,11 @@ void snake() {
                     saveMiniGame(joueurs,"Snake",score2,1);
                 }
             }
+            joueurs[0].score_snake[joueurs[0].nb_essaie_snake]=score1;
+            joueurs[1].score_snake[joueurs[1].nb_essaie_snake]=score2;
+            joueurs[0].nb_essaie_snake+=1;
+            joueurs[1].nb_essaie_snake+=1;
+
             loadHighScore(highscore);
         }
 

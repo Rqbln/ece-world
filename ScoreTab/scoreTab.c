@@ -8,6 +8,7 @@ void tableau_score(){
     BITMAP *buffer;
     BITMAP *compteur[10];
     BITMAP *lettre[37];//+10 pour les chiffre
+    BITMAP *affichage= load_bitmap("../ScoreTab/image/affichage.bmp",NULL);
     BITMAP *fond= load_bitmap("../ScoreTab/image/fond.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/kingGT.wav");
@@ -30,13 +31,14 @@ void tableau_score(){
     int ylettre;
     char message[8][nblettre];
     char nomDeFichier[50];
+    char messageDebut[200];
     int option=0;
 
     int xenter=WIDTH-400;
     int yenter=HEIGHT-80;
 
-    if(!fond){
-        allegro_message("../image/fondguitar0.bmp ");
+    if(!affichage){
+        allegro_message("../image/affichageguitar0.bmp ");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
@@ -64,8 +66,11 @@ void tableau_score(){
     while (!key[KEY_ESC]) {
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
-        stretch_blit(fond, buffer, 0, 0, fond->w, fond->h, 0, 0, WIDTH, HEIGHT);
-        draw_sprite(buffer, enterkey, xenter, yenter);
+        draw_sprite(buffer,fond,0,0);
+        draw_sprite(buffer, affichage, 0, 0);
+        sprintf(messageDebut, "Appuyez sur les flèches HAUT et BAS pour naviguer entre les Highscores et les statistiques des différents jeux de la partie");
+        textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT - 200, makecol(0, 0, 0), -1);
+
         if (key[KEY_UP]) { // Flèche du haut
             option--;
             if (option<0){
