@@ -40,8 +40,10 @@ void park(){
     //barbare[0]=load_bitmap("../Parc/imagepnj/perso0/action0/0.bmp",NULL);
     //barbare[1]=load_bitmap("../Parc/imagepnj/perso1/action0/0.bmp",NULL);
     barbare[1] = load_bitmap("../Parc/image/pnjbarbare/barbare1.bmp", NULL);
+
     int xbarbare[2];
     int ybarbare[2];
+
     xbarbare[0] = WIDTH - (barbare[0]->w);
     xbarbare[1] = 0;
     ybarbare[0] = HEIGHT - (barbare[0]->h);
@@ -1074,6 +1076,8 @@ void park(){
                 stop_sample(effet[i]);
             }
             musique=1;
+
+            //choix(&*buffer2,&*parchemin,&*buffer,&*pacman,&*barbare);
         }
         stop_sample(ambiance);
         //textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[0]);
@@ -1210,3 +1214,75 @@ void park(){
     stop_sample(sound[musiquealeatoire]);
 
 }
+/*void choix(BITMAP *buffer2,BITMAP *parchemin,BITMAP *buffer,BITMAP *pacman[grille][action][posirang],BITMAP *barbare[2]){
+    int xbarbare[2];
+    int ybarbare[2];
+    char text_input[128] = {0}; // variable pour stocker la saisie clavier
+    int stop = 0;
+    int buffersizew = WIDTH / 6;
+    int buffersizeh = HEIGHT / 8;
+    int posxbuff2 = (WIDTH / 2) - (buffersizew / 2);//WIDTH/2
+    int posybuff2 = (HEIGHT / 3) - (buffersizeh / 2);//HEIGHT/2
+    xbarbare[0] = WIDTH - (barbare[0]->w);
+    xbarbare[1] = 0;
+    ybarbare[0] = HEIGHT - (barbare[0]->h);
+    ybarbare[1] = HEIGHT - (barbare[1]->h);
+    SAMPLE *sound[nbMusique];
+    sound[0] = load_wav("../Parc/musique/GameTrone.wav");//GameTrone  HouseDragon
+    SAMPLE *effet[2];
+    SAMPLE *ambiance = load_wav("../Parc/musique/ambiance.wav");
+    play_sample(ambiance, 255, 128, 1000, 1);
+    for (int i = 0; i < NB_JOUEURS; ++i) {
+        play_sample(effet[i], 255, 128, 1000, 0);
+        while (!key[KEY_ENTER] && stop == 0 || strlen(text_input)>10) {
+            clear_bitmap(buffer2);
+            clear_to_color(buffer2, makecol(253, 208, 146)); // Effacer l'écran en blanc
+            // Afficher la zone de saisie clavier
+            textout_centre_ex(buffer2, font, "entrez votre nom : ", buffersizew/2, 3, makecol(0, 0, 0), -1);
+            textout_centre_ex(buffer2, font, text_input, buffersizew/2, buffersizeh/2, makecol(0, 0, 0), -1);
+            draw_sprite(buffer,barbare[i],xbarbare[i],ybarbare[i]);
+            // Lire la saisie clavier
+            //draw_sprite(buffer, bulle[i], (xbarbare[i] + barbare[i]->w), ybarbare[i]);
+
+            blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+            while (keypressed()) {
+                int cle = readkey();
+                if (cle >> 8 == KEY_BACKSPACE && strlen(text_input) > 0) {
+                    text_input[strlen(text_input) - 1] = '\0';
+                } else if (strlen(text_input) < 128 && (cle & 0xFF) >= ' ' && (cle & 0xFF) <= '~') {
+                    text_input[strlen(text_input)] = cle & 0xFF;
+                }
+            }
+            // Rafraîchir l'écran
+            vsync();
+            if(key[KEY_RIGHT]){
+                joueurs[i].persoChoisi +=1;
+            }
+            if(key[KEY_LEFT]){
+                joueurs[i].persoChoisi-=1;
+            }
+            if(joueurs[i].persoChoisi>=grille){
+                joueurs[i].persoChoisi=0;
+            }
+            if(joueurs[i].persoChoisi<0){
+                joueurs[i].persoChoisi=4;
+            }
+
+            draw_sprite(buffer, parchemin, ((WIDTH/2)-(parchemin->w)/2), 0);
+            draw_sprite(buffer, pacman[joueurs[i].persoChoisi][0][0], ((WIDTH/2)-50), HEIGHT-470);
+            blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
+            rest(120);
+        }
+        if(strlen(text_input)==0){
+            sprintf(text_input,"%s%d%d%d%d","Player",rand()%10,rand()%10,rand()%10,rand()%10);
+        }
+        //sprintf(nomjoueur[i], "%s", text_input);
+        while(strlen(text_input)!=10){
+            sprintf(text_input,"%s%s",text_input," ");
+        }
+        sprintf(joueurs[i].nom,"%s",text_input);
+        memset(text_input, '\0', sizeof(text_input)); //effacer tout le tableau
+        rest(300);
+        stop_sample(effet[i]);
+    }
+}*/

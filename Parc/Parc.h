@@ -32,4 +32,5 @@
 
 void parc();
 void park();
+//void choix(BITMAP *buffer2,BITMAP *parchemin,BITMAP *buffer,BITMAP *pacman[grille][action][posirang],BITMAP *barbare[2]);
 

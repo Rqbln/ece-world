@@ -8,7 +8,7 @@ void tableau_score(){
     BITMAP *buffer;
     BITMAP *compteur[10];
     BITMAP *lettre[37];//+10 pour les chiffre
-    BITMAP *fond= load_bitmap("../Games/Guitar_hero/image/tetedragon1.bmp",NULL);
+    BITMAP *fond= load_bitmap("../ScoreTab/image/fond.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *musique= load_sample("../Games/Guitar_hero/musique/kingGT.wav");
     set_trans_blender(0, 0, 0, 128);
@@ -26,8 +26,8 @@ void tableau_score(){
     int ycompteur=0;
     int numlettre=0;
     int nblettre=40;
-    int xlettre=0;
-    int ylettre=0;
+    int xlettre;
+    int ylettre;
     char message[8][nblettre];
     char nomDeFichier[50];
 
@@ -95,8 +95,8 @@ void tableau_score(){
                     }
                 }
                 printf("Caractere : %c, Entier : %d\n", message[j][i], (message[j][i] - '0'));
-                ylettre=j*(lettre[0]->h);
-                xlettre=i*(lettre[0]->w);
+                ylettre=j*(lettre[0]->h)+140;
+                xlettre=i*(lettre[0]->w)+180;
                 draw_sprite(buffer,lettre[numlettre],xlettre,ylettre);
             }
 
