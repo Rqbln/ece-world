@@ -1281,9 +1281,7 @@ void park(){
                         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
                     }
                     break;
-            }
-
-                stop_sample(sound[musiquealeatoire]);
+                }
             }
         }
 
