@@ -17,4 +17,5 @@
 
 #define HEIGHT 1080
 #define WIDTH 1920
+#define nbessaie 20
 void tableau_score();
