@@ -398,8 +398,9 @@ void river()
             vsync();
         }
         gameover=0;
-        joueurs[turn].nb_essaie_river++;
         joueurs[turn].score_river[joueurs[turn].nb_essaie_river]=joueurscore[turn];
+        joueurs[turn].nb_essaie_river++;
+
     }
     stop_sample(music);
     play_sample(clear, 255, 128, 1000, 0);
