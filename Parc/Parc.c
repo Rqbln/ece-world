@@ -490,7 +490,7 @@ void park(){
                 end = 1;
             }
             // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
         //collision activité hippodrome
         if (xPacman <= (xhippodrome + (hippodrome->w)/2) && (xhippodrome + (hippodrome->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yhippodrome+(hippodrome->h)/2) && (yhippodrome+(hippodrome->h)/2) <= (yPacman + pacman[0][0][1]->h)){
@@ -523,7 +523,7 @@ void park(){
             cmpt=0;
             cmp=0;
             // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
         if (xPacman <= (xtir + (tirballon->w)/2) && (xtir + (tirballon->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytir+tirballon->h) && (ytir+tirballon->h) <= (yPacman + pacman[0][0][1]->h)){
             shoot();
@@ -554,7 +554,7 @@ void park(){
             cmpt = 0;
             cmp = 0;
             // Collision détectée !
-            textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
         if (xPacman <= (xlabyrinthe + (labyrinthe->w)/2) && (xlabyrinthe + (labyrinthe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ylabyrinthe) && (ylabyrinthe) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
