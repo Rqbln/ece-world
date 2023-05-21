@@ -94,7 +94,7 @@ void tableau_score(){
                         numlettre=26;
                     }
                 }
-                printf("Caractere : %c, Entier : %d\n", message[j][i], (message[j][i] - '0'));
+                //printf("Caractere : %c, Entier : %d\n", message[j][i], (message[j][i] - '0'));
                 ylettre=j*(lettre[0]->h)+140;
                 xlettre=i*(lettre[0]->w)+180;
                 draw_sprite(buffer,lettre[numlettre],xlettre,ylettre);

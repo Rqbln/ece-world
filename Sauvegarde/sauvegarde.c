@@ -40,7 +40,7 @@ void saveGame(const t_joueurs* players, const char* saveFileName) {
 
     FILE* file = fopen(saveFilePath, "wb");
     if (file == NULL) {
-        fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde.\n");
+        //fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde.\n");
         return;
     }
 
@@ -66,7 +66,7 @@ void loadGame(t_joueurs* players, const char* loadFileName) {
 
     FILE* file = fopen(saveFilePath, "rb");
     if (file == NULL) {
-        fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde.\n");
+        //fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde.\n");
         return;
     }
 
@@ -113,7 +113,7 @@ void saveMiniGame (const t_joueurs* players, const char* saveFileName, int score
 
     FILE* file = fopen(saveFilePath, "wb");
     if (file == NULL) {
-        fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde.\n");
+        //fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde.\n");
         return;
     }
 
@@ -130,6 +130,19 @@ void saveMiniGame (const t_joueurs* players, const char* saveFileName, int score
     fclose(file); // Fermez le fichier
 }
 
+int compareNumerosFichiers(const void* a, const void* b) {
+    const t_fichier* fichierA = (const t_fichier*)a;
+    const t_fichier* fichierB = (const t_fichier*)b;
+
+    if (fichierA->numero < fichierB->numero) {
+        return -1;
+    } else if (fichierA->numero > fichierB->numero) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 void loadHighScore(t_highscore* highscore) {
     const char* savesFolderPath = "../saves/games/";
 
@@ -140,98 +153,88 @@ void loadHighScore(t_highscore* highscore) {
         return;
     }
 
-    // Lire les fichiers de sauvegarde dans le dossier
+
+
+
+
+// Lire les fichiers de sauvegarde dans le dossier
+    t_fichier fichiers[MAX_HIGH_SCORES];
     struct dirent* saveFile;
     int fileCount = 0;
     while ((saveFile = readdir(savesDir)) != NULL && fileCount < MAX_HIGH_SCORES) {
         if (saveFile->d_type == DT_REG && strcmp(saveFile->d_name, ".") != 0 && strcmp(saveFile->d_name, "..") != 0) {
             if (strstr(saveFile->d_name, ".sav") != NULL) {
-                // Construire le chemin complet du fichier
-                char saveFilePath[256];
-                snprintf(saveFilePath, sizeof(saveFilePath), "%s%s", savesFolderPath, saveFile->d_name);
-                // Ouvrir le fichier de sauvegarde
-                FILE* file = fopen(saveFilePath, "rb");
-                if (file == NULL) {
-                    fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde '%s'.\n", saveFilePath);
-                    continue;
-                }
+                // Extraire le numéro du fichier à partir du nom
+                int numeroFichier;
+                sscanf(saveFile->d_name, "%d", &numeroFichier);
 
-                if (feof(file)) {
-                    fprintf(stderr, "Le curseur du fichier est à la fin du fichier avant l'appel à fread.\n");
-                }
-
-                // Allouer suffisamment de mémoire pour contenir la chaîne de caractères de sérialisation
-                fseek(file, 0, SEEK_END);
-                long fileSize = ftell(file);
-                fseek(file, 0, SEEK_SET);
-
-
-
-                char* serializedData = (char*)malloc(fileSize + 1);
-                if (serializedData == NULL) {
-                    fprintf(stderr, "Erreur d'allocation mémoire pour la désérialisation.\n");
-                    fclose(file);
-                    continue;
-                }
-
-
-
-                // Lire la chaîne de caractères de sérialisation à partir du fichier
-                size_t elementsRead = fread(serializedData, sizeof(char), fileSize, file);
-
-                serializedData[fileSize] = '\0'; // Ajouter le caractère de fin de chaîne
-
-
-                if (elementsRead < fileSize) {
-
-                    fprintf(stderr, "Only %zu out of %ld bytes were read from the file '%s'.\n", elementsRead, fileSize, saveFilePath);
-                    fprintf(stderr, "Erreur lors de la lecture du fichier de sauvegarde '%s'.\n", saveFilePath);
-                    free(serializedData);
-                    fclose(file);
-                    continue;
-                }
-
-                // printf("Donnees sérialisées: %s\n", serializedData);
-
-                // Attribuer "user" comme nom par défaut
-                strcpy(highscore[fileCount].nom, "user");
-
-
-                // Extraire le nom du joueur et le score à partir de la chaîne de caractères sérialisée
-                if(serializedData[0] == ',') {
-                    sscanf(serializedData, ",%d", &highscore[fileCount].score);
-                } else {
-                    sscanf(serializedData, "%[^,],%d", highscore[fileCount].nom, &highscore[fileCount].score);
-                }
-                // Si aucun nom n'a été lu, attribuer une valeur par défaut
-                if (highscore[fileCount].nom[0] == '\0') {
-                    strcpy(highscore[fileCount].nom, "user");
-                }
-
-                free(serializedData); // Libérer la mémoire allouée
-                fclose(file); // Fermer le fichier
+                // Stocker le numéro de fichier et le nom du fichier dans la structure
+                fichiers[fileCount].numero = numeroFichier;
+                strcpy(fichiers[fileCount].nomFichier, saveFile->d_name);
 
                 fileCount++;
-
             }
         }
     }
+
+// Trier les fichiers en fonction du numéro de fichier
+    qsort(fichiers, fileCount, sizeof(t_fichier), compareNumerosFichiers);
+
+// Parcourir les fichiers triés
+    for (int i = 0; i < fileCount; i++) {
+        // Construire le chemin complet du fichier
+        char saveFilePath[256];
+        snprintf(saveFilePath, sizeof(saveFilePath), "%s%s", savesFolderPath, fichiers[i].nomFichier);
+
+        // Ouvrir le fichier de sauvegarde
+        FILE* file = fopen(saveFilePath, "rb");
+        if (file == NULL) {
+            //fprintf(stderr, "Erreur lors de l'ouverture du fichier de sauvegarde '%s'.\n", saveFilePath);
+            continue;
+        }
+
+        // Allouer suffisamment de mémoire pour contenir la chaîne de caractères de sérialisation
+        fseek(file, 0, SEEK_END);
+        long fileSize = ftell(file);
+        fseek(file, 0, SEEK_SET);
+
+        char* serializedData = (char*)malloc(fileSize + 1);
+        if (serializedData == NULL) {
+            fprintf(stderr, "Erreur d'allocation mémoire pour la désérialisation.\n");
+            fclose(file);
+            continue;
+        }
+
+        // Lire la chaîne de caractères de sérialisation à partir du fichier
+        fread(serializedData, sizeof(char), fileSize, file);
+        serializedData[fileSize] = '\0'; // Ajouter le caractère de fin de chaîne
+
+        // Extraire le nom du joueur et le score à partir de la chaîne de caractères sérialisée
+        sscanf(serializedData, "%[^,],%d", highscore[i].nom, &highscore[i].score);
+
+        free(serializedData); // Libérer la mémoire allouée
+        fclose(file); // Fermer le fichier
+
+        fileCount++;
+    }
+
     closedir(savesDir);
+
 
     // Afficher les noms et les scores lus
     for (int i = 0; i < fileCount; i++) {
-       // printf("Nom: %s, Score: %d\n", highscore[i].nom, highscore[i].score);
+       //printf("Nom: %s, Score: %d\n", highscore[i].nom, highscore[i].score);
     }
 }
 void nom_jeu(){
-    sprintf(highscore[0].nomjeu,"Canard ");
-    sprintf(highscore[1].nomjeu,"River  ");
-    sprintf(highscore[2].nomjeu,"Guitar1");
-    sprintf(highscore[3].nomjeu,"Guitar2");
-    sprintf(highscore[4].nomjeu,"Casino ");
-    sprintf(highscore[5].nomjeu,"Ballon ");
-    sprintf(highscore[6].nomjeu,"Snake  ");
-    sprintf(highscore[7].nomjeu,"Taupe  ");
+    sprintf(highscore[0].nomjeu,"Snake ");
+    sprintf(highscore[1].nomjeu,"Taupe  ");
+    sprintf(highscore[2].nomjeu,"Horse ");
+    sprintf(highscore[3].nomjeu,"Guitar ");
+    sprintf(highscore[4].nomjeu,"Ducky ");
+    sprintf(highscore[5].nomjeu,"Jackpot ");
+    sprintf(highscore[6].nomjeu,"River ");
+    sprintf(highscore[7].nomjeu,"Shoot  ");
 
 
 }
