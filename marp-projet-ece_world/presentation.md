@@ -226,8 +226,15 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 
 ![bg right:40%](images/serpent.png)
 
-        Pour ce qui est du snake :
-        - blablabla
+        Pour ce qui est du snake, il fonctionne comme ceci : 
+            - Chaque serpent est représenté par deux tableaux de coordonnées pour x et y, ainsi qu'une 
+            variable pour changer la longueur du snake. Un tableau score stocke les points des deux joueurs.
+            - Les pommes sont générées aléatoirement avec une fonction rand()
+            - Les joueurs jouent simultanément (l'un avec RDFG et l'autre avec IJKL)
+            - Les coordonnées sont actualisées en temps réel afin de vérifier les collisions 
+            avec le serpent lui-même, l'autre serpent et les bordures de l'écran
+            - Si la partie n'est toujours pas terminée par une collision et que l'un des
+            joueurs atteint 5 points, le mini jeu se termine.
 
 ![bg right:40%](images/snakelogi.png)
 ---
@@ -236,8 +243,16 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 
 ![bg right:40%](images/taupe.png)
 
-    Pour ce qui est du snake :
-        - blablabla
+    Le jeu Taupe fonctionne comme ceci :
+        - Chaque joueur joue chacun son tour et doit viser des cibles à l'aide de sa souris.
+        - Les cibles représentées sous forme d'archers ont 6 positions différentes et peuvent apparaître
+        n'importe où à ses 6 endroits
+        Quand le clic gauche de la souris est appuyé, le programme regarde si le joueur est positionné 
+        sur l'une des cibles. Si il est bien positionné sur une cible active, la cible disparait 
+        et se repositionne aléatoirement sur un autre endroit, tout en ajoutant 1 au score du joueur
+        en train de jouer.
+        - La joueur finit son tour lorsque le joueur prend trop de temps à cliquer sur une cible, 
+        ou qu'il atteint les 30 cibles touchées.
 ![bg right:40%](images/taupelogi.png)
 ---
 # Héros de la guitare
