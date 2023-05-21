@@ -222,6 +222,11 @@ void jackpot(){
     Jplayer1(&s1);
     Jplayer2(&s2);
 
+    joueurs[0].nb_essaie_casino+=1;
+    joueurs[1].nb_essaie_casino+=1;
+    joueurs[0].score_casino[joueurs[0].nb_essaie_casino]=s1;
+    joueurs[1].score_casino[joueurs[1].nb_essaie_casino]=s2;
+
     draw_sprite(buffer, fond, 0, 0);
     char message[50];
     char messagefin1[100];
