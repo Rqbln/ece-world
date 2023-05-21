@@ -275,6 +275,10 @@ void jeu_taupe() {
             saveMiniGame(joueurs,"Taupe",score[0],0);
         }
 
+        joueurs[0].score_taupe[joueurs[0].nb_essaie_taupe]=score[0];
+        joueurs[1].score_taupe[joueurs[1].nb_essaie_taupe]=score[1];
+        joueurs[0].nb_essaie_taupe+=1;
+        joueurs[1].nb_essaie_taupe+=1;
         loadHighScore(highscore);
 
         // Mettre à jour l'écran
