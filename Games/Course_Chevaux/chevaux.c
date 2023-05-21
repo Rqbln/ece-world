@@ -19,6 +19,8 @@ void anim_horse(){
     SAMPLE *musicparis= load_sample("../Games/Course_Chevaux/musique/pascheval.wav");
     SAMPLE *musiccourse= load_sample("../Games/Course_Chevaux/musique/coursecommente.wav");
     SAMPLE *musicarrive= load_sample("../Games/Course_Chevaux/musique/coursearriver.wav");
+    SAMPLE *course= load_sample("../Games/Course_Chevaux/musique/course.wav");
+    SAMPLE *fete= load_sample("../Games/Course_Chevaux/musique/fete.wav");
     //initialisation des variable
     int numlettre=0;
     int nblettre=30;
@@ -91,6 +93,7 @@ void anim_horse(){
     }
     buffer=create_bitmap(WIDTH,HEIGHT);
     play_sample(musicparis, 255, 128, 1000, 1);
+    play_sample(fete, 150, 128, 1000, 1);
 
     while (tour < 2) { //menu pour les paris avant la course
         clear_bitmap(buffer);
@@ -142,7 +145,9 @@ void anim_horse(){
     while (fin==0 && !key[KEY_ESC]){//initialise la course(position et music)
         stop_sample(musicarrive);
         stop_sample(musicparis);
+        stop_sample(fete);
         play_sample(musiccourse, 255, 128, 1000, 1);
+        play_sample(course, 150, 128, 1000, 1);
         for(int i=0;i<nbCheval;i++) {
             xcheval[i] = 0;
             position[i] = 0;
@@ -179,7 +184,9 @@ void anim_horse(){
         }
         //gestion music
         stop_sample(musiccourse);
-        play_sample(musicarrive, 255, 128, 1000, 1);
+        stop_sample(course);
+        play_sample(musicarrive, 150, 128, 1000, 1);
+        play_sample(fete, 255, 128, 1000, 1);
         while (!key[KEY_ENTER] && !key[KEY_ESC]) {
             //affiche le cavalier vainqueur
             sprintf(message,"  LE CAVALIER %d A WIN  ",memo+1);
@@ -246,4 +253,5 @@ void anim_horse(){
     }
     rest(200); // Pause pour eviter de capter plusieur fois la touche echap
     stop_sample(musicarrive);
+    stop_sample(fete);
 }

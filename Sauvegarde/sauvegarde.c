@@ -223,3 +223,15 @@ void loadHighScore(t_highscore* highscore) {
        // printf("Nom: %s, Score: %d\n", highscore[i].nom, highscore[i].score);
     }
 }
+void nom_jeu(){
+    sprintf(highscore[0].nomjeu,"Canard ");
+    sprintf(highscore[1].nomjeu,"River  ");
+    sprintf(highscore[2].nomjeu,"Guitar1");
+    sprintf(highscore[3].nomjeu,"Guitar2");
+    sprintf(highscore[4].nomjeu,"Casino ");
+    sprintf(highscore[5].nomjeu,"Ballon ");
+    sprintf(highscore[6].nomjeu,"Snake  ");
+    sprintf(highscore[7].nomjeu,"Taupe  ");
+
+
+}

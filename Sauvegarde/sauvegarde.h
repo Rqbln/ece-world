@@ -15,6 +15,7 @@
 #define MAX_NOM_LENGTH 50
 
 typedef struct highscore {
+    char nomjeu[20];
     char nom[MAX_NOM_LENGTH];
     int score;
 } t_highscore;
@@ -28,6 +29,7 @@ void loadGame(t_joueurs* players, const char* loadFileName) ;
 char* serializeMiniGames(const t_joueurs* players, int score, int gagnant);
 void saveMiniGame (const t_joueurs* players, const char* saveFileName, int score, int gagnant);
 void loadHighScore(t_highscore* highscores);
+void nom_jeu();
 
 extern t_highscore highscore [MAX_HIGH_SCORES];
 

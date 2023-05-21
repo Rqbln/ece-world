@@ -31,5 +31,5 @@
 
 
 void parc();
-void parc2();
+void park();
 
