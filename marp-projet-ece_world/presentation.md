@@ -179,7 +179,7 @@ end++;
 }
 //Conditions de vérification pour le ballon éclaté
 ```
-
+![bg right:40%](images/shootlogi.png)
 ---
 # Rivière de la Tortue
 *Réalisé par : **Laouïg** (100%).*
@@ -217,7 +217,7 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 (frogy + frogw) > log[1][logfrog] && (frogy + frogw) < log[1][logfrog] + 124))
     //Condition d'élimination du joueur où l'on a pixelX, la couleur analysée et pixelXm la couleur de référence
 ```
-
+![bg right:40%](images/riverlogi.png)
 
 
 ---
@@ -226,20 +226,27 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 
 ![bg right:40%](images/serpent.png)
 
+        Pour ce qui est du snake :
+        - blablabla
 
+![bg right:40%](images/snakelogi.png)
 ---
 # Tape Taupe
 *Réalisé par : **Robin** (100%).*
 
 ![bg right:40%](images/taupe.png)
 
-
+    Pour ce qui est du snake :
+        - blablabla
+![bg right:40%](images/taupelogi.png)
 ---
 # Héros de la guitare
 *Réalisé par : **Baptiste** (100%).*
 
 ![bg right:40%](images/dragon.png)
 
+    Pour ce qui est du Guitar Hero :
+        - blablabla
 
 ---
 # Course de chevaux
@@ -247,14 +254,8 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 
 ![bg right:40%](images/chevalo.png)
 
----
-### Logigramme
-
-Que vous jugez pertinent (image ou Mermaid.js)
-
-
-
----
+    Pour ce qui est du snake :
+        - blablabla
 
 # Bilan collectif
 `Comment le travail a-t-il été réparti et qui s'est occupé de quelle fonctionnalité ?`
@@ -274,6 +275,7 @@ Que vous jugez pertinent (image ou Mermaid.js)
 # Laouïg
 
 - `✅ 100%` Traversée de la rivière
+  - *L'ésthestime global du jeu à été sacrifié en partie pour conserverun gameplay plaisant (affichage bûche)*
 - `✅ 100%` Tir aux ballons
 - `✅ 100%` MARP : Mise en page, graphes d'appel et présentation générale
 ---
@@ -282,7 +284,6 @@ Que vous jugez pertinent (image ou Mermaid.js)
 
 - `✅ 100%` Pêche aux canards
 - `✅ 100%` Jackpot
-  - *Développer ici pourquoi cette tâche n'est pas terminée à 100%. (exemple : on aurait pu améliorer...).*
 - `✅ 100%` Infographie et affiche du jeu
 
 ---
@@ -305,19 +306,24 @@ Cependant pour ce qui est de la partie parc et gestion global,Robin et Baptiste 
 
 # Récapitulatif des jeux
 
-| Jeu                 | Avancement | Problèmes / reste |
-|---------------------|------------|-------------------|
-| Jackpot             | 100%       | -                 |
-| Pêche aux canards   | 100%       | -                 |
-| Traversée rivière   | 100%       | -                 |
-| Tir aux ballons     | 100%       | -                 |
-| Héros de la guitare | 100%       | -                 |
-| Course de chevaux   | 100%       | -                 |
-| Snake               | 100%       | -                 |
-| Tape-Taupes         | 100%       | -                 |
+| Jeu                 | Avancement | Problèmes / reste                     |
+|---------------------|------------|---------------------------------------|
+| Jackpot             | 100%       | -                                     |
+| Pêche aux canards   | 100%       | -                                     |
+| Traversée rivière   | 100%       | Amélioration de l'esthétisme possible |
+| Tir aux ballons     | 100%       | -                                     |
+| Héros de la guitare | 100%       | -                                     |
+| Course de chevaux   | 100%       | -                                     |
+| Snake               | 100%       | -                                     |
+| Tape-Taupes         | 100%       | -                                     |
+
 
 ---
 
+# Contribution Github
+
+![bg right:40%](images/git.png)
+---
 
 
 
