@@ -1187,6 +1187,43 @@ void park(){
 
             rest(100); // Pause de 100 ms pour rafraîchir l'écran
         }
+
+
+        if (key[KEY_Q]){
+            isPaused = 1; // Mettre le jeu en pause
+            rest(200); // Attendre un peu pour éviter les pressions répétées de la touche P
+        }
+
+        // Si le jeu est en pause
+        while (isPaused) {
+            clear_keybuf(); // Effacer le tampon des touches pressées pendant la pause
+
+            // Afficher le menu de pause
+            clear(buffer);
+            draw_sprite(buffer, fondmap, ximgfond, yimgfond);
+            rectfill(buffer, (WIDTH / 2) - 400, (HEIGHT / 2) - 100, (WIDTH / 2) + 400, (HEIGHT / 2) + 100,
+                     makecol(0, 0, 0));
+            textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 - 40, makecol(255, 255, 255), -1, "MENU QUITTER");
+            textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2, makecol(255, 255, 255), -1,
+                                 "Etes vous sûr de vouloir quitter ?");
+            textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1,
+                                 "Votre partie ne sera pas sauvegardée si vous n'avez pas sauvegardé au préalable");
+            textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 + 40, makecol(255, 255, 255), -1,
+                                 "Appuyez sur Entrée pour quitter ECE-WORLD, appuyez sur R pour revenir au jeu");
+
+            blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+
+            if (key[KEY_R]) {
+                isPaused = 0;
+            } else if (key[KEY_ENTER]) {
+                end = 1;
+                isPaused = 0;
+
+            }
+            rest(100); // Pause de 100 ms pour rafraîchir l'écran
+        }
+
+
         if (key[KEY_SPACE]) {
             rest(10);
         } else
