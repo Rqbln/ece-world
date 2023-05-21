@@ -1251,6 +1251,7 @@ void park(){
                         play_sample(clear1, 255, 128, 1000, 0);
                         draw_sprite(buffer, fonfin, 0, 0);
                         draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200);
+                        draw_sprite(buffer, congrats, WIDTH / 2 - 50, HEIGHT / 2 - 500);
                         textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a perdu, son coéquipier remporte la quête du Bitcoin !",joueurs[0].nom);
                         textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Gloire à ce preux chevalier :) !");
                         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
