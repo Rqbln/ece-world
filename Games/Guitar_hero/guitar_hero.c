@@ -362,14 +362,14 @@ void playguitar1(){
                     // Collision détectée !
                 }
             }
-            textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
+            //textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "score: %d", score);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             rest(vitesse); // Pause de 10 ms pour rafraîchir l'écran
         }
         while (!key[KEY_ENTER]) {
             draw_sprite(buffer,enterkey,xenter,yenter);
             stop_sample(musique);
-            sprintf(message,"Perdu enculé");
+            //sprintf(message,"Perdu ");
             joueurs[tour].score_guitare[joueurs[tour].nb_essaie_guitare]=score;
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
@@ -601,7 +601,7 @@ void playguitar(){
         while (!key[KEY_ENTER]) {
             draw_sprite(buffer,enterkey,xenter,yenter);
             stop_sample(musique);
-            sprintf(message,"Perdu enculé");
+            //sprintf(message,"Perdu ");
             joueurs[tour].score_guitare[joueurs[tour].nb_essaie_guitare]=score;
             textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);

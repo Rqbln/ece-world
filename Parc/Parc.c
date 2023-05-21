@@ -27,7 +27,7 @@ void park(){
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
     BITMAP *panneau = load_bitmap("../Parc/image/batiment/telephone0.bmp", NULL);
     BITMAP *enterkey = load_bitmap("../Parc/image/enterkey.bmp", NULL);
-    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore.bmp", NULL);
+    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore4.bmp", NULL);
     BITMAP *dragon[4][3];
 
 
@@ -472,6 +472,16 @@ void park(){
         posbitcoin += 1;
         if (posbitcoin >= 8) {
             posbitcoin = 0;
+        }
+        //gestion point
+        for (int i = 0; i < 2; ++i) {
+            draw_sprite(buffer, affichageScore, i*(WIDTH-affichageScore->w), 0);
+            for (int j = 0; j < joueurs[0].nbTickets; ++j) {//joueurs[0].nbTickets
+                draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +85+(i*(WIDTH-660))), 45);
+                //draw_sprite(buffer, bitcoin[posbitcoin],  ((-i)*(j*50 +85)+(i*(WIDTH-660))), 45);
+
+            }
+            textprintf_ex(buffer, font, 220+(i*(WIDTH-660)), 20, makecol(0, 0, 0), -1, "%s, bitcoin(s) : %d", joueurs[i].nom, joueurs[i].nbTickets);
         }
         //collision porte end
         if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[0][0][1]->h)){
@@ -1083,19 +1093,18 @@ void park(){
         //textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[0]);
         //textprintf_ex(buffer, font, 1700, 100, makecol(255, 255, 255), -1, "%s", nomjoueur[1]);
         stop = 1;
-        draw_sprite(buffer, affichageScore, 1200, 30);
+        /*draw_sprite(buffer, affichageScore, 1200, 30);
         for (int i = 0; i < joueurs[0].nbTickets; ++i) {
             draw_sprite(buffer, bitcoin[posbitcoin], 1320 + i*50 , 170);
         }
         for (int i = 0; i < joueurs[1].nbTickets; ++i) {
             draw_sprite(buffer, bitcoin[posbitcoin], 1320 + i*50 , 280);
-        }
+        }*/
 
-        textprintf_ex(buffer, font, 1340, 150, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[0].nom, joueurs[0].nbTickets);
-        textprintf_ex(buffer, font, 1340, 260, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[1].nom, joueurs[1].nbTickets);
-        stop=1;
+        //textprintf_ex(buffer, font, 1340, 150, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[0].nom, joueurs[0].nbTickets);
+        //textprintf_ex(buffer, font, 1340, 260, makecol(0, 0, 0), -1, "%s, Tickets : %d", joueurs[1].nom, joueurs[1].nbTickets);
+        //stop=1;
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
-
 
 
         if (key[KEY_P]) {
