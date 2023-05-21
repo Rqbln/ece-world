@@ -136,7 +136,7 @@ void tableau_score(){
             case 1:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               1");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
@@ -188,7 +188,7 @@ void tableau_score(){
             case 2:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               2");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
@@ -240,7 +240,7 @@ void tableau_score(){
             case 3:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               3");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
@@ -292,7 +292,7 @@ void tableau_score(){
             case 4:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               4");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
@@ -344,7 +344,7 @@ void tableau_score(){
             case 5:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               5");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
@@ -396,7 +396,7 @@ void tableau_score(){
             case 6:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               6");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
@@ -448,7 +448,7 @@ void tableau_score(){
             case 7:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               7");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
@@ -500,7 +500,7 @@ void tableau_score(){
             case 8:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               8");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
@@ -552,7 +552,7 @@ void tableau_score(){
             case 9:
                 while (!key[KEY_DOWN]&& !key[KEY_UP]&& !key[KEY_ESC]){
                     for (int j = 0; j < 2; ++j) {
-                        sprintf(message[0],"               %s", highscore[option + 1].nomjeu);
+                        sprintf(message[0],"               9");
                         sprintf(message[1],"%s             %s", joueurs[0].nom,joueurs[1].nom);
                         nblettre = strlen(message[j]);
                         for (int i = 0; i < nblettre; ++i) {
