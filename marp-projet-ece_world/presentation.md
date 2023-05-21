@@ -127,7 +127,7 @@ Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les st
 
 ![bg right:40%](images/potdejacques.png)
 
----
+
 ---
 # Shoot Baloon
 *Réalisé par : **Laouïg** (100%).*
@@ -141,7 +141,36 @@ Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les st
           rebondissant sur les murs à haute vitesse le plus vite possible !
         - Finalement, le score des deux joueurs s'affiche et le meilleur est gratifié de 2 tickets !
         - Le meilleur score est enregistré s'il y a lieu, puis mis à jour.
----
+Gestion du déplacement des ballons et condition de victoire :
+
+- Premièrement chaque ballon est initialisé à une position et vitesse aléatoire dans les limites de l'écran et son état mis à 0 (non éclaté) :
+```C
+int baloonxy[2[5]; //Positions des 5 ballons en x et y
+int vx[5],vy[5]; //Vitesses des 5 ballons en x et en y
+int baloonstate[5]; //tableau enregistrant l'état des 5 ballons (0=non-éclaté ; 1=éclaté)
+```
+- A chaque tour de boucle une condition vérifie si chaque ballon touche le borde de l'écran et si tel est le cas, sa vitesse est inversée pour donner un effet de rebond
+```C
+  if ((baloonxy[0][i] < 0 && vx[i] < 0) || (baloonxy[0][i] + baloon_w > SCREEN_W && vx[i] > 0)) {
+vx[i] = -vx[i];
+}
+if ((baloonxy[1][i] < 0 && vy[i] < 0) || (baloonxy[1][i] + baloon_h > SCREEN_H && vy[i] > 0)) {
+vy[i] = -vy[i];
+}
+//Conditions gérant le rebond des ballons
+```
+- Pour savoir quand tous les ballons sont éclatés, une variable end est incrémentée à chaque fois qu'un baloonState[x] passe à 1.
+```C
+  if ((mouse_b & 1) && (mouse_x > baloonxy[0][i]) && (mouse_x < (baloonxy[0][i] + baloon_w)) &&
+(mouse_y > baloonxy[1][i]) && (mouse_y < (baloonxy[1][i] + baloon_w))) {
+baloonState[i] = 1;
+baloonxy[0][i] = -1000; // Positions misent hors de l'écran pour que le ballon ne soit pas éclaté plusieurs fois par le joueur
+baloonxy[1][i] = -1000;
+end++;
+}
+//Conditions de vérification pour le ballon éclaté
+```
+
 ---
 # Rivière de la Tortue
 *Réalisé par : **Laouïg** (100%).*
@@ -157,29 +186,52 @@ Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les st
         - Finalement, le score des deux joueurs s'affiche et le meilleur est gratifié de 2 tickets !
         - Le meilleur score est enregistré s'il y a lieu, puis mis à jour.
 
+Fonctionnement et gestion des bûches:
 
----
+- La postition de chaque bûche est déclarée puis initialisée dans un tableau à 2 dimensions :
+```C
+int log[2][8]; // [0][x] pos en abscisse de la bûche x,[1][x] pos en ordonnée de la bûche x
+```
+- Un tableau va ensuite se charger de gérer l'apparition aléatoire dans le temps et la taille aléatoire de chaque bûche :
+```C
+int randtime[8]; // On initialise à rand()%10000 et la bûche x apparait si randtime[x]<40
+int randbmp[8]; // Initialisé à rand()%1 avant la boucle de jeu (0 = moyen, 1=grande)
+```
+- Pour ce qui est de la dérivation de la grenouille se trouvant sur une bûche, la position de la grenouille sur la bûche x est enregistrée en fonction de son ordonnée, on va vérifier qu'elle se trouve bien sur une bûche et la faire dériver, soit à droite, soit à gauche.
+```C
+int logfrog; // Prend une valeur de 1 à 8 selon la bûche où se trouve la grenouille
+int dlog; //Vitesse des bûches, soustraite ou ajoutée à la position en x de la grenouille si présente sur la bûche
+```
+- Gestion des collisions d'élimination rivière : Le seul moyen que j'ai trouvé pour que les collisions soient fonctionnelles est de sacrifier l'esthétisme du jeu en rajoutant des rectangles marron en dessous de chaque BMP de bûche. A l'aide de la fonction getPixel() on peut vérifier la couleur du pixel sur lequel se trouve la grenouille en un point et éliminer le joueur. 
+```C
+if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm && pixelB == couleurBm)&& !((frogx + frogw / 2) > log[0][logfrog] && (frogx + frogw / 2) < log[0][logfrog] + logw[logfrog] &&
+(frogy + frogw) > log[1][logfrog] && (frogy + frogw) < log[1][logfrog] + 124))
+    //Condition d'élimination du joueur où l'on a pixelX, la couleur analysée et pixelXm la couleur de référence
+```
+
+
+
 ---
 # Snake
 *Réalisé par : **Robin** (100%).*
 
 ![bg right:40%](images/serpent.png)
 
----
+
 ---
 # Tape Taupe
 *Réalisé par : **Robin** (100%).*
 
 ![bg right:40%](images/taupe.png)
 
----
+
 ---
 # Héros de la guitare
 *Réalisé par : **Baptiste** (100%).*
 
 ![bg right:40%](images/dragon.png)
 
----
+
 ---
 # Course de chevaux
 *Réalisé par : **Baptiste** (100%).*
