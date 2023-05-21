@@ -108,26 +108,35 @@ Décrire ici les fonctionnalités implémentées : choix joueurs, saisie des nom
 
 ![bg right:40%](images/coincoin.png)
 
-Décrire le fonctionnement du jeu dans les grandes lignes. Comment vous l'avez conçu.
-- Les canards vont de la droite à la gauche.
-- Lorsqu'ils ont disparu, ils ont 1 chance sur 50 de réapparaitre à droite.
-- Les canards vont à une vitesse différente (tirée aléatoirement).
-- La collision des canards est détectée.
-- etc.
-Pour chaque jeu (bien détailler au moins un jeu par personne), précisez les structures de données (structures importantes, tableaux importants, listes chainées...) et les fonctions importantes (avec leur prototype).
+    La pêche aux canard fonctionne de la manière suivante :
+        - chaque canard est représenté par une structure qui contient 4 entiers ( des coordonnées x, y et des vecteurs de déplacement x, y )
+          ces coordonnées sont chargées aléatoirement au début de chaque partie.
 
-### Tableaux
+        - On remplit un tableau de structure de 45 canards et l’on dessine les 45 images de canard aux coordonnées associées
+          un autre sous-programme va aussi venir vérifier si les canards on des tous les coordonnées différentes. 
+          si ce n’est pas le cas, si les canards se touchent, il y a collision.
 
-- `Canard canards[20]`
-### Graphe d'appel
----
+        - en cas de collision, on change aléatoirement le vecteur, déplacement, ordonnée et abscisse une nouvelle fois.
+
+        - On charge aussi la position de la souris et un sous programme compare ses coordonnées à celle de tous les canards.
+
+
+Les parties du joueur 1 et du joueur 2 sont des sous programme différent qui prennent en paramètres un pointeur d’entier un pointeur : le score.
+
+Dans la boucle de jeux on détecte le clic gauche de la souris et ses coordonnées sur l’écran, si les coordonnées correspondent avec un des canards, celui-ci vient se placer dans un des deux paniers et le score augmente. 
+
+Une fois que les deux joueurs ont joué, on compare les scores et on annonce le gagnant.
+
 ---
 # Jackpot
 *Réalisé par : **Lola** (100%).*
 
 ![bg right:40%](images/potdejacques.png)
 
-
+    Le jeu du casino fonctionne de la manière suivante : 
+        - on commence par charger les quatre icônes de 0 a 3.
+        - Quand l’utilisateur appui sur entrer 3 icône sont tirés aléatoirement pour chaque roue de la machine si les trois icônes ont le même numéro on ajoute 1 au score. 
+        - Au bout de 5 appuie sur entrer c’est au tour de l’adversaire on compare ensuite les scores et on annonce le gagnant.
 ---
 # Shoot Baloon
 *Réalisé par : **Laouïg** (100%).*
@@ -318,21 +327,7 @@ Cependant pour ce qui est de la partie parc et gestion global,Robin et Baptiste 
 
 Vous pouvez utiliser [Mermaid.js](https://mermaid.js.org/) pour générer des schémas. Regardez la documentation.
 
----
 
-# Slide avec du code
-
-
-```C
-for(int i = 0; i < 5; i++) {
-    printf("%d ", i);
-}
-```
-
-> 0 1 2 3 4 
-
-
----
 
 # Emojis
 
