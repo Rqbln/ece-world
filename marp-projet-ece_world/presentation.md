@@ -288,8 +288,13 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 
 ![bg right:40%](images/chevalo.png)
 
-    Pour ce qui est du snake :
-        - blablabla
+Pour le jeux course chevaux :
+
+Au début de chaque tour, les joueurs prennent tour à tour la décision de parier sur le cheval de leur choix. À l'aide des flèches directionnelles et de la touche "Entrée", ils sélectionnent le cheval sur lequel ils souhaitent placer leur pari. Les joueurs peuvent prendre en compte les statistiques, l'apparence ou tout autre critère pour faire leur choix.
+
+Une fois que tous les joueurs ont placé leurs paris, les courses commencent ! Les chevaux sont générés automatiquement à l'aide d'une boucle, ce qui signifie que chaque course est unique. La vitesse de chaque cheval varie aléatoirement à chaque déplacement, ce qui ajoute un élément de suspense et d'incertitude. Vous ne saurez jamais quel cheval prendra la tête et qui sera le grand gagnant.
+
+Les courses se poursuivent jusqu'à ce qu'un des chevaux atteigne la ligne d'arrivée ou entre en collision avec celle-ci. Lorsqu'un cheval atteint la ligne d'arrivée, le joueur qui a parié sur ce cheval remporte la manche. C'est un moment de grande joie et de célébration, car vous avez réussi à choisir le cheval le plus rapide parmi les autres concurrents.
 
 # Bilan collectif
 `Comment le travail a-t-il été réparti et qui s'est occupé de quelle fonctionnalité ?`
