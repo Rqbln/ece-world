@@ -1284,10 +1284,7 @@ void park(){
                 }
             }
         }
-
-
     stop_sample(sound[musiquealeatoire]);
-
 }
 /*void choix(BITMAP *buffer2,BITMAP *parchemin,BITMAP *buffer,BITMAP *pacman[grille][action][posirang],BITMAP *barbare[2]){
     int xbarbare[2];
