@@ -207,7 +207,7 @@ void anim_horse(){
                         numlettre=26;
                     }
                 }
-                printf("Caractere : %c, Entier : %d\n", message[i], (message[i] - '0'));
+                //printf("Caractere : %c, Entier : %d\n", message[i], (message[i] - '0'));
                 ylettre=j*(lettre[0]->h);
                 xlettre=i*(lettre[0]->w);
                 draw_sprite(buffer,lettre[numlettre],xlettre,ylettre);
