@@ -103,6 +103,7 @@ void park(){
     int persochoisit=0;
     int tourjoueur=0;
     int tourjoueur2=1;
+    int activateperso2=1;
 
     int vitesseimage=0;
     int xbitcoin = 0;
@@ -404,7 +405,16 @@ void park(){
         draw_sprite(buffer, river1, xriver, yriver);
         draw_sprite(buffer, serpent, xserpent, yserpent);
         draw_sprite(buffer,panneau,xpanneau,ypanneauM);
-        draw_sprite(buffer, pacman[joueurs[tourjoueur2].persoChoisi][actionperso2][posx2], xperso2, yperso2);
+        if (activateperso2==1){
+            draw_sprite(buffer, pacman[joueurs[tourjoueur2].persoChoisi][actionperso2][posx2], xperso2, yperso2);
+        }
+        if (key[KEY_H]){
+            activateperso2++;
+            if (activateperso2>=2){
+                activateperso2=0;
+            }
+            rest(200);
+        }
         //draw_sprite(buffer,dragon[0][0],xdragon,ydragon);
         //draw_sprite(buffer, portail[posbitcoin], xportail, yportail);
 
@@ -1332,16 +1342,16 @@ void park(){
                 // Option de chargement
                 loadGame(joueurs, loadFileName); // Charger le jeu (adapté à votre structure de joueurs et nom de sauvegarde)
                 isPaused = 0; // Reprendre le jeu
-            } else if (key[KEY_3]) {
+            } else if (key[KEY_3]||key[KEY_ESC]) {
                 // Option de reprise
                 isPaused = 0; // Reprendre le jeu
             }
 
-            rest(100); // Pause de 100 ms pour rafraîchir l'écran
+            rest(200); // Pause de 100 ms pour rafraîchir l'écran
         }
 
 
-        if (key[KEY_Q]){
+        if (key[KEY_ESC]){
             isPaused = 1; // Mettre le jeu en pause
             rest(200); // Attendre un peu pour éviter les pressions répétées de la touche P
         }
@@ -1361,11 +1371,11 @@ void park(){
             textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1,
                                  "Votre partie ne sera pas sauvegardée si vous n'avez pas sauvegardé au préalable");
             textprintf_centre_ex(buffer, font, WIDTH / 2, HEIGHT / 2 + 40, makecol(255, 255, 255), -1,
-                                 "Appuyez sur Entrée pour quitter ECE-WORLD, appuyez sur R pour revenir au jeu");
+                                 "Appuyez sur Entrée pour quitter ECE-WORLD, appuyez sur echap pour revenir au jeu");
 
             blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
 
-            if (key[KEY_R]) {
+            if (key[KEY_ESC]) {
                 isPaused = 0;
             } else if (key[KEY_ENTER]) {
                 end = 1;
