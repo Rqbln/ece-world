@@ -27,7 +27,7 @@ void park(){
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
     BITMAP *panneau = load_bitmap("../Parc/image/batiment/telephone0.bmp", NULL);
     BITMAP *enterkey = load_bitmap("../Parc/image/enterkey.bmp", NULL);
-    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore5.bmp", NULL);
+    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore6.bmp", NULL);
     BITMAP *dragon[4][3];
     BITMAP* scroll = load_bitmap("../Games/Shoot/image/scroll.bmp", NULL);
     BITMAP * fonfin= load_bitmap("../Parc/image/fondfin.bmp", NULL);
