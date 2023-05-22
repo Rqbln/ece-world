@@ -27,7 +27,7 @@ void park(){
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
     BITMAP *panneau = load_bitmap("../Parc/image/batiment/telephone0.bmp", NULL);
     BITMAP *enterkey = load_bitmap("../Parc/image/enterkey.bmp", NULL);
-    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore4.bmp", NULL);
+    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore5.bmp", NULL);
     BITMAP *dragon[4][3];
     BITMAP* scroll = load_bitmap("../Games/Shoot/image/scroll.bmp", NULL);
     BITMAP * fonfin= load_bitmap("../Parc/image/fondfin.bmp", NULL);
@@ -95,9 +95,15 @@ void park(){
     int xporte = ((xchateauEnd + (chateau->w)/2));//-((porte[0]->w)/2)
     int yporte = ychateauEnd+ (chateau->h)/2;
     int posx = 0; //position des sprite du personnage
+    int posx2 = 0;
     int actionperso = 0;
+    int actionperso2 = 0;
+    int xperso2=WIDTH/2;
+    int yperso2=HEIGHT/2-50;
     int persochoisit=0;
     int tourjoueur=0;
+    int tourjoueur2=1;
+
     int vitesseimage=0;
     int xbitcoin = 0;
     int ybitcoin = 0;
@@ -116,6 +122,7 @@ void park(){
     char nomDeFichier[80];
     char text_input[128] = {0}; // variable pour stocker la saisie clavier
     int stop = 0;
+    int selectperso=10;
 
     int poscheval = 0;
     int cmpt = 0;
@@ -397,6 +404,7 @@ void park(){
         draw_sprite(buffer, river1, xriver, yriver);
         draw_sprite(buffer, serpent, xserpent, yserpent);
         draw_sprite(buffer,panneau,xpanneau,ypanneauM);
+        draw_sprite(buffer, pacman[joueurs[tourjoueur2].persoChoisi][actionperso2][posx2], xperso2, yperso2);
         //draw_sprite(buffer,dragon[0][0],xdragon,ydragon);
         //draw_sprite(buffer, portail[posbitcoin], xportail, yportail);
 
@@ -479,11 +487,13 @@ void park(){
         //gestion point
         for (int i = 0; i < 2; ++i) {
             draw_sprite(buffer, affichageScore, i*(WIDTH-affichageScore->w), 0);
-            for (int j = 0; j < joueurs[0].nbTickets; ++j) {//joueurs[0].nbTickets
-                draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +85+(i*(WIDTH-660))), 45);
+            for (int j = 0; j < 10; ++j) {//joueurs[0].nbTickets
+                draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +25+(i*(WIDTH-545))), 42);
+                //draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +85+(i*(WIDTH-660))), 45);
                 //draw_sprite(buffer, bitcoin[posbitcoin],  ((-i)*(j*50 +85)+(i*(WIDTH-660))), 45);
 
             }
+            //textprintf_ex(buffer, font, 220+(i*(WIDTH-660)), 20, makecol(0, 0, 0), -1, "%s, bitcoin(s) : %d", joueurs[i].nom, joueurs[i].nbTickets);
             textprintf_ex(buffer, font, 220+(i*(WIDTH-660)), 20, makecol(0, 0, 0), -1, "%s, bitcoin(s) : %d", joueurs[i].nom, joueurs[i].nbTickets);
         }
         //collision porte end
@@ -519,6 +529,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -550,6 +561,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -583,6 +595,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -615,6 +628,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -647,6 +661,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -678,6 +693,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -709,6 +725,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -740,6 +757,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -771,6 +789,7 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
+            tourjoueur2=tourjoueur;
             tourjoueur+=1;
             if(tourjoueur>=NB_JOUEURS){
                 tourjoueur=0;
@@ -812,14 +831,101 @@ void park(){
                 xcheval[i] = ximgfond + 2670 - i * 21;
                 ycheval[i] = yimgfond + 1305 + i * 9;
             }
-            tourjoueur+=1;
-            if(tourjoueur>=NB_JOUEURS){
-                tourjoueur=0;
-            }
             cmpt = 0;
             cmp = 0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+        }
+        //xperso2 = WIDTH/2;
+        //yperso2 = HEIGHT/2 +50;
+        if ((xperso2 + (pacman[0][0][0]->w)/2)<=((WIDTH/2)-10)) {
+            if ((yperso2 + (pacman[0][0][0]->h)/2)>=((HEIGHT/2)+70)) {
+                if(vitesseimage==0){
+                    actionperso2 = 13;
+                } else{
+                    actionperso2 = 15;
+                }
+                yperso2 -= dy;
+
+            } else if ((yperso2 + (pacman[0][0][0]->h)/2)<=((HEIGHT/2)-70)) {
+                if(vitesseimage==0){
+                    actionperso2 = 5;
+                } else{
+                    actionperso2 = 7;
+                }
+                yperso2 += dy;
+
+            } else {
+                if(vitesseimage==0){
+                    actionperso2 = 8;
+                } else{
+                    actionperso2 = 10;
+                }
+            }
+            posx2++;
+            xperso2 += dx;
+
+            if (posx2 > 3) {
+                posx2 = 0;
+            }
+        } else if ((xperso2 + (pacman[0][0][0]->w)/2)>=((WIDTH/2)+100)) {
+            if ((yperso2 + (pacman[0][0][0]->h)/2)>=((HEIGHT/2)+7)) {
+                if(vitesseimage==0){
+                    actionperso2 = 9;
+                } else{
+                    actionperso2 = 11;
+                }
+                yperso2 -= dy;
+
+            } else if ((yperso2 + (pacman[0][0][0]->h)/2)<=((HEIGHT/2)-70)) {
+                if(vitesseimage==0){
+                    actionperso2 = 1;
+                } else{
+                    actionperso2 = 3;
+                }
+                yperso2 += dy;
+
+            } else {
+                if(vitesseimage==0){
+                    actionperso2 = 4;
+                } else{
+                    actionperso2 = 6;
+                }
+            }
+            posx2++;
+            xperso2 -= dx;
+
+            if (posx2 > 3) {
+                posx2 = 0;
+            }
+        } else if ((yperso2 + (pacman[0][0][0]->h)/2)>=((HEIGHT/2)+100)) {
+            if(vitesseimage==0){
+                actionperso2 = 12;
+            } else{
+                actionperso2 = 14;
+            }
+            posx2++;
+            yperso2 -= dy;
+
+            if (posx2 > 3) {
+                posx2 = 0;
+            }
+        } else if ((yperso2 + (pacman[0][0][0]->h)/2)<=((HEIGHT/2)-100)) {
+            if(vitesseimage==0){
+                actionperso2 = 0;
+            } else{
+                actionperso2 = 2;
+            }
+            posx2++;
+            yperso2 += dy;
+
+            if (posx2 > 3) {
+                posx2 = 0;
+            }
+        }
+        else{
+            posx2=0;
+            actionperso2=0;
         }
         if (key[KEY_DOWN] || key[KEY_UP] || key[KEY_LEFT] || key[KEY_RIGHT]) {
             if (key[KEY_RIGHT] && ((WIDTH + 1) < (fondmap->w + ximgfond))) {
@@ -842,6 +948,7 @@ void park(){
                     ycanard += dy;
                     ychateauEnd += dy;
                     ypanneau += dy;
+                    yperso2 += dy;
                     //yportail += dy;
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] += dy;
@@ -865,6 +972,7 @@ void park(){
                     ycanard -= dy;
                     ychateauEnd -= dy;
                     ypanneau -= dy;
+                    yperso2 -= dy;
                     //yportail -= dy;
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] -= dy;
@@ -890,6 +998,8 @@ void park(){
                 xcanard -= dx;
                 xchateauEnd -= dx;
                 xpanneau -= dx;
+                xperso2 -= dx;
+
                 //xportail -= dx;
                 for (int i = 0; i < nbcheval; ++i) {
                     xcheval[i] -= dx;
@@ -917,6 +1027,7 @@ void park(){
                     ycanard += dy;
                     ychateauEnd += dy;
                     ypanneau += dy;
+                    yperso2 += dy;
                     //yportail += dy;
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] += dy;
@@ -940,6 +1051,7 @@ void park(){
                     ycanard -= dy;
                     ychateauEnd -= dy;
                     ypanneau -= dy;
+                    yperso2 -= dy;
                     //yportail -= dy;
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] -= dy;
@@ -965,6 +1077,7 @@ void park(){
                 xcanard += dx;
                 xchateauEnd += dx;
                 xpanneau += dx;
+                xperso2 += dx;
                 //xportail += dx;
                 for (int i = 0; i < nbcheval; ++i) {
                     xcheval[i] += dx;
@@ -995,6 +1108,7 @@ void park(){
                 ycanard += dy;
                 ychateauEnd += dy;
                 ypanneau += dy;
+                yperso2 += dy;
                 //yportail += dy;
                 for (int i = 0; i < nbcheval; ++i) {
                     ycheval[i] += dy;
@@ -1022,6 +1136,7 @@ void park(){
                 ycanard -= dy;
                 ychateauEnd -= dy;
                 ypanneau -= dy;
+                yperso2 -= dy;
                 //yportail -= dy;
                 for (int i = 0; i < nbcheval; ++i) {
                     ycheval[i] -= dy;
@@ -1060,11 +1175,21 @@ void park(){
                     }
                     // Rafraîchir l'écran
                     vsync();
-                    if(key[KEY_RIGHT]){
-                        joueurs[i].persoChoisi +=1;
-                    }
+
                     if(key[KEY_LEFT]){
                         joueurs[i].persoChoisi-=1;
+                        if(joueurs[i].persoChoisi==selectperso){
+                            joueurs[i].persoChoisi-=1;
+                        }
+                    }
+                    else if(joueurs[i].persoChoisi==selectperso){
+                        joueurs[i].persoChoisi+=1;
+                    }
+                    else if(key[KEY_RIGHT]){
+                        joueurs[i].persoChoisi +=1;
+                        if(joueurs[i].persoChoisi==selectperso){
+                            joueurs[i].persoChoisi+=1;
+                        }
                     }
                     if(joueurs[i].persoChoisi>=grille){
                         joueurs[i].persoChoisi=0;
@@ -1073,11 +1198,13 @@ void park(){
                         joueurs[i].persoChoisi=4;
                     }
 
+
                     draw_sprite(buffer, parchemin, ((WIDTH/2)-(parchemin->w)/2), 0);
                     draw_sprite(buffer, pacman[joueurs[i].persoChoisi][0][0], ((WIDTH/2)-50), HEIGHT-470);
                     blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
-                    rest(120);
+                    rest(200);
                 }
+                selectperso=joueurs[i].persoChoisi;
                 if(strlen(text_input)==0){
                     sprintf(text_input,"%s%d%d%d%d","Player",rand()%10,rand()%10,rand()%10,rand()%10);
                 }
