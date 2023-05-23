@@ -101,7 +101,7 @@ void animation_guitarEnd(){
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         draw_sprite(buffer,witcher,0,0);
-        textout_centre_ex(buffer, font, message, 1400, 200, makecol(0, 0, 0), -1);
+        textout_centre_ex(buffer, font, message, 1500, 200, makecol(0, 0, 0), -1);
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
     }
     rest(250); // Pause pour éviter les mouvements trop rapides

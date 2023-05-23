@@ -26,6 +26,7 @@ void anim_horse(){
     int nblettre=30;
     int xlettre=0;
     int ylettre=0;
+    char vainqueur[15];
     char message[nblettre];
     int position[nbCheval];
     int xcheval[nbCheval];
@@ -189,7 +190,7 @@ void anim_horse(){
         while (!key[KEY_ENTER] && !key[KEY_ESC]) {
             //affiche le cavalier vainqueur
             sprintf(message,"  LE CAVALIER %d A WIN  ",memo+1);
-            textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             draw_sprite(buffer,enterkey, xenter, yenter);
             nblettre = strlen(message);
             for (int i = 0; i < nblettre; ++i) {
@@ -200,7 +201,7 @@ void anim_horse(){
                         numlettre+=32;
                     }
                     else if(numlettre>-50 && numlettre<-39) {
-                        numlettre+=49+26;//26+49 pour les chiffre on remplace 49 par ca
+                        numlettre+=49+27;//27+49 pour les chiffre on remplace 49 par ca
                     }
                     else{
                         numlettre=26;
@@ -216,6 +217,7 @@ void anim_horse(){
             //condition de fin de partie et attribution des points
             if(memo==joueur[0] && memo==joueur[1]){
                 fin=1;
+                sprintf(vainqueur, "egalité");
                 textout_centre_ex(buffer, font, "Les deux joueurs ont remporter un ticket", WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
                 if(ticket==0){
                     joueurs[1].nbTickets+=1;
@@ -227,6 +229,7 @@ void anim_horse(){
 
             }else if(memo==joueur[0]){
                 fin=1;
+                sprintf(vainqueur, "%s", joueurs[0].nom);
                 sprintf(message,"%s a remporter un ticket",joueurs[0].nom);
                 textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
                 joueurs[0].score_chevaux[joueurs[0].nb_essaie_chevaux-1]=1;
@@ -238,6 +241,7 @@ void anim_horse(){
             }else if(memo==joueur[1]){
                 joueurs[0].score_chevaux[joueurs[0].nb_essaie_chevaux-1]=0;
                 joueurs[1].score_chevaux[joueurs[1].nb_essaie_chevaux-1]=1;
+                sprintf(vainqueur, "%s", joueurs[1].nom);
                 fin=1;
                 sprintf(message,"%s a remporter un ticket",joueurs[1].nom);
                 textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT /3, makecol(255, 0, 0), -1);
@@ -250,11 +254,12 @@ void anim_horse(){
             rest(100); // Pause de 10 ms pour rafraîchir l'écran
         }
     }
+    animation_chevauxEnd(vainqueur);
     rest(200); // Pause pour eviter de capter plusieur fois la touche echap
     stop_sample(musicarrive);
     stop_sample(fete);
 }
-void animation_chevauxEnd(){
+void animation_chevauxEnd(char vainqueur[]){
     BITMAP *bitcoin[8];
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
     BITMAP *witcher = load_bitmap("../Games/Guitar_hero/image/witcher_face.bmp",NULL);;
@@ -280,14 +285,12 @@ void animation_chevauxEnd(){
         allegro_message("../../image/victoire.bmp");
         exit(EXIT_FAILURE);
     }
-
-
     play_sample(victoire, 255, 128, 1000, 1);
     while (!key[KEY_ENTER]) {
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         draw_sprite(buffer,witcher,0,0);
-        textout_centre_ex(buffer, font, message, 1400, 200, makecol(0, 0, 0), -1);
+        textout_centre_ex(buffer, font, vainqueur, 1500, 200, makecol(0, 0, 0), -1);
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
     }
     rest(250); // Pause pour éviter les mouvements trop rapides

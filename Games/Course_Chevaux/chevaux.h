@@ -12,3 +12,4 @@
 #define WIDTH 1920
 //void pari();
 void anim_horse();
+void animation_chevauxEnd(char vainqueur[]);
