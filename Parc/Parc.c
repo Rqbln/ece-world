@@ -33,6 +33,8 @@ void park(){
     BITMAP * fonfin= load_bitmap("../Parc/image/fondfin.bmp", NULL);
     BITMAP * congrats= load_bitmap("../Parc/image/congrats.bmp", NULL);
 
+    BITMAP *lettre[37];//+10 pour les chiffre//police d ecriture
+
     SAMPLE *clear1 = load_wav("../Games/Shoot/musique/marioclear.wav");
     SAMPLE *sound[nbMusique];
     sound[0] = load_wav("../Parc/musique/GameTrone.wav");//GameTrone  HouseDragon
@@ -110,6 +112,13 @@ void park(){
     int ybitcoin = 0;
     int posbitcoin = 0;
 
+    int numlettre=0;
+    int nblettre=40;
+    int xlettre;
+    int ylettre;
+    char message[8][nblettre];
+    int activatescore=1;
+
     int dx = 15;//vitesse
     int dy = 8;
     int xcenter;//centre du personnage
@@ -185,6 +194,18 @@ void park(){
             exit(EXIT_FAILURE);
         }
     }*/
+    for(int i=0;i<37;i++){ //+10
+        if (i<27){
+            sprintf(nomDeFichier,"../police/lettre12/%c.bmp",i+97);
+        } else{
+            sprintf(nomDeFichier,"../police/lettre12/%d.bmp",i-27);
+        }
+        lettre[i]= load_bitmap(nomDeFichier,NULL);
+        if(!lettre[i]){
+            allegro_message("../police/lettre12/%c.bmp",i+97);
+            exit(EXIT_FAILURE);
+        }
+    }
     //sprite bitcoin
     for (int j = 0; j < 8; j++) {
         sprintf(tabporte, "../Parc/image/bitcoin/bitcoin%d.bmp", j);
@@ -495,16 +516,45 @@ void park(){
             posbitcoin = 0;
         }
         //gestion point
-        for (int i = 0; i < 2; ++i) {
-            draw_sprite(buffer, affichageScore, i*(WIDTH-affichageScore->w), 0);
-            for (int j = 0; j < 10; ++j) {//joueurs[0].nbTickets
-                draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +25+(i*(WIDTH-545))), 42);
-                //draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +85+(i*(WIDTH-660))), 45);
-                //draw_sprite(buffer, bitcoin[posbitcoin],  ((-i)*(j*50 +85)+(i*(WIDTH-660))), 45);
-
+        if(key[KEY_J]){
+            activatescore++;
+            if (activatescore>=2){
+                activatescore=0;
             }
-            //textprintf_ex(buffer, font, 220+(i*(WIDTH-660)), 20, makecol(0, 0, 0), -1, "%s, bitcoin(s) : %d", joueurs[i].nom, joueurs[i].nbTickets);
-            textprintf_ex(buffer, font, 220+(i*(WIDTH-660)), 20, makecol(0, 0, 0), -1, "%s, bitcoin(s) : %d", joueurs[i].nom, joueurs[i].nbTickets);
+            rest(200);
+        }
+        if(activatescore==1){
+            for (int i = 0; i < 2; ++i) {
+                draw_sprite(buffer, affichageScore, i*(WIDTH-affichageScore->w), 0);
+                draw_sprite(buffer, pacman[joueurs[i].persoChoisi][0][0], (affichageScore->w)+i*(WIDTH-2*(affichageScore->w)-pacman[0][0][0]->w), 0);
+
+                sprintf(message[0],"%s",joueurs[i].nom);
+                nblettre = strlen(message[0]);
+                for (int j = 0; j < nblettre; ++j) {
+
+                    numlettre = (message[0][j] - '0') - 49;
+                    if (numlettre < 0 || numlettre > 25) {
+                        if (numlettre > -33 && numlettre < -6) {
+                            numlettre += 32;
+                        } else if (numlettre > -50 && numlettre < -39) {
+                            numlettre += 49 + 27;//26+49 pour les chiffre on remplace 49 par ca
+                        } else {
+                            numlettre = 26;
+                        }
+                    }
+                    ylettre = 10;
+                    xlettre = j*(lettre[0]->w)+55+(i*(WIDTH-545));
+                    draw_sprite(buffer, lettre[numlettre], xlettre, ylettre);
+                }
+                for (int j = 0; j < joueurs[0].nbTickets; ++j) {//joueurs[0].nbTickets
+                    draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +25+(i*(WIDTH-545))), 42);
+                    //draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +85+(i*(WIDTH-660))), 45);
+                    //draw_sprite(buffer, bitcoin[posbitcoin],  ((-i)*(j*50 +85)+(i*(WIDTH-660))), 45);
+
+                }
+                //textprintf_ex(buffer, font, 220+(i*(WIDTH-660)), 20, makecol(0, 0, 0), -1, "%s, bitcoin(s) : %d", joueurs[i].nom, joueurs[i].nbTickets);
+                //textprintf_ex(buffer, font, 220+(i*(WIDTH-660)), 20, makecol(0, 0, 0), -1, "%s, bitcoin(s) : %d", joueurs[i].nom, joueurs[i].nbTickets);
+            }
         }
         //collision porte end
         if (xPacman <= (xporte + porte[1]->w) && xporte <= (xPacman + pacman[0][0][1]->w) && yPacman <= (yporte + porte[1]->h) && yporte <= (yPacman + pacman[0][0][1]->h)){
