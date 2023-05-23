@@ -110,7 +110,6 @@ void anim_horse(){
                 j=0;
             }
             draw_sprite(buffer,select[i][j],xselect,yselect[i]);
-            textprintf_ex(buffer, font, 200, 100, makecol(255, 255, 255), -1, "joueur %d fais ton choix enculé!",tour);
         }
         draw_sprite(buffer,enterkey, xenter, yenter);
         if (key[KEY_UP]) { // Flèche du haut
@@ -254,4 +253,66 @@ void anim_horse(){
     rest(200); // Pause pour eviter de capter plusieur fois la touche echap
     stop_sample(musicarrive);
     stop_sample(fete);
+}
+void animation_guitarEnd(){
+    BITMAP *bitcoin[8];
+    BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
+    BITMAP *witcher = load_bitmap("../Games/Guitar_hero/image/witcher_face.bmp",NULL);;
+    BITMAP *blonde = load_bitmap("../Games/Guitar_hero/image/daenerys.bmp",NULL);
+    BITMAP *fond = load_bitmap("../Games/Guitar_hero/image/image_dragon.bmp",NULL);
+    SAMPLE *victoire = load_wav("../Games/Guitar_hero/musique/victoire.wav");
+    SAMPLE *bonus = load_wav("../Games/Guitar_hero/musique/bonus.wav");
+    char message[50];
+    int xbitcoin = WIDTH/2;
+    int ybitcoin = (HEIGHT/2)+70;
+    int posbitcoin = 0;
+    int cmpt=0;
+    int time=50;
+    for (int j = 0; j < 8; j++) {
+        sprintf(message, "../Games/bitcoin/bitcoin%d.bmp", j);
+        bitcoin[j] = load_bitmap(message, NULL);
+        if (!bitcoin[j]) {
+            allegro_message("../image/bitcoin/bitcoin%d.bmp", j);
+            exit(EXIT_FAILURE);
+        }
+    }
+    if(!victoire){
+        allegro_message("../../image/victoire.bmp");
+        exit(EXIT_FAILURE);
+    }
+
+
+    play_sample(victoire, 255, 128, 1000, 1);
+    while (!key[KEY_ENTER]) {
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,witcher,0,0);
+        textout_centre_ex(buffer, font, message, 1400, 200, makecol(0, 0, 0), -1);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+    }
+    rest(250); // Pause pour éviter les mouvements trop rapides
+    play_sample(bonus, 255, 128, 1000, 0);
+    while (!key[KEY_ENTER] && (joueurs[0].score_guitare[joueurs[0].nb_essaie_guitare-1] != joueurs[1].score_guitare[joueurs[1].nb_essaie_guitare-1])) {
+        cmpt+=1;
+        posbitcoin += 1;
+        if (posbitcoin >= 8) {
+            posbitcoin = 0;
+        }
+        if(cmpt>30 && cmpt<50){
+            ybitcoin-=6;
+        }
+        if(cmpt>=50){
+            time =15;
+            xbitcoin-=WIDTH/80;
+            ybitcoin-=HEIGHT/80;
+        }
+        clear_bitmap(buffer);
+        clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+        draw_sprite(buffer,blonde,0,0);
+        draw_sprite(buffer, bitcoin[posbitcoin], xbitcoin, ybitcoin);
+        blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
+        rest(time); // Pause pour éviter les mouvements trop rapides
+    }
+    stop_sample(victoire);
+    rest(250); // Pause pour éviter les mouvements trop rapides
 }
