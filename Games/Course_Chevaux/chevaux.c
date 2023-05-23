@@ -254,7 +254,7 @@ void anim_horse(){
     stop_sample(musicarrive);
     stop_sample(fete);
 }
-void animation_guitarEnd(){
+void animation_chevauxEnd(){
     BITMAP *bitcoin[8];
     BITMAP *buffer = create_bitmap(WIDTH, HEIGHT);
     BITMAP *witcher = load_bitmap("../Games/Guitar_hero/image/witcher_face.bmp",NULL);;
