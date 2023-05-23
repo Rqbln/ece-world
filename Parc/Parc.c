@@ -27,7 +27,7 @@ void park(){
     BITMAP *canard = load_bitmap("../Parc/image/batiment/parc1.bmp", NULL);
     BITMAP *panneau = load_bitmap("../Parc/image/batiment/telephone0.bmp", NULL);
     BITMAP *enterkey = load_bitmap("../Parc/image/enterkey.bmp", NULL);
-    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore6.bmp", NULL);
+    BITMAP *affichageScore = load_bitmap("../Parc/image/affichageScore7.bmp", NULL);
     BITMAP *dragon[4][3];
     BITMAP* scroll = load_bitmap("../Games/Shoot/image/scroll.bmp", NULL);
     BITMAP * fonfin= load_bitmap("../Parc/image/fondfin.bmp", NULL);
@@ -548,12 +548,12 @@ void park(){
                             numlettre = 26;
                         }
                     }
-                    ylettre = 10;
+                    ylettre = 7;
                     xlettre = j*(lettre[0]->w)+55+(i*(WIDTH-545));
                     draw_sprite(buffer, lettre[numlettre], xlettre, ylettre);
                 }
                 for (int j = 0; j < joueurs[0].nbTickets; ++j) {//joueurs[0].nbTickets
-                    draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +25+(i*(WIDTH-545))), 42);
+                    draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +25+(i*(WIDTH-545))), 55);
                     //draw_sprite(buffer, bitcoin[posbitcoin],  (j*50 +85+(i*(WIDTH-660))), 45);
                     //draw_sprite(buffer, bitcoin[posbitcoin],  ((-i)*(j*50 +85)+(i*(WIDTH-660))), 45);
 
