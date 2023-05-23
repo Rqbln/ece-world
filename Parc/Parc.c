@@ -159,6 +159,7 @@ void park(){
     int ytaupeM;
     int ycanardM;
     int ypanneauM;
+    int yperso2M;
     //int yportailM;
     int xguitarM;
     int xserpentM;
@@ -176,6 +177,7 @@ void park(){
     //int xportailM;
     int xchevalM[nbCheval];
     int ychevalM[nbCheval];
+    int xperso2M;
     //sprite porte de fin
     for (int j = 0; j < 4; j++) {
         sprintf(tabporte, "../Parc/image/porte/portEnd%d.bmp", j);
@@ -322,6 +324,7 @@ void park(){
             ytaupe=ytaupeM;
             ycanard=ycanardM;
             ypanneau=ypanneauM;
+            yperso2=yperso2M;
             //yportail=yportailM;
             xguitar=xguitarM;
             xserpent=xserpentM;
@@ -336,6 +339,7 @@ void park(){
             xtaupe=xtaupeM;
             xcanard=xcanardM;
             xpanneau=xpanneauM;
+            xperso2=xperso2M;
             //xportail=xportailM;
             /*for (int i = 0; i < nbcheval; ++i) {
                 xcheval[i] = xchevalM[i];
@@ -373,6 +377,7 @@ void park(){
         ytaupeM=ytaupe;
         ycanardM=ycanard;
         ypanneauM=ypanneau;
+        yperso2M=yperso2;
         //yportailM=yportail;
         xguitarM=xguitar;
         xserpentM=xserpent;
@@ -387,6 +392,7 @@ void park(){
         xtaupeM=xtaupe;
         xcanardM=xcanard;
         xpanneauM=xpanneau;
+        xperso2M=xperso2;
         //xportailM=xportail;
         for (int i = 0; i < nbcheval; ++i) {
             xchevalM[i] = xcheval[i];
@@ -413,7 +419,7 @@ void park(){
         //image de fond qui bouge
         draw_sprite(buffer, fondmap, ximgfond, yimgfond);
         //draw_sprite(buffer, fond, ximgfond, yimgfond);
-        textprintf_ex(buffer, font, 500, 10, makecol(255, 255, 255), -1, "red: %d, vert: %d, blu: %d", pixel_r, pixel_v,pixel_b);
+        //textprintf_ex(buffer, font, 500, 10, makecol(255, 255, 255), -1, "red: %d, vert: %d, blu: %d", pixel_r, pixel_v,pixel_b);
         draw_sprite(buffer, chateau, xchateauEnd, ychateauEnd);
         draw_sprite(buffer, porte[order], xporte, yporte);
         //draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
@@ -898,7 +904,7 @@ void park(){
         }
         //xperso2 = WIDTH/2;
         //yperso2 = HEIGHT/2 +50;
-        if ((xperso2 + (pacman[0][0][0]->w)/2)<=((WIDTH/2)-10)) {
+        if ((xperso2 + (pacman[0][0][0]->w)/2)<=((WIDTH/2)-100)) {
             if ((yperso2 + (pacman[0][0][0]->h)/2)>=((HEIGHT/2)+70)) {
                 if(vitesseimage==0){
                     actionperso2 = 13;
@@ -929,7 +935,7 @@ void park(){
                 posx2 = 0;
             }
         } else if ((xperso2 + (pacman[0][0][0]->w)/2)>=((WIDTH/2)+100)) {
-            if ((yperso2 + (pacman[0][0][0]->h)/2)>=((HEIGHT/2)+7)) {
+            if ((yperso2 + (pacman[0][0][0]->h)/2)>=((HEIGHT/2)+70)) {
                 if(vitesseimage==0){
                     actionperso2 = 9;
                 } else{
