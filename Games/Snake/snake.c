@@ -303,7 +303,7 @@ void snake() {
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
             joueurs[0].nbTickets=memotickets[0]+2;
             if (highscore[0].score <= score1) {
-                saveMiniGame(joueurs,"Snake",score1,0);
+                saveMiniGame(joueurs,"0Snake",score1,0);
                 sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[0].nom,OldHighScore);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
             }
@@ -314,7 +314,7 @@ void snake() {
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
             joueurs[1].nbTickets=memotickets[1]+2;
             if (highscore[0].score <= score2) {
-                saveMiniGame(joueurs,"Snake",score2,1);
+                saveMiniGame(joueurs,"0Snake",score2,1);
                 sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[1].nom,OldHighScore);
                 textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
 
@@ -328,7 +328,7 @@ void snake() {
                 joueurs[0].nbTickets=memotickets[0]+2;
 
                 if (highscore[0].score <= score1) {
-                    saveMiniGame(joueurs,"Snake",score1,0);
+                    saveMiniGame(joueurs,"0Snake",score1,0);
                     sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[0].nom, OldHighScore);
                     textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
                 }
@@ -342,7 +342,7 @@ void snake() {
 
                     sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[1].nom, OldHighScore);
                     textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-                    saveMiniGame(joueurs,"Snake",score2,1);
+                    saveMiniGame(joueurs,"0Snake",score2,1);
                 }
             }
             joueurs[0].score_snake[joueurs[0].nb_essaie_snake]=score1;

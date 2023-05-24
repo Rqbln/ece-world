@@ -239,7 +239,7 @@ void jeu_taupe() {
     }
     stop_sample(ambiance);
     play_sample(victoire, 255, 128, 1000, 0);
-    while (!key[KEY_ESC]) {
+    while (!key[KEY_ENTER]) {
 
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
@@ -272,7 +272,7 @@ void jeu_taupe() {
 
             sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[gagnant].nom,OldHighScore);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 60, makecol(255, 255, 255), -1);
-            saveMiniGame(joueurs,"Taupe",score[0],0);
+            saveMiniGame(joueurs,"1Taupe",score[0],0);
         }
 
         joueurs[0].score_taupe[joueurs[0].nb_essaie_taupe]=score[0];
@@ -280,6 +280,7 @@ void jeu_taupe() {
         joueurs[0].nb_essaie_taupe+=1;
         joueurs[1].nb_essaie_taupe+=1;
         loadHighScore(highscore);
+
 
         // Mettre à jour l'écran
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);

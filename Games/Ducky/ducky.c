@@ -158,8 +158,8 @@ void player1(int *score1){
         allegro_message("Erreur image mouse");
         exit(EXIT_FAILURE);
     }
-    set_mouse_sprite(mouse);
-    set_mouse_sprite_focus(0, 0);
+    //set_mouse_sprite(mouse);
+    //set_mouse_sprite_focus(0, 0);
     BITMAP *player1;
     player1= load_bitmap("../Games/Ducky/IMAGES/player1.bmp",NULL);
     if (!player1) { //blindage
@@ -191,7 +191,7 @@ void player1(int *score1){
     while (!key[KEY_ESC] && temps_actuel < compteur){
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
-        poll_mouse();
+        //poll_mouse();
         mouseX = mouse_x;
         mouseY = mouse_y;
         if (mouse_b & 1) {
@@ -267,8 +267,8 @@ void player2(int *score2){
         allegro_message("Erreur image mouse");
         exit(EXIT_FAILURE);
     }
-    set_mouse_sprite(mouse);
-    set_mouse_sprite_focus(0, 0);
+    //set_mouse_sprite(mouse);
+    //set_mouse_sprite_focus(0, 0);
     SAMPLE * duck;
     duck= load_wav("../Games/Ducky/IMAGES/Vidéo-sans-titre.wav");
     ///////////////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@ void player2(int *score2){
     while (!key[KEY_ESC] && temps_actuel < compteur){
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
-        poll_mouse();
+        //poll_mouse();
         mouseX = mouse_x;
         mouseY = mouse_y;
         if (mouse_b & 1) {
@@ -413,7 +413,7 @@ void ducky(){ // remplace le main
         joueurs[1].nbTickets+=1;
         joueurs[0].nbTickets-=1;
         if (highscore[4].score <= s2) {
-            saveMiniGame(joueurs,"Ducky",s2,1);
+            saveMiniGame(joueurs,"4Ducky",s2,1);
             sprintf(messagefin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
             textout_centre_ex(buffer,font, messagefin, SCREEN_W/2, SCREEN_H / 2 + 20, makecol(255, 255, 255), -1);
 
