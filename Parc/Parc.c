@@ -20,7 +20,7 @@ void park(){
     BITMAP *guitar = load_bitmap("../Parc/image/batiment/concert2.bmp", NULL);
     BITMAP *casino = load_bitmap("../Parc/image/batiment/casino0.bmp", NULL);
     BITMAP *river1 = load_bitmap("../Parc/image/batiment/lac1.bmp", NULL);
-    BITMAP *serpent = load_bitmap("../Parc/image/batiment/river0.bmp", NULL);
+    BITMAP *serpent = load_bitmap("../Parc/image/batiment/labyrinthe0.bmp", NULL);
     BITMAP *tirballon = load_bitmap("../Parc/image/batiment/futuroscope0.bmp", NULL);
     BITMAP *labyrinthe = load_bitmap("../Parc/image/batiment/labyrinthe0.bmp", NULL);
     BITMAP *taupe = load_bitmap("../Parc/image/batiment/cirque0.bmp", NULL);
@@ -425,7 +425,7 @@ void park(){
         draw_sprite(buffer, porte[order], xporte, yporte);
         //draw_sprite(buffer,hippodrome,xhippodrome,yhippodrome);
         draw_sprite(buffer, tirballon, xtir, ytir);
-        draw_sprite(buffer, labyrinthe, xlabyrinthe, ylabyrinthe);
+        //draw_sprite(buffer, labyrinthe, xlabyrinthe, ylabyrinthe);
         draw_sprite(buffer, canard, xcanard, ycanard);
         draw_sprite(buffer, taupe, xtaupe, ytaupe);
         draw_sprite(buffer, guitar, xguitar, yguitar);
@@ -640,7 +640,7 @@ void park(){
             //textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         }
 
-        if (xPacman <= (xlabyrinthe + (labyrinthe->w)/2) && (xlabyrinthe + (labyrinthe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ylabyrinthe) && (ylabyrinthe) <= (yPacman + pacman[0][0][1]->h)){
+        /*if (xPacman <= (xlabyrinthe + (labyrinthe->w)/2) && (xlabyrinthe + (labyrinthe->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ylabyrinthe) && (ylabyrinthe) <= (yPacman + pacman[0][0][1]->h)){
             stop_sample(sound[musiquealeatoire]);
             //pari();
             anim_horse();
@@ -672,7 +672,7 @@ void park(){
             cmp = 0;
             // Collision détectée !
             textout_centre_ex(buffer, font, "Collision !", WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
-        }
+        }*/
         if (xPacman <= (xcanard + (canard->w)/2) && (xcanard + (canard->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ycanard) && (ycanard) <= (yPacman + pacman[0][0][1]->h)){
 
             stop_sample(sound[musiquealeatoire]);
