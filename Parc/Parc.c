@@ -9,7 +9,7 @@ void park(){
     BITMAP *buffer= create_bitmap(WIDTH, HEIGHT);
     BITMAP *pacman[grille][action][posirang];
     BITMAP *porte[4];
-    BITMAP *chateau = load_bitmap("../Parc/image/porte/chateauEnd1.bmp", NULL);
+    BITMAP *chateau = load_bitmap("../Parc/image/porte/chateauEnd3.bmp", NULL);
     BITMAP *barbare[2];
     //BITMAP *portail[12];
     BITMAP *fond = load_bitmap("../Parc/image/fond/fondplage3.bmp", NULL);
@@ -95,7 +95,7 @@ void park(){
     int xchateauEnd = ximgfond + 3350;
     int ychateauEnd = yimgfond + 2060;
     int xporte = ((xchateauEnd + (chateau->w)/2));//-((porte[0]->w)/2)
-    int yporte = ychateauEnd+ (chateau->h)/2;
+    int yporte = (ychateauEnd+ (chateau->h)/2)+10;
     int posx = 0; //position des sprite du personnage
     int posx2 = 0;
     int actionperso = 0;
@@ -187,6 +187,7 @@ void park(){
             exit(EXIT_FAILURE);
         }
     }
+    xporte-=(porte[0]->w)/2;
     //sprite portail
     /*for (int j = 0; j < 12; j++) {
         sprintf(tabporte, "../Parc/image/portail/%d.bmp", j);

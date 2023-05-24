@@ -139,7 +139,7 @@ void menuguitar(){
     BITMAP *selectstart1[2];
     BITMAP *selectrules[2];
     BITMAP *selectexit[2];
-    BITMAP *regle = load_bitmap("../Games/Guitar_hero/image/parcheminGH.bmp",NULL);
+    BITMAP *regle = load_bitmap("../Games/Guitar_hero/image/parcheminGH1.bmp",NULL);
     BITMAP *enterkey= load_bitmap("../Games/Course_Chevaux/image/enterkey.bmp",NULL);
     SAMPLE *sound = load_wav("../Games/Guitar_hero/musique/westworld.wav");
     if (!sound) {
