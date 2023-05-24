@@ -66,9 +66,8 @@ Tous nos jeux ont soit un scénario soit des éléments graphiques appartenant �
 Décrire ici les fonctionnalités implémentées : choix joueurs, saisie des noms, affichage des scores/classement... Comment avez-vous fait ? Quels étaient les problèmes rencontrés.
 - Choix des joueurs et du nom : Après avoir cliquer sur le bouton pour commencer la partie, chaque joueur se verra, chacun à son tour, choisir un personnage et le nom de son chevalier par une fenêtre pop-up.
 
-
-- Accès aux mini-jeux et fonctionnalités (sortie du parc, tableau des scores) : Dans le parc, chaque mini-jeu est représenté par un bâtiment personalisé permettant de bien distinguer chaque mini-jeu. Le joueur a la possibilité de marcher ou bien de courir pour accéder plus rapidement à ses jeux préférés !
- De plus, le joueur peut, à tout moment sortir du parc par la porte ou bien consulter le tableau des meilleurs scores.
+- Accéder aux mini-jeux et fonctionnalités (sortie du parc, tableau des scores) : Chaque mini-jeu dans le parc est représenté par un bâtiment personnalisé, permettant une distinction claire entre eux. Le joueur ne peut traverser les zones d'eau et se déplace plus rapidement en empruntant les chemins pour accéder plus rapidement à ses jeux préférés !
+De plus, le joueur a la possibilité de sortir du parc à tout moment par la porte principale. Il peut également consulter le tableau des scores en appuyant sur la touche "Enter" à l'entrée du parc.
 
 
 ---
@@ -261,17 +260,16 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 ![bg right:40%](images/dragon.png)
 
     Mon Guitar Hero offre deux modes de jeu uniques et captivants. 
-    Dans ce jeu, vous pourrez vous immerger dans une expérience musicale palpitante en utilisant 
-    votre souris et votre sens du rythme. Permettez-moi de vous expliquer en détail les deux modes de jeu disponibles.
+    Dans ce jeu, vous pourrez vous immerger dans une expérience musicale palpitante en utilisant votre souris ou votre clavier 
+    et surtout votre sens du rythme. Permettez-moi de vous expliquer en détail les deux modes de jeu disponibles.
 
     Mode 1 : Défis de rapidité
 
     Dans ce mode, votre objectif est de bouger votre souris rapidement et avec précision pour 
     toucher les flammes qui apparaissent à l'écran avant qu'elles ne quittent celui-ci. 
-    Chaque fois que vous réussissez à toucher une flamme sans collision, votre score augmente de 1. 
-    Cependant, si vous ratez une flamme ou si une collision se produit, votre score n'augmente pas et la 
-    vitesse du jeu s'accélère. Cela ajoute une dose d'excitation supplémentaire et vous met au défi de
-    rester concentré et réactif tout au long du jeu.
+    Chaque fois que vous réussissez à toucher une flamme, votre score augmente de 1 et la vitesse du jeu s'accélère. 
+    Cependant, si vous ratez une flamme ou si une collision avec le bord de l'écran se produit, votre tour se fini. 
+    Cela ajoute une dose d'excitation supplémentaire et vous met au défi de rester concentré et réactif tout au long du jeu.
 
     Mode 2 : Défis de coordination
 
@@ -288,13 +286,18 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 
 ![bg right:40%](images/chevalo.png)
 
-Pour le jeux course chevaux :
+Pour le jeu course chevaux :
 
-Au début de chaque tour, les joueurs prennent tour à tour la décision de parier sur le cheval de leur choix. À l'aide des flèches directionnelles et de la touche "Entrée", ils sélectionnent le cheval sur lequel ils souhaitent placer leur pari. Les joueurs peuvent prendre en compte les statistiques, l'apparence ou tout autre critère pour faire leur choix.
+Au début de chaque tour, les joueurs prennent tour à tour la décision de parier sur le cheval de leur choix.
+À l'aide des flèches directionnelles et de la touche "Entrée", ils sélectionnent le cheval sur lequel ils souhaitent placer leur pari.
 
-Une fois que tous les joueurs ont placé leurs paris, les courses commencent ! Les chevaux sont générés automatiquement à l'aide d'une boucle, ce qui signifie que chaque course est unique. La vitesse de chaque cheval varie aléatoirement à chaque déplacement, ce qui ajoute un élément de suspense et d'incertitude. Vous ne saurez jamais quel cheval prendra la tête et qui sera le grand gagnant.
+Une fois que tous les joueurs ont placé leurs paris, les courses commencent ! Les chevaux sont générés automatiquement à l'aide d'une boucle,
+ce qui signifie qu il s'agit d'un seule sprite de cheval. La vitesse de chaque cheval varie aléatoirement à chaque déplacement, ce qui ajoute 
+un élément de suspense et d'incertitude en effet chaque tour est unique. Vous ne saurez jamais quel cheval prendra la tête et qui sera le grand gagnant.
 
-Les courses se poursuivent jusqu'à ce qu'un des chevaux atteigne la ligne d'arrivée ou entre en collision avec celle-ci. Lorsqu'un cheval atteint la ligne d'arrivée, le joueur qui a parié sur ce cheval remporte la manche. C'est un moment de grande joie et de célébration, car vous avez réussi à choisir le cheval le plus rapide parmi les autres concurrents.
+Les courses se poursuivent jusqu'à ce qu'un des chevaux atteigne la ligne d'arrivée ou entre en collision avec celle-ci.
+Lorsqu'un cheval atteint la ligne d'arrivée, le joueur qui a parié sur ce cheval remporte la manche.
+C'est un moment de grande joie et de célébration, car vous avez réussi à choisir le cheval le plus rapide parmi les autres concurrents.
 
 # Bilan collectif
 `Comment le travail a-t-il été réparti et qui s'est occupé de quelle fonctionnalité ?`
@@ -305,7 +308,7 @@ Les courses se poursuivent jusqu'à ce qu'un des chevaux atteigne la ligne d'arr
 
 - `✅ 100%` Snake
 - `✅ 100%` Tape-Taupe
-- `✅ 100%` Système de gestion de point (structure)
+- `✅ 100%` Système de gestion des highscores
 - `✅ 100%` Système de sauvegarde du jeu en cours
 
 
@@ -332,6 +335,8 @@ Les courses se poursuivent jusqu'à ce qu'un des chevaux atteigne la ligne d'arr
 - `✅ 100%` Course de chevaux
 - `✅ 100%` Héros de la guitare
 - `✅ 100%` Création et gestion du parc
+- `✅ 100%` Système de gestion de point
+
 ---
 # Investissement
 
