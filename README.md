@@ -106,7 +106,7 @@ Décrire ici les fonctionnalités implémentées : choix joueurs, saisie des nom
 
 *Réalisé par : **Lola** (100%).*
 
-![bg right:40%](images/coincoin.png)
+![bg right:40%](marp-projet-ece_world/images/coincoin.png)
 
     La pêche aux canard fonctionne de la manière suivante :
         - chaque canard est représenté par une structure qui contient 4 entiers ( des coordonnées x, y et des vecteurs de déplacement x, y )
@@ -131,7 +131,7 @@ Une fois que les deux joueurs ont joué, on compare les scores et on annonce le 
 # Jackpot
 *Réalisé par : **Lola** (100%).*
 
-![bg right:40%](images/potdejacques.png)
+![bg right:40%](marp-projet-ece_world/images/potdejacques.png)
 
     Le jeu du casino fonctionne de la manière suivante : 
         - on commence par charger les quatre icônes de 0 a 3.
@@ -141,7 +141,7 @@ Une fois que les deux joueurs ont joué, on compare les scores et on annonce le 
 # Shoot Baloon
 *Réalisé par : **Laouïg** (100%).*
 
-![bg right:40%](images/ballon.jpg)
+![bg right:40%](marp-projet-ece_world/images/ballon.jpg)
 
     Le déroulement du jeu de tir au ballon est le suivant :
 
@@ -179,11 +179,11 @@ end++;
 }
 //Conditions de vérification pour le ballon éclaté
 ```
-![bg right:40%](images/shootlogi.png)
+![bg right:40%](marp-projet-ece_world/images/shootlogi.png)
 ---
 # Rivière de la Tortue
 *Réalisé par : **Laouïg** (100%).*
-![bg right:40%](images/frog.jpg)
+![bg right:40%](marp-projet-ece_world/images/frog.jpg)
 ---
 
     Pour ce qui est du jeu de la rivière :
@@ -217,14 +217,14 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 (frogy + frogw) > log[1][logfrog] && (frogy + frogw) < log[1][logfrog] + 124))
     //Condition d'élimination du joueur où l'on a pixelX, la couleur analysée et pixelXm la couleur de référence
 ```
-![bg right:40%](images/riverlogi.png)
+![bg right:40%](marp-projet-ece_world/images/riverlogi.png)
 
 
 ---
 # Snake
 *Réalisé par : **Robin** (100%).*
 
-![bg right:40%](images/serpent.png)
+![bg right:40%](marp-projet-ece_world/images/serpent.png)
 
         Pour ce qui est du snake, il fonctionne comme ceci : 
             - Chaque serpent est représenté par deux tableaux de coordonnées pour x et y, ainsi qu'une 
@@ -236,12 +236,12 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
             - Si la partie n'est toujours pas terminée par une collision et que l'un des
             joueurs atteint 5 points, le mini jeu se termine.
 
-![bg right:40%](images/snakelogi.png)
+![bg right:40%](marp-projet-ece_world/images/snakelogi.png)
 ---
 # Tape Taupe
 *Réalisé par : **Robin** (100%).*
 
-![bg right:40%](images/taupe.png)
+![bg right:40%](marp-projet-ece_world/images/taupe.png)
 
     Le jeu Taupe fonctionne comme ceci :
         - Chaque joueur joue chacun son tour et doit viser des cibles à l'aide de sa souris.
@@ -253,12 +253,12 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
         en train de jouer.
         - La joueur finit son tour lorsque le joueur prend trop de temps à cliquer sur une cible, 
         ou qu'il atteint les 30 cibles touchées.
-![bg right:40%](images/taupelogi.png)
+![bg right:40%](marp-projet-ece_world/images/taupelogi.png)
 ---
 # Héros de la guitare
 *Réalisé par : **Baptiste** (100%).*
 
-![bg right:40%](images/dragon.png)
+![bg right:40%](marp-projet-ece_world/images/dragon.png)
 
     Mon Guitar Hero offre deux modes de jeu uniques et captivants. 
     Dans ce jeu, vous pourrez vous immerger dans une expérience musicale palpitante en utilisant 
@@ -286,7 +286,7 @@ if (frogy+frogw<700 && frogy>100 && !(pixelR == couleurRm && pixelG == couleurGm
 # Course de chevaux
 *Réalisé par : **Baptiste** (100%).*
 
-![bg right:40%](images/chevalo.png)
+![bg right:40%](marp-projet-ece_world/images/chevalo.png)
 
 Pour le jeux course chevaux :
 
@@ -361,7 +361,7 @@ Cependant pour ce qui est de la partie parc et gestion global,Robin et Baptiste 
 
 # Contribution Github
 
-![bg right:40%](images/git.png)
+![bg right:40%](marp-projet-ece_world/images/git.png)
 ---
 
 
