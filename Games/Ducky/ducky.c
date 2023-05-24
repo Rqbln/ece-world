@@ -158,8 +158,8 @@ void player1(int *score1){
         allegro_message("Erreur image mouse");
         exit(EXIT_FAILURE);
     }
-    set_mouse_sprite(mouse);
-    set_mouse_sprite_focus(0, 0);
+    //set_mouse_sprite(mouse);
+    //set_mouse_sprite_focus(0, 0);
     BITMAP *player1;
     player1= load_bitmap("../Games/Ducky/IMAGES/player1.bmp",NULL);
     if (!player1) { //blindage
@@ -191,7 +191,7 @@ void player1(int *score1){
     while (!key[KEY_ESC] && temps_actuel < compteur){
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
-        poll_mouse();
+        //poll_mouse();
         mouseX = mouse_x;
         mouseY = mouse_y;
         if (mouse_b & 1) {
@@ -267,8 +267,8 @@ void player2(int *score2){
         allegro_message("Erreur image mouse");
         exit(EXIT_FAILURE);
     }
-    set_mouse_sprite(mouse);
-    set_mouse_sprite_focus(0, 0);
+    //set_mouse_sprite(mouse);
+    //set_mouse_sprite_focus(0, 0);
     SAMPLE * duck;
     duck= load_wav("../Games/Ducky/IMAGES/Vidéo-sans-titre.wav");
     ///////////////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@ void player2(int *score2){
     while (!key[KEY_ESC] && temps_actuel < compteur){
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
-        poll_mouse();
+        //poll_mouse();
         mouseX = mouse_x;
         mouseY = mouse_y;
         if (mouse_b & 1) {
