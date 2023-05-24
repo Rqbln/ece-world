@@ -118,7 +118,7 @@ void jeu_taupe() {
                 textout_centre_ex(buffer, font, messageFin, WIDTH / 2, (HEIGHT / 2) - 20,makecol(255, 255, 255), -1);
                 score[1] = 0;
             } else{
-                draw_sprite(buffer,regles,WIDTH/2-230,HEIGHT/2-200);
+                draw_sprite(buffer,regles,WIDTH/2-345,HEIGHT/2-300);
             }
             sprintf(messageDebut, "%s, A toi de jouer. Appuie sur entrée pour commencer.", joueurs[i].nom);
             textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
@@ -128,7 +128,7 @@ void jeu_taupe() {
         if (score[0]==0){
             for (int i = 0; i < 300; ++i) {
                 draw_sprite(buffer,fond,0,0);
-                draw_sprite(buffer, regles, WIDTH / 2 - 230, HEIGHT / 2 - 200-2*i);
+                draw_sprite(buffer, regles, WIDTH/2-345,HEIGHT/2-300-2*i);
                 sprintf(messageDebut, "%s, A toi de jouer. Appuie sur entrée pour commencer.", joueurs[0].nom);
                 textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
                 blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -275,11 +275,7 @@ void jeu_taupe() {
             saveMiniGame(joueurs,"1Taupe",score[0],0);
         }
 
-        joueurs[0].score_taupe[joueurs[0].nb_essaie_taupe]=score[0];
-        joueurs[1].score_taupe[joueurs[1].nb_essaie_taupe]=score[1];
-        joueurs[0].nb_essaie_taupe+=1;
-        joueurs[1].nb_essaie_taupe+=1;
-        loadHighScore(highscore);
+
 
 
         // Mettre à jour l'écran
@@ -287,6 +283,11 @@ void jeu_taupe() {
         rest(10); // Pause de 10 ms pour rafraîchir l'écran
         vsync();
     }
+    joueurs[0].score_taupe[joueurs[0].nb_essaie_taupe]=score[0];
+    joueurs[1].score_taupe[joueurs[1].nb_essaie_taupe]=score[1];
+    joueurs[0].nb_essaie_taupe+=1;
+    joueurs[1].nb_essaie_taupe+=1;
+    loadHighScore(highscore);
     stop_sample(victoire);
     stop_sample(ambiance);
 }
