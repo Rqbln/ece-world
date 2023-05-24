@@ -297,7 +297,7 @@ void snake() {
     }
     stop_sample(ambiance);
     play_sample(victoire, 255, 128, 1000, 0);
-    while (!key[KEY_ESC]){
+    while (!key[KEY_ENTER]){
         if (gagnant == 1){
             sprintf(messageFin, "%s a gagné par collision ! +1 ticket",joueurs[0].nom);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2, makecol(255, 255, 255), -1);
