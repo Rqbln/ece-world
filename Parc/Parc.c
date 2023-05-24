@@ -607,8 +607,8 @@ void park(){
             //textout_centre_ex(buffer, font, "Collision !", WIDTH/2, HEIGHT/2, makecol(255, 0, 0), -1);
         }
         if (xPacman <= (xtir + (tirballon->w)/2) && (xtir + (tirballon->w)/2) <= (xPacman + pacman[0][0][1]->w) && yPacman <= (ytir+tirballon->h) && (ytir+tirballon->h) <= (yPacman + pacman[0][0][1]->h)){
-            shoot();
             stop_sample(sound[musiquealeatoire]);
+            shoot();
             musique = 1;
             yguitar -= pacman[0][0][1]->h;
             yserpent -= pacman[0][0][1]->h;
@@ -1451,31 +1451,45 @@ void park(){
             switch (joueurs[i].nbTickets) {
                 case 0:
                     stop_sample(sound[musiquealeatoire]);
+                    rest(1000);
+                    readkey();
+                    play_sample(clear1, 255, 128, 1000, 0);
                     while (!key[KEY_ENTER]) {
-                        clear_bitmap(buffer);
-                        play_sample(clear1, 255, 128, 1000, 0);
-                        draw_sprite(buffer, fonfin, 0, 0);
+                        draw_sprite(buffer,fonfin,0,0);
+                        draw_sprite(buffer, congrats, (WIDTH / 2 )-260, HEIGHT / 2 - 400);
                         draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200);
-                        draw_sprite(buffer, congrats, WIDTH / 2 - 50, HEIGHT / 2 - 500);
-                        textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a perdu, son coéquipier remporte la quête du Bitcoin !",joueurs[0].nom);
-                        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Gloire à ce preux chevalier :) !");
+                        textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-60, makecol(0, 0, 0), -1, "%s a perdu, son coéquipier remporte la quête du Bitcoin !",joueurs[0].nom);
+                        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-30, makecol(0, 0, 0), -1, "Gloire à ce preux chevalier :) !");
+                        textprintf_ex(buffer, font, (WIDTH/2)-170, (HEIGHT/2)-15, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <entrée> pour revenir au menu chevalier");
                         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
                     }
+                    stop_sample(clear1);
+                    end=1;
+                    rest(100);
                     break;
                 case 10:
                     stop_sample(sound[musiquealeatoire]);
+                    rest(1000);
+                    readkey();
+                    play_sample(clear1, 255, 128, 1000, 0);
                     while (!key[KEY_ENTER]) {
-                        clear_bitmap(buffer);
-                        play_sample(clear1, 255, 128, 1000, 0);
-                        draw_sprite(buffer, fonfin, 0, 0);
+                        draw_sprite(buffer,fonfin,0,0);
+
                         draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200);
-                        draw_sprite(buffer, congrats, WIDTH / 2 - 50, HEIGHT / 2 - 500);
-                        textprintf_ex(buffer, font, (WIDTH/2)-100, (HEIGHT/2)-25, makecol(0, 0, 0), -1, "%s a terminée la quête du Bitcoin !",joueurs[0].nom);
-                        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-15, makecol(0, 0, 0), -1, "Gloire à ce preux chevalier :) !");
+                        draw_sprite(buffer, congrats, WIDTH / 2 -260, HEIGHT / 2 - 400);
+                        textprintf_ex(buffer, font, (WIDTH/2)-130, (HEIGHT/2)-60, makecol(0, 0, 0), -1, "%s a terminée la quête du Bitcoin !",joueurs[0].nom);
+                        textprintf_ex(buffer, font, (WIDTH/2)-110, (HEIGHT/2)-30, makecol(0, 0, 0), -1, "Gloire à ce preux chevalier :) !");
+                        textprintf_ex(buffer, font, (WIDTH/2)-170, (HEIGHT/2)-15, makecol(rand()%255, rand()%255, rand()%255), -1, "Appuyez sur <entrée> pour revenir au menu, chevalier");
                         blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
                     }
+                    end=1;
+                    rest(100);
+                    stop_sample(clear1);
+                    break;
+                default:
                     break;
                 }
+
             }
         }
     stop_sample(sound[musiquealeatoire]);

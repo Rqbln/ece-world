@@ -413,7 +413,7 @@ void ducky(){ // remplace le main
         joueurs[1].nbTickets+=1;
         joueurs[0].nbTickets-=1;
         if (highscore[4].score <= s2) {
-            saveMiniGame(joueurs,"Ducky",s2,1);
+            saveMiniGame(joueurs,"4Ducky",s2,1);
             sprintf(messagefin, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[1].nom);
             textout_centre_ex(buffer,font, messagefin, SCREEN_W/2, SCREEN_H / 2 + 20, makecol(255, 255, 255), -1);
 

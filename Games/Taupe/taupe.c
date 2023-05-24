@@ -272,7 +272,7 @@ void jeu_taupe() {
 
             sprintf(messageFin, "%s vient d'établir un nouveau record en battant %d ! Enregistrement du meilleur score terminé.",joueurs[gagnant].nom,OldHighScore);
             textout_centre_ex(buffer,font, messageFin, WIDTH/2, HEIGHT / 2 + 60, makecol(255, 255, 255), -1);
-            saveMiniGame(joueurs,"Taupe",score[0],0);
+            saveMiniGame(joueurs,"1Taupe",score[0],0);
         }
 
         joueurs[0].score_taupe[joueurs[0].nb_essaie_taupe]=score[0];

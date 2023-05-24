@@ -392,7 +392,6 @@ void river()
 
             }
             draw_sprite(buffer, frog, frogx, frogy);
-            textprintf_ex(buffer, font, frogx+frogw, (frogy+frogw)/2-100, makecol(255, 255, 255), -1, "%s",joueurs[turn].nom);
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
             // Affichage du buffer principal
             vsync();
@@ -455,7 +454,7 @@ void river()
 
             sprintf(mess, "%s vient d'établir un nouveau record ! Enregistrement du meilleur score terminé.",joueurs[0].nom);
             textout_centre_ex(buffer,font, mess, WIDTH/2, HEIGHT / 2 + 20, makecol(255, 255, 255), -1);
-            saveMiniGame(joueurs,"Frogger",joueurscore[0]*100,0);
+            saveMiniGame(joueurs,"6Frogger",joueurscore[0]*100,0);
         }
     }
     else if (joueurscore[0]==joueurscore[1]) {
