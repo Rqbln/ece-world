@@ -80,7 +80,7 @@ void shoot() {
         while (!key[KEY_ENTER]){
             draw_sprite(buffer,background,0,0);
             //Affichage règles
-            if (turn==0) draw_sprite(buffer,regles,WIDTH/2-200,HEIGHT/2-200);
+            if (turn==0) draw_sprite(buffer,regles,WIDTH/2-150,HEIGHT/2-200);
 
             sprintf(mess, "Appuyez sur entrée pour commencer le tour de %s !",joueurs[turn].nom);
             textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
@@ -91,7 +91,7 @@ void shoot() {
             play_sample(transition, 255, 128, 1000, 0);
             for (int i = 0; i < 300; ++i) {
                 draw_sprite(buffer,background,0,0);
-                draw_sprite(buffer, regles, WIDTH / 2 - 200, HEIGHT / 2 - 200-2*i);
+                draw_sprite(buffer, regles, WIDTH / 2 - 150, HEIGHT / 2 - 200-2*i);
                 sprintf(mess, "Appuyez sur entrée pour commencer le tour de %s !",joueurs[turn].nom);
                 textout_centre_ex(buffer, font, mess, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
                 blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -256,6 +256,7 @@ void shoot() {
             saveMiniGame(joueurs,"Shoot",joueurscore[1]*100,1);
         }
     }
+    stop_sample(clear);
     // Libération des ressources
     destroy_bitmap(background);
     destroy_bitmap(buffer);
