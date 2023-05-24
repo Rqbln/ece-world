@@ -392,7 +392,6 @@ void river()
 
             }
             draw_sprite(buffer, frog, frogx, frogy);
-            textprintf_ex(buffer, font, frogx+frogw, (frogy+frogw)/2-100, makecol(255, 255, 255), -1, "%s",joueurs[turn].nom);
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
             // Affichage du buffer principal
             vsync();
