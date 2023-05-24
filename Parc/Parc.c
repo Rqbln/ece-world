@@ -1466,7 +1466,7 @@ void park(){
                     end=1;
                     rest(100);
                     break;
-                case 6:
+                case 10:
                     stop_sample(sound[musiquealeatoire]);
                     rest(1000);
                     readkey();
