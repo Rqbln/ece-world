@@ -239,7 +239,7 @@ void jeu_taupe() {
     }
     stop_sample(ambiance);
     play_sample(victoire, 255, 128, 1000, 0);
-    while (!key[KEY_ESC]) {
+    while (!key[KEY_ENTER]) {
 
         clear_bitmap(buffer);
         draw_sprite(buffer, fond, 0, 0);
@@ -280,6 +280,7 @@ void jeu_taupe() {
         joueurs[0].nb_essaie_taupe+=1;
         joueurs[1].nb_essaie_taupe+=1;
         loadHighScore(highscore);
+
 
         // Mettre à jour l'écran
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
