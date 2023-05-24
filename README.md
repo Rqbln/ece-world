@@ -364,23 +364,3 @@ Cependant pour ce qui est de la partie parc et gestion global,Robin et Baptiste 
 ![bg right:40%](marp-projet-ece_world/images/git.png)
 ---
 
-
-
-
-
-# Schémas et Graphes
-
-Vous pouvez utiliser [Mermaid.js](https://mermaid.js.org/) pour générer des schémas. Regardez la documentation.
-
-
-
-# Emojis
-
-https://gist.github.com/rxaviers/7360908
-
-
-
-# Export PDF
-
-Depuis récemment, l'export (**`Export Slide Deck...`**) en PDF oublie parfois des éléments. 
-Si c'est le cas, nous vous conseillons d'exporter en fichier PowerPoint (pptx), puis de l'exporter en PDF depuis PowerPoint.
