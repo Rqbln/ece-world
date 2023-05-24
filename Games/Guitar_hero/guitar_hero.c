@@ -371,13 +371,13 @@ void playguitar1(){
             stop_sample(musique);
             //sprintf(message,"Perdu ");
             joueurs[tour].score_guitare1[joueurs[tour].nb_essaie_guitare1]=score;
-            textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             rest(100); // Pause de 10 ms pour rafraîchir l'écran
         }
         joueurs[tour].nb_essaie_guitare1+=1;
     }
-    rest(150); // Pause de 10 ms pour rafraîchir l'écran
+    /*rest(150); // Pause de 10 ms pour rafraîchir l'écran
     clear_bitmap(buffer);
     clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
     while (!key[KEY_ESC]) {
@@ -418,7 +418,11 @@ void playguitar1(){
         textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         rest(100); // Pause de 10 ms pour rafraîchir l'écran
-    }
+    }*/
+    rest(150); // Pause de 10 ms pour rafraîchir l'écran
+    clear_bitmap(buffer);
+    clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
+    animation_guitarEnd();
     rest(150); // Pause de 10 ms pour rafraîchir l'écran
 }
 void playguitar(){
@@ -603,7 +607,7 @@ void playguitar(){
             stop_sample(musique);
             //sprintf(message,"Perdu ");
             joueurs[tour].score_guitare[joueurs[tour].nb_essaie_guitare]=score;
-            textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
+            //textout_centre_ex(buffer, font, message, WIDTH / 2, HEIGHT / 2, makecol(255, 0, 0), -1);
             blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
             rest(100); // Pause de 10 ms pour rafraîchir l'écran
         }

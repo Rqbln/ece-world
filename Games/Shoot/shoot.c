@@ -188,7 +188,7 @@ void shoot() {
     stop_sample(music);
     play_sample(clear, 255, 128, 1000, 0);
 
-    while (!(key[KEY_ENTER          )) {
+    while (!(key[KEY_ENTER])) {
         draw_sprite(buffer,background,0,0);
         draw_sprite(buffer,scores,WIDTH/2-200,HEIGHT/2-200);
         textprintf_ex(buffer, font, (WIDTH/2)-50, (HEIGHT/2)-75, makecol(0, 0, 0), -1, "%s : %.2f s",joueurs[0].nom,joueurscore[0]);
