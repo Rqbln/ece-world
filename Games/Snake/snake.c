@@ -79,7 +79,7 @@ void snake() {
     while (!key[KEY_ENTER]){
         draw_sprite(buffer,fond,0,0);
         //Affichage règles
-        draw_sprite(buffer,regles,WIDTH/2-230,HEIGHT/2-200);
+        draw_sprite(buffer,regles,WIDTH/2-345,HEIGHT/2-300);
 
         sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
         textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
@@ -88,7 +88,7 @@ void snake() {
     }
         for (int i = 0; i < 300; ++i) {
             draw_sprite(buffer,fond,0,0);
-            draw_sprite(buffer, regles, WIDTH / 2 - 230, HEIGHT / 2 - 200-2*i);
+            draw_sprite(buffer, regles, WIDTH/2-345,HEIGHT/2-300-2*i);
             sprintf(messageDebut, "Appuyez sur entrée pour commencer la partie !");
             textout_centre_ex(buffer, font, messageDebut, WIDTH / 2, HEIGHT / 2+120, makecol(255, 255, 255), -1);
             blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -345,16 +345,17 @@ void snake() {
                     saveMiniGame(joueurs,"0Snake",score2,1);
                 }
             }
-            joueurs[0].score_snake[joueurs[0].nb_essaie_snake]=score1;
-            joueurs[1].score_snake[joueurs[1].nb_essaie_snake]=score2;
-            joueurs[0].nb_essaie_snake+=1;
-            joueurs[1].nb_essaie_snake+=1;
 
-            loadHighScore(highscore);
         }
 
 
         blit(buffer,screen,0,0,0,0,WIDTH,HEIGHT);
         rest(10); // Pause de 10 ms pour rafraîchir l'écran
     }
+    joueurs[0].score_snake[joueurs[0].nb_essaie_snake]=score1;
+    joueurs[1].score_snake[joueurs[1].nb_essaie_snake]=score2;
+    joueurs[0].nb_essaie_snake+=1;
+    joueurs[1].nb_essaie_snake+=1;
+
+    loadHighScore(highscore);
 }
