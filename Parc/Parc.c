@@ -289,6 +289,7 @@ void park(){
 
 
     while (end == 0) {  //boucle principale
+        poll_joystick();
         //choix d une musique aleatoire
         if (musique == 1) {
             musiquealeatoire = rand() % nbMusique;
@@ -877,9 +878,13 @@ void park(){
         &&(xpanneau) <= (xPacman + pacman[0][0][1]->w)
         && yPacman <= (ypanneau + panneau->h)
         && (ypanneau) <= (yPacman + pacman[0][0][1]->h)
-        && key[KEY_ENTER]){
+        && (key[KEY_ENTER]|| joy[0].button[3].b)){
             stop_sample(sound[musiquealeatoire]);
+            rest(200); // Pause pour éviter les mouvements trop rapides
+            poll_joystick();
             tableau_score();
+            rest(250); // Pause pour éviter les mouvements trop rapides
+            poll_joystick();
             musique = 1;
             yguitar -= pacman[0][0][1]->h;
             yserpent -= pacman[0][0][1]->h;
@@ -995,9 +1000,9 @@ void park(){
             posx2=0;
             actionperso2=0;
         }
-        if (key[KEY_DOWN] || key[KEY_UP] || key[KEY_LEFT] || key[KEY_RIGHT]) {
-            if (key[KEY_RIGHT] && ((WIDTH + 1) < (fondmap->w + ximgfond))) {
-                if (key[KEY_UP] && yimgfond < 0) {
+        if (key[KEY_DOWN] || key[KEY_UP] || key[KEY_LEFT] || key[KEY_RIGHT] || joy[0].stick[0].axis[0].pos != 0 || joy[0].stick[0].axis[1].pos != 0 ) {
+            if ((key[KEY_RIGHT] || joy[0].stick[0].axis[0].pos > 0) && ((WIDTH + 1) < (fondmap->w + ximgfond))) {
+                if ((key[KEY_UP] || joy[0].stick[0].axis[1].pos < 0) && yimgfond < 0) {
                     if(vitesseimage==0){
                         actionperso = 13;
                     } else{
@@ -1021,7 +1026,7 @@ void park(){
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] += dy;
                     }
-                } else if (key[KEY_DOWN] && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
+                } else if ((key[KEY_DOWN] || joy[0].stick[0].axis[1].pos > 0)  && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
                     if(vitesseimage==0){
                         actionperso = 5;
                     } else{
@@ -1075,8 +1080,8 @@ void park(){
                 if (posx > 3) {
                     posx = 0;
                 }
-            } else if (key[KEY_LEFT] && ximgfond < 0) {
-                if (key[KEY_UP] && yimgfond < 0) {
+            } else if ((key[KEY_LEFT] || joy[0].stick[0].axis[0].pos < 0) && ximgfond < 0) {
+                if ((key[KEY_UP] || joy[0].stick[0].axis[1].pos < 0) && yimgfond < 0) {
                     if(vitesseimage==0){
                         actionperso = 9;
                     } else{
@@ -1100,7 +1105,7 @@ void park(){
                     for (int i = 0; i < nbcheval; ++i) {
                         ycheval[i] += dy;
                     }
-                } else if (key[KEY_DOWN] && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
+                } else if ((key[KEY_DOWN] || joy[0].stick[0].axis[1].pos > 0)  && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
                     if(vitesseimage==0){
                         actionperso = 1;
                     } else{
@@ -1156,7 +1161,7 @@ void park(){
                 if (posx > 3) {
                     posx = 0;
                 }
-            } else if (key[KEY_UP] && yimgfond < 0) {
+            } else if ((key[KEY_UP] || joy[0].stick[0].axis[1].pos < 0) && yimgfond < 0) {
                 if(vitesseimage==0){
                     actionperso = 12;
                 } else{
@@ -1184,7 +1189,7 @@ void park(){
                 if (posx > 3) {
                     posx = 0;
                 }
-            } else if (key[KEY_DOWN] && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
+            } else if ((key[KEY_DOWN] || joy[0].stick[0].axis[1].pos > 0)  && ((HEIGHT + 1) < (fondmap->h + yimgfond))) {
                 if(vitesseimage==0){
                     actionperso = 0;
                 } else{
@@ -1222,7 +1227,9 @@ void park(){
             play_sample(ambiance, 255, 128, 1000, 1);
             for (int i = 0; i < NB_JOUEURS; ++i) {
                 play_sample(effet[i], 255, 128, 1000, 0);
-                while (!key[KEY_ENTER] && stop == 0 || strlen(text_input)>10) {
+                poll_joystick();
+                while ((!key[KEY_ENTER] && !joy[0].button[3].b) && stop == 0 || strlen(text_input)>10) {
+                    poll_joystick();
                     clear_bitmap(buffer2);
                     clear_to_color(buffer2, makecol(253, 208, 146)); // Effacer l'écran en blanc
                     // Afficher la zone de saisie clavier
@@ -1234,6 +1241,7 @@ void park(){
 
                     blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
                     while (keypressed()) {
+                        poll_joystick();
                         int cle = readkey();
                         if (cle >> 8 == KEY_BACKSPACE && strlen(text_input) > 0) {
                             text_input[strlen(text_input) - 1] = '\0';
@@ -1243,6 +1251,7 @@ void park(){
                     }
                     // Rafraîchir l'écran
                     vsync();
+                    poll_joystick();
 
                     if(key[KEY_LEFT]){
                         joueurs[i].persoChoisi-=1;
@@ -1271,6 +1280,7 @@ void park(){
                     draw_sprite(buffer, pacman[joueurs[i].persoChoisi][0][0], ((WIDTH/2)-50), HEIGHT-470);
                     blit(buffer2, buffer, 0, 0, posxbuff2, posybuff2, WIDTH, HEIGHT);
                     rest(200);
+                    poll_joystick();
                 }
                 selectperso=joueurs[i].persoChoisi;
                 if(strlen(text_input)==0){
@@ -1309,7 +1319,7 @@ void park(){
 
 
 
-        if (key[KEY_P]) {
+        if (key[KEY_P] && !joy[0].button[8].b) {
             isPaused = 1; // Mettre le jeu en pause
             rest(200); // Attendre un peu pour éviter les pressions répétées de la touche P
         }
@@ -1333,7 +1343,7 @@ void park(){
 
                 char saveFileName[100];
                 // Afficher le menu de pause
-                while (!key[KEY_ENTER]){
+                while (!key[KEY_ENTER] && !joy[0].button[3].b){
                 clear(buffer);
                 draw_sprite(buffer, fondmap, ximgfond, yimgfond);
                 rectfill(buffer, (WIDTH / 2) - 100, (HEIGHT / 2) - 100, (WIDTH / 2) + 100, (HEIGHT / 2) + 100,
@@ -1369,7 +1379,8 @@ void park(){
 
                 char loadFileName[100];
                 // Afficher le menu de pause
-                while (!key[KEY_ENTER]){
+                while (!key[KEY_ENTER] && !joy[0].button[3].b){
+                    poll_joystick();
                     clear(buffer);
                     draw_sprite(buffer, fondmap, ximgfond, yimgfond);
                     rectfill(buffer, (WIDTH / 2) - 100, (HEIGHT / 2) - 100, (WIDTH / 2) + 100, (HEIGHT / 2) + 100,
@@ -1409,13 +1420,14 @@ void park(){
         }
 
 
-        if (key[KEY_ESC]){
+        if (key[KEY_ESC] || joy[0].button[9].b){
             isPaused = 1; // Mettre le jeu en pause
             rest(200); // Attendre un peu pour éviter les pressions répétées de la touche P
         }
 
         // Si le jeu est en pause
         while (isPaused) {
+            poll_joystick();
             clear_keybuf(); // Effacer le tampon des touches pressées pendant la pause
 
             // Afficher le menu de pause
@@ -1433,9 +1445,11 @@ void park(){
 
             blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
 
-            if (key[KEY_ESC]) {
+            rest(100);
+            if (key[KEY_ESC] || joy[0].button[9].b) {
                 isPaused = 0;
-            } else if (key[KEY_ENTER]) {
+            }
+            if (key[KEY_ENTER] || joy[0].button[3].b) {
                 end = 1;
                 isPaused = 0;
 
@@ -1444,7 +1458,7 @@ void park(){
         }
 
 
-        if (key[KEY_SPACE]) {
+        if (key[KEY_SPACE] || joy[0].button[5].b) {
             rest(10);
         } else
         rest(60); // Pause de 10 ms pour rafraîchir l'écran
@@ -1455,7 +1469,7 @@ void park(){
                     rest(1000);
                     readkey();
                     play_sample(clear1, 255, 128, 1000, 0);
-                    while (!key[KEY_ENTER]) {
+                    while (!key[KEY_ENTER] && !joy[0].button[3].b) {
                         draw_sprite(buffer,fonfin,0,0);
                         draw_sprite(buffer, congrats, (WIDTH / 2 )-260, HEIGHT / 2 - 400);
                         draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200);
@@ -1473,7 +1487,7 @@ void park(){
                     rest(1000);
                     readkey();
                     play_sample(clear1, 255, 128, 1000, 0);
-                    while (!key[KEY_ENTER]) {
+                    while (!key[KEY_ENTER] && !joy[0].button[3].b) {
                         draw_sprite(buffer,fonfin,0,0);
 
                         draw_sprite(buffer, scroll, WIDTH / 2 - 200, HEIGHT / 2 - 200);

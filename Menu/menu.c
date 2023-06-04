@@ -90,6 +90,7 @@ void menu() {
 
     // Boucle principale
     while (!key[KEY_ESC]) {
+        poll_joystick();
 
         // Affichage de l'image de fond
         // Affichage du buffer à l'écran avec l'image de fond
@@ -126,21 +127,21 @@ void menu() {
         blit(buffer, screen, 0, 0, 0, 0, WIDTH, HEIGHT);
 
         // Gestion de l'entrée utilisateur
-        if (key[KEY_UP]) { // Flèche du haut
+        if (key[KEY_UP] || joy[0].stick[0].axis[1].pos < 0) { // Flèche du haut
             option--;
             if (option<0){
                 option=2;
             }
             rest(250); // Pause pour éviter les mouvements trop rapides
         }
-        if (key[KEY_DOWN]) { // Flèche du bas
+        if (key[KEY_DOWN] || joy[0].stick[0].axis[1].pos > 0) { // Flèche du bas
             option++;
             if (option>2){
                 option=0;
             }
             rest(250); // Pause pour éviter les mouvements trop rapides
         }
-        if (key[KEY_ENTER]) { // Touche Entrée
+        if (key[KEY_ENTER] || joy[0].button[3].b) { // Touche Entrée
 
             if (option == 0) { // Option Jouer
                 // TODO: Ajouter le code pour lancer le jeu

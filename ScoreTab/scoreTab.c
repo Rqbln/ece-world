@@ -63,7 +63,8 @@ void tableau_score(){
             exit(EXIT_FAILURE);
         }   
     }
-    while (!key[KEY_ESC]) {
+    while (!key[KEY_ESC] && !key[KEY_ENTER] && !joy[0].button[9].b && !joy[0].button[3].b) {
+        poll_joystick();
         clear_bitmap(buffer);
         clear_to_color(buffer, makecol(255, 255, 255)); // Effacer l'écran en blanc
         draw_sprite(buffer,fond,0,0);

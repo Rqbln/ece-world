@@ -152,11 +152,6 @@ void loadHighScore(t_highscore* highscore) {
         fprintf(stderr, "Erreur lors de l'ouverture du dossier des sauvegardes.\n");
         return;
     }
-
-
-
-
-
 // Lire les fichiers de sauvegarde dans le dossier
     t_fichier fichiers[MAX_HIGH_SCORES];
     struct dirent* saveFile;

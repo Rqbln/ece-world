@@ -19,5 +19,9 @@ void initialisation_allegro(){
         allegro_message("Error initializing sound system: %s\n", allegro_error);
         exit(EXIT_FAILURE);
     }
+    if (install_joystick(JOY_TYPE_AUTODETECT) != 0) {
+        allegro_message("Échec de l'initialisation de la manette");
+        exit(EXIT_FAILURE);
+    }
     show_mouse(screen); // Affiche le curseur de la souris à l'écran
 }
